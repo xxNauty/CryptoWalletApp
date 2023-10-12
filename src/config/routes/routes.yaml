@@ -1,0 +1,9 @@
+when@dev:
+    _errors:
+        resource: '@FrameworkBundle/Resources/config/routing/errors.xml'
+        prefix: /_error
+
+api_platform:
+    resource: .
+    type: api_platform
+    prefix: /api
