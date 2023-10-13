@@ -16,7 +16,6 @@ use App\Domain\User\Model\User;
 use App\Infrastructure\User\ApiPlatform\OpenApi\UserFilter;
 use App\Infrastructure\User\ApiPlatform\State\Processor\UserCrudProcessor;
 use App\Infrastructure\User\ApiPlatform\State\Provider\UserCrudProvider;
-use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
@@ -54,7 +53,12 @@ final class UserResource
         #[Assert\NotNull]
         #[Assert\Length(min: 1, max: 50)]
         public ?string $password = null,
-    ) {}
+
+        #[Assert\NotNull]
+        #[Assert\Length(min: 1, max: 50)]
+        public ?string $role = null,
+    ) {
+    }
 
     public static function fromModel(User $user): self
     {
@@ -62,7 +66,8 @@ final class UserResource
             $user->id,
             $user->email,
             $user->firstName,
-            $user->lastName
+            $user->lastName,
+            $user->role
         );
     }
 }

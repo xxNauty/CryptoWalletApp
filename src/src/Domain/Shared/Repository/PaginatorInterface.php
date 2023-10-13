@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\Shared\Repository;
 
-interface PaginatorInterface extends \IteratorAggregate, \Countable
+use Countable;
+
+interface PaginatorInterface extends \IteratorAggregate, Countable
 {
     public function getCurrentPage(): int;
 

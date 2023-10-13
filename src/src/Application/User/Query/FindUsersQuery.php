@@ -12,5 +12,6 @@ final class FindUsersQuery implements QueryInterface
         public readonly ?string $firstName = null,
         public readonly ?int $page = null,
         public readonly ?int $itemsPerPage = null,
-    ) {}
+    ) {
+    }
 }

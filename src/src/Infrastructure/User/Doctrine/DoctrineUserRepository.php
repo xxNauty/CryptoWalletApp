@@ -9,9 +9,8 @@ use App\Domain\User\Repository\UserRepositoryInterface;
 use App\Infrastructure\Shared\Doctrine\DoctrineRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Component\Uid\Uuid;
 
-final class DoctrineUserRepository extends DoctrineRepository implements UserRepositoryInterface
+class DoctrineUserRepository extends DoctrineRepository implements UserRepositoryInterface
 {
     private const ENTITY_CLASS = User::class;
     private const ALIAS = 'user';
@@ -33,7 +32,7 @@ final class DoctrineUserRepository extends DoctrineRepository implements UserRep
         $this->em->flush();
     }
 
-    public function find(Uuid $id): ?User
+    public function find(int $id): ?User
     {
         return $this->em->find(self::ENTITY_CLASS, $id);
     }

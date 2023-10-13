@@ -8,22 +8,21 @@ use ApiPlatform\Metadata\CollectionOperationInterface;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\Pagination\Pagination;
 use ApiPlatform\State\ProviderInterface;
-use App\Application\User\Query\FindCityCountryQuery;
-use App\Application\User\Query\FindCityCountriesQuery;
 use App\Application\Shared\Query\QueryBusInterface;
 use App\Application\User\Query\FindUserQuery;
 use App\Application\User\Query\FindUsersQuery;
 use App\Domain\User\Model\User;
 use App\Domain\User\Repository\UserRepositoryInterface;
-use App\Infrastructure\User\ApiPlatform\Resource\UserResource;
 use App\Infrastructure\Shared\ApiPlatform\State\Paginator;
+use App\Infrastructure\User\ApiPlatform\Resource\UserResource;
 
 final class UserCrudProvider implements ProviderInterface
 {
     public function __construct(
         private readonly QueryBusInterface $queryBus,
         private readonly Pagination $pagination,
-    ) {}
+    ) {
+    }
 
     /**
      * @return UserResource|Paginator<UserResource>|array<UserResource>

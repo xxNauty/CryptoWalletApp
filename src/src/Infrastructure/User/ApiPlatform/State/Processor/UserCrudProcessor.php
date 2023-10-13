@@ -7,23 +7,20 @@ namespace App\Infrastructure\User\ApiPlatform\State\Processor;
 use ApiPlatform\Metadata\DeleteOperationInterface;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\Application\User\Command\CreateCityCountryCommand;
-use App\Application\User\Command\CreateUserCommand;
-use App\Application\User\Command\DeleteCityCountryCommand;
-use App\Application\User\Command\DeleteUserCommand;
-use App\Application\User\Command\UpdateCityCountryCommand;
 use App\Application\Shared\Command\CommandBusInterface;
+use App\Application\User\Command\CreateUserCommand;
+use App\Application\User\Command\DeleteUserCommand;
 use App\Application\User\Command\UpdateUserCommand;
 use App\Domain\User\Model\User;
 use App\Infrastructure\User\ApiPlatform\Resource\UserResource;
-use Symfony\Component\Uid\Uuid;
 use Webmozart\Assert\Assert;
 
 final class UserCrudProcessor implements ProcessorInterface
 {
     public function __construct(
         private readonly CommandBusInterface $commandBus,
-    ) {}
+    ) {
+    }
 
     public function process($data, Operation $operation, array $uriVariables = [], array $context = [])
     {
