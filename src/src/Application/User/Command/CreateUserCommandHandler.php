@@ -7,13 +7,15 @@ namespace App\Application\User\Command;
 use App\Application\Shared\Command\CommandHandlerInterface;
 use App\Domain\User\Model\User;
 use App\Domain\User\Repository\UserRepositoryInterface;
+use App\Infrastructure\User\Service\UserPasswordService;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Webmozart\Assert\Assert;
 
 final class CreateUserCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
         private readonly UserRepositoryInterface $userRepository,
-        private readonly UserPasswordHasherInterface $passwordHasher
+        private readonly UserPasswordService $passwordService
     ) {
     }
 
@@ -25,7 +27,7 @@ final class CreateUserCommandHandler implements CommandHandlerInterface
             $command->lastName,
         );
 
-        $user->password = $this->passwordHasher->hashPassword($user, $command->password);
+        $this->passwordService->updatePassword($user, $command->password);
 
         $this->userRepository->save($user);
 

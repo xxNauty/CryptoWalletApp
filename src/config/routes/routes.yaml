@@ -9,3 +9,5 @@ api_platform:
     prefix: /api
 login:
     path: /authentication_token
+refresh_token:
+    path: /authentication_token/refresh

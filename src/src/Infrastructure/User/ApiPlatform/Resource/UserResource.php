@@ -16,6 +16,7 @@ use App\Domain\User\Model\User;
 use App\Infrastructure\User\ApiPlatform\OpenApi\UserFilter;
 use App\Infrastructure\User\ApiPlatform\State\Processor\UserCrudProcessor;
 use App\Infrastructure\User\ApiPlatform\State\Provider\UserCrudProvider;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
@@ -28,6 +29,8 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Patch(),
         new Delete(),
     ],
+    normalizationContext: ['groups' => ['user.read']],
+    security: 'is_granted("ROLE_ADMIN")',
     provider: UserCrudProvider::class,
     processor: UserCrudProcessor::class,
 )]
@@ -35,19 +38,23 @@ final class UserResource
 {
     public function __construct(
         #[ApiProperty(writable: false, identifier: true)]
+        #[Groups(['user.read'])]
         public ?int $id = null,
 
         #[Assert\NotNull]
         #[Assert\Email]
         #[Assert\Length(min: 5, max: 100)]
+        #[Groups(['user.read'])]
         public ?string $email = null,
 
         #[Assert\NotNull]
         #[Assert\Length(min: 1, max: 50)]
+        #[Groups(['user.read'])]
         public ?string $firstName = null,
 
         #[Assert\NotNull]
         #[Assert\Length(min: 1, max: 50)]
+        #[Groups(['user.read'])]
         public ?string $lastName = null,
 
         #[Assert\NotNull]

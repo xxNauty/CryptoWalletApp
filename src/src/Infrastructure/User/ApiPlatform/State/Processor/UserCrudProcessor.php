@@ -34,7 +34,7 @@ final class UserCrudProcessor implements ProcessorInterface
 
         $command = !isset($uriVariables['id'])
             ? new CreateUserCommand($data->email, $data->firstName, $data->lastName, $data->password)
-            : new UpdateUserCommand($uriVariables['id'], $data->email, $data->firstName, $data->lastName)
+            : new UpdateUserCommand($uriVariables['id'], $data->email, $data->firstName, $data->lastName, $data->password)
         ;
 
         /** @var User $model */

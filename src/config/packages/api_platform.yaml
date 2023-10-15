@@ -9,5 +9,9 @@ api_platform:
         ]
     swagger:
         versions: [3]
+        api_keys:
+            JWT:
+                name: Authorization
+                type: header
     exception_to_status:
         Webmozart\Assert\InvalidArgumentException: 422

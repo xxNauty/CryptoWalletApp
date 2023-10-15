@@ -18,5 +18,7 @@ final class CreateUserCommand implements CommandInterface
         Assert::lengthBetween($email, 5, 100);
         Assert::lengthBetween($firstName, 2, 50);
         Assert::lengthBetween($lastName, 2, 50);
+        Assert::minLength($password, 8);
+        Assert::email($email);
     }
 }
