@@ -8,10 +8,8 @@ use App\Application\Shared\Command\CommandHandlerInterface;
 use App\Domain\User\Model\User;
 use App\Domain\User\Repository\UserRepositoryInterface;
 use App\Infrastructure\User\Service\UserPasswordService;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Webmozart\Assert\Assert;
 
-final class CreateUserCommandHandler implements CommandHandlerInterface
+class CreateUserCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
         private readonly UserRepositoryInterface $userRepository,

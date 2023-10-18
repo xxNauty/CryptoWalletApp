@@ -7,7 +7,7 @@ namespace App\Application\User\Query;
 use App\Application\Shared\Query\QueryHandlerInterface;
 use App\Domain\User\Repository\UserRepositoryInterface;
 
-final class FindUsersQueryHandler implements QueryHandlerInterface
+class FindUsersQueryHandler implements QueryHandlerInterface
 {
     public function __construct(private readonly UserRepositoryInterface $userRepository)
     {

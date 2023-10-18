@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Application\User\Command;
+namespace App\Application\Currency\Command;
 
 use App\Application\Shared\Command\CommandInterface;
 
-class DeleteUserCommand implements CommandInterface
+class DeleteCurrencyCommand implements CommandInterface
 {
     public function __construct(
         public readonly int $id,

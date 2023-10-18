@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\User\Service;
 
 use App\Application\User\Service\UserPasswordServiceInterface;
@@ -10,13 +12,12 @@ class UserPasswordService implements UserPasswordServiceInterface
 {
     public function __construct(
         private readonly UserPasswordHasherInterface $passwordHasher
-    )
-    {
+    ) {
     }
 
     public function updatePassword(User $user, ?string $plainPassword): void
     {
-        if($plainPassword != null){
+        if (null != $plainPassword) {
             $user->setPassword($this->passwordHasher->hashPassword($user, $plainPassword));
         }
     }

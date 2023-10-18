@@ -11,7 +11,6 @@ use App\Application\Shared\Command\CommandBusInterface;
 use App\Application\User\Command\CreateUserCommand;
 use App\Application\User\Command\DeleteUserCommand;
 use App\Application\User\Command\UpdateUserCommand;
-use App\Domain\User\Model\User;
 use App\Infrastructure\User\ApiPlatform\Resource\UserResource;
 use Webmozart\Assert\Assert;
 
@@ -33,11 +32,21 @@ final class UserCrudProcessor implements ProcessorInterface
         }
 
         $command = !isset($uriVariables['id'])
-            ? new CreateUserCommand($data->email, $data->firstName, $data->lastName, $data->password)
-            : new UpdateUserCommand($uriVariables['id'], $data->email, $data->firstName, $data->lastName, $data->password)
+            ? new CreateUserCommand(
+                $data->email,
+                $data->firstName,
+                $data->lastName,
+                $data->password
+            )
+            : new UpdateUserCommand(
+                $uriVariables['id'],
+                $data->email,
+                $data->firstName,
+                $data->lastName,
+                $data->password
+            )
         ;
 
-        /** @var User $model */
         $model = $this->commandBus->dispatch($command);
 
         return UserResource::fromModel($model);

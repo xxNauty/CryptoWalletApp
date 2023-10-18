@@ -34,7 +34,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     provider: UserCrudProvider::class,
     processor: UserCrudProcessor::class,
 )]
-final class UserResource
+class UserResource
 {
     public function __construct(
         #[ApiProperty(writable: false, identifier: true)]

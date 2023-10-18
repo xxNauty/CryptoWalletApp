@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Application\User\Query;
+namespace App\Application\Currency\Query;
 
 use App\Application\Shared\Query\QueryInterface;
 
-class FindUsersQuery implements QueryInterface
+class FindCurrencyCollectionQuery implements QueryInterface
 {
     public function __construct(
-        public readonly ?string $firstName = null,
         public readonly ?int $page = null,
         public readonly ?int $itemsPerPage = null,
     ) {
