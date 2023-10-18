@@ -7,7 +7,7 @@ namespace App\Application\User\Command;
 use App\Application\Shared\Command\CommandInterface;
 use Webmozart\Assert\Assert;
 
-final class CreateUserCommand implements CommandInterface
+class CreateUserCommand implements CommandInterface
 {
     public function __construct(
         public readonly string $email,

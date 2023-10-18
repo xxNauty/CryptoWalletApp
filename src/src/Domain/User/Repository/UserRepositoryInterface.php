@@ -16,5 +16,4 @@ interface UserRepositoryInterface extends RepositoryInterface
     public function find(int $id): ?User;
 
     public function withFirstName(string $firstName): static;
-
 }

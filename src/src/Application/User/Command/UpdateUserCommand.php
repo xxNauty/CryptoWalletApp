@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace App\Application\User\Command;
 
 use App\Application\Shared\Command\CommandInterface;
-use App\Domain\User\Model\User;
 use Webmozart\Assert\Assert;
 
-final class UpdateUserCommand implements CommandInterface
+class UpdateUserCommand implements CommandInterface
 {
     public function __construct(
         public readonly int $id,
