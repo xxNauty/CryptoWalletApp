@@ -9,8 +9,9 @@ use App\Domain\User\Repository\UserRepositoryInterface;
 
 class FindUsersQueryHandler implements QueryHandlerInterface
 {
-    public function __construct(private readonly UserRepositoryInterface $userRepository)
-    {
+    public function __construct(
+        private readonly UserRepositoryInterface $userRepository
+    ) {
     }
 
     public function __invoke(FindUsersQuery $query): UserRepositoryInterface

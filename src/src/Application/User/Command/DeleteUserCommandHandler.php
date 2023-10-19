@@ -10,8 +10,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DeleteUserCommandHandler implements CommandHandlerInterface
 {
-    public function __construct(private readonly UserRepositoryInterface $userRepository)
-    {
+    public function __construct(
+        private readonly UserRepositoryInterface $userRepository
+    ) {
     }
 
     public function __invoke(DeleteUserCommand $command): void

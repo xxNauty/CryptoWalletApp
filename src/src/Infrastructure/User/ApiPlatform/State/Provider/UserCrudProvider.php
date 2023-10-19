@@ -16,7 +16,7 @@ use App\Domain\User\Repository\UserRepositoryInterface;
 use App\Infrastructure\Shared\ApiPlatform\State\Paginator;
 use App\Infrastructure\User\ApiPlatform\Resource\UserResource;
 
-final class UserCrudProvider implements ProviderInterface
+class UserCrudProvider implements ProviderInterface
 {
     public function __construct(
         private readonly QueryBusInterface $queryBus,
@@ -24,9 +24,6 @@ final class UserCrudProvider implements ProviderInterface
     ) {
     }
 
-    /**
-     * @return UserResource|Paginator<UserResource>|array<UserResource>
-     */
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
         if (!$operation instanceof CollectionOperationInterface) {
@@ -44,7 +41,6 @@ final class UserCrudProvider implements ProviderInterface
             $limit = $this->pagination->getLimit($operation, $context);
         }
 
-        /** @var UserRepositoryInterface $models */
         $models = $this->queryBus->ask(new FindUsersQuery($firstName, $offset, $limit));
 
         $resources = [];
