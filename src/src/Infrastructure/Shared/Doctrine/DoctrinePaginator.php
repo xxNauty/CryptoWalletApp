@@ -19,6 +19,7 @@ final class DoctrinePaginator implements PaginatorInterface
         //        $this->maxResults = $paginator->getQuery()->getMaxResults();
         $this->firstResult = 1;
         $this->maxResults = 100;
+        // todo: poprawić to
 
         if (null == $this->firstResult || null === $this->maxResults) {
             throw new \InvalidArgumentException('Missing firstResult and maxResults from the query.');

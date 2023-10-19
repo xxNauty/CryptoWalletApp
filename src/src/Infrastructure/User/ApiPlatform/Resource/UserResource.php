@@ -30,7 +30,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Delete(),
     ],
     normalizationContext: ['groups' => ['user.read']],
-    security: 'is_granted("ROLE_ADMIN")',
+    security: 'is_granted("PUBLIC_ACCESS")',
     provider: UserCrudProvider::class,
     processor: UserCrudProcessor::class,
 )]

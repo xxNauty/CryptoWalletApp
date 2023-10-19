@@ -14,7 +14,7 @@ use App\Application\User\Command\UpdateUserCommand;
 use App\Infrastructure\User\ApiPlatform\Resource\UserResource;
 use Webmozart\Assert\Assert;
 
-final class UserCrudProcessor implements ProcessorInterface
+class UserCrudProcessor implements ProcessorInterface
 {
     public function __construct(
         private readonly CommandBusInterface $commandBus,
