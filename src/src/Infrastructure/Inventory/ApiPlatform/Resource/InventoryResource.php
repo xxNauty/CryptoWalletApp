@@ -16,32 +16,18 @@ use App\Infrastructure\Inventory\ApiPlatform\State\Processor\InventoryCrudProces
 use App\Infrastructure\Inventory\ApiPlatform\State\Provider\InventoryCrudProvider;
 use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
 use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceInterface;
-use App\Infrastructure\User\ApiPlatform\Resource\UserResource;
+use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ApiResource(
-    shortName: 'Inventory',
-    operations: [
-        new GetCollection(),
-        new Get(),
-        new Post(),
-        new Put(),
-        new Patch(),
-        new Delete(),
-    ],
-    security: 'is_granted("PUBLIC_ACCESS")',
-    provider: InventoryCrudProvider::class,
-    processor: InventoryCrudProcessor::class,
-)]
 class InventoryResource implements ResourceInterface
 {
     public function __construct(
         #[ApiProperty(writable: false, identifier: true)]
         public ?int $id = null,
 
-        public ?UserResource $user = null,
-
+        #[Groups(['user.read'])]
         public ?float $totalInventoryValue = null,
 
+        #[Groups(['user.read'])]
         public ?array $content = null,
     ) {
     }

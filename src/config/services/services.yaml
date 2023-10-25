@@ -9,3 +9,11 @@ services:
         resource: '../../src/'
         exclude:
             - '../src/Infrastructure/Shared/Kernel.php'
+
+    gedmo.listener.softdeleteable:
+        class: Gedmo\SoftDeleteable\SoftDeleteableListener
+        tags:
+            - { name: doctrine.event_listener, event: 'onFlush' }
+            - { name: doctrine.event_listener, event: 'loadClassMetadata' }
+        calls:
+            - [ setAnnotationReader, [ "@annotation_reader" ] ]
