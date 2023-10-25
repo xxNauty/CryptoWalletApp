@@ -7,14 +7,14 @@ namespace App\Application\User\Query;
 use App\Application\Shared\Query\QueryHandlerInterface;
 use App\Domain\User\Repository\UserRepositoryInterface;
 
-class FindUsersQueryHandler implements QueryHandlerInterface
+class FindUserCollectionQueryHandler implements QueryHandlerInterface
 {
     public function __construct(
         private readonly UserRepositoryInterface $userRepository
     ) {
     }
 
-    public function __invoke(FindUsersQuery $query): UserRepositoryInterface
+    public function __invoke(FindUserCollectionQuery $query): UserRepositoryInterface
     {
         $userRepository = $this->userRepository;
 

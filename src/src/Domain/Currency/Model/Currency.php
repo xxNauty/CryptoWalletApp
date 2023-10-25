@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\Domain\Currency\Model;
 
+use App\Domain\Shared\Model\ModelInterface;
+use App\Infrastructure\Currency\ApiPlatform\Resource\CurrencyResource;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Webmozart\Assert\Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'currency')]
-class Currency
+class Currency implements ModelInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: Types::INTEGER)]
@@ -40,5 +42,10 @@ class Currency
         Assert::nullOrInArray($this->change24h, [-1, 0, 1]);
         Assert::nullOrInArray($this->change7d, [-1, 0, 1]);
         // -1 => spadek, 0 => bez zmian, 1 => wzrost
+    }
+
+    public function getResource(): string
+    {
+        return CurrencyResource::class;
     }
 }

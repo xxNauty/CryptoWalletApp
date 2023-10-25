@@ -6,7 +6,7 @@ namespace App\Application\User\Query;
 
 use App\Application\Shared\Query\QueryInterface;
 
-class FindUsersQuery implements QueryInterface
+class FindUserCollectionQuery implements QueryInterface
 {
     public function __construct(
         public readonly ?string $firstName = null,

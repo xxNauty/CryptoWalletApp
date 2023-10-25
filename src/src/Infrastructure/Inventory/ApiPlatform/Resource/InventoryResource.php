@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Currency\ApiPlatform\Resource;
+namespace App\Infrastructure\Inventory\ApiPlatform\Resource;
 
 use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
@@ -12,14 +12,14 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
-use App\Infrastructure\Currency\ApiPlatform\State\Processor\CurrencyCrudProcessor;
-use App\Infrastructure\Currency\ApiPlatform\State\Provider\CurrencyCrudProvider;
+use App\Infrastructure\Inventory\ApiPlatform\State\Processor\InventoryCrudProcessor;
+use App\Infrastructure\Inventory\ApiPlatform\State\Provider\InventoryCrudProvider;
 use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
 use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceInterface;
-use Symfony\Component\Validator\Constraints as Assert;
+use App\Infrastructure\User\ApiPlatform\Resource\UserResource;
 
 #[ApiResource(
-    shortName: 'Currency',
+    shortName: 'Inventory',
     operations: [
         new GetCollection(),
         new Get(),
@@ -29,27 +29,20 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Delete(),
     ],
     security: 'is_granted("PUBLIC_ACCESS")',
-    provider: CurrencyCrudProvider::class,
-    processor: CurrencyCrudProcessor::class,
+    provider: InventoryCrudProvider::class,
+    processor: InventoryCrudProcessor::class,
 )]
-class CurrencyResource implements ResourceInterface
+class InventoryResource implements ResourceInterface
 {
     public function __construct(
         #[ApiProperty(writable: false, identifier: true)]
         public ?int $id = null,
 
-        #[Assert\Length(exactly: 3)]
-        public ?string $symbol = null,
+        public ?UserResource $user = null,
 
-        public ?string $name = null,
+        public ?float $totalInventoryValue = null,
 
-        public ?float $priceUSD = null,
-
-        public ?int $change1h = null,
-
-        public ?int $change24h = null,
-
-        public ?int $change7d = null,
+        public ?array $content = null,
     ) {
     }
 

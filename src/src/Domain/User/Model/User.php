@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Domain\User\Model;
 
+use App\Domain\Inventory\Model\Inventory;
+use App\Domain\Shared\Model\ModelInterface;
+use App\Infrastructure\User\ApiPlatform\Resource\UserResource;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -11,7 +14,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'user_base')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, ModelInterface
 {
     public const ROLE_ADMIN = 'ROLE_ADMIN';
     public const ROLE_PLAYER = 'ROLE_PLAYER';
@@ -31,6 +34,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::STRING, length: 255)]
     private string $password;
+
+    #[ORM\OneToOne(inversedBy: 'owner', targetEntity: Inventory::class)]
+    public Inventory $inventory;
 
     public function __construct(
         #[ORM\Column(type: Types::STRING, length: 100, unique: true)]
@@ -68,5 +74,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): void
     {
         $this->password = $password;
+    }
+
+    public function getResource(): string
+    {
+        return UserResource::class;
     }
 }

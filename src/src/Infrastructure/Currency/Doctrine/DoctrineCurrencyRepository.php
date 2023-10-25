@@ -33,6 +33,6 @@ class DoctrineCurrencyRepository extends DoctrineRepository implements CurrencyR
 
     public function find(int $id): ?Currency
     {
-        $this->em->find(self::ENTITY_CLASS, $id);
+        return $this->em->find(self::ENTITY_CLASS, $id);
     }
 }
