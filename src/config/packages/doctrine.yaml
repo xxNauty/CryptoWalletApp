@@ -25,3 +25,9 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Domain/Currency/Model'
                 prefix: 'App\Domain\Currency\Model'
                 alias: 'Currency'
+            Inventory:
+                is_bundle: false
+                type: attribute
+                dir: '%kernel.project_dir%/src/Domain/Inventory/Model'
+                prefix: 'App\Domain\Inventory\Model'
+                alias: 'Inventory'

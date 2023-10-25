@@ -9,10 +9,9 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\Pagination\Pagination;
 use ApiPlatform\State\ProviderInterface;
 use App\Application\Shared\Query\QueryBusInterface;
+use App\Application\User\Query\FindUserCollectionQuery;
 use App\Application\User\Query\FindUserQuery;
-use App\Application\User\Query\FindUsersQuery;
 use App\Domain\User\Model\User;
-use App\Domain\User\Repository\UserRepositoryInterface;
 use App\Infrastructure\Shared\ApiPlatform\State\Paginator;
 use App\Infrastructure\User\ApiPlatform\Resource\UserResource;
 
@@ -41,7 +40,7 @@ class UserCrudProvider implements ProviderInterface
             $limit = $this->pagination->getLimit($operation, $context);
         }
 
-        $models = $this->queryBus->ask(new FindUsersQuery($firstName, $offset, $limit));
+        $models = $this->queryBus->ask(new FindUserCollectionQuery($firstName, $offset, $limit));
 
         $resources = [];
         foreach ($models as $model) {

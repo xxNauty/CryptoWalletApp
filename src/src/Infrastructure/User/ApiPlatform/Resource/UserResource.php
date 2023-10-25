@@ -12,7 +12,8 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
-use App\Domain\User\Model\User;
+use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
+use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceInterface;
 use App\Infrastructure\User\ApiPlatform\OpenApi\UserFilter;
 use App\Infrastructure\User\ApiPlatform\State\Processor\UserCrudProcessor;
 use App\Infrastructure\User\ApiPlatform\State\Provider\UserCrudProvider;
@@ -34,7 +35,7 @@ use Symfony\Component\Validator\Constraints as Assert;
     provider: UserCrudProvider::class,
     processor: UserCrudProcessor::class,
 )]
-class UserResource
+class UserResource implements ResourceInterface
 {
     public function __construct(
         #[ApiProperty(writable: false, identifier: true)]
@@ -67,14 +68,8 @@ class UserResource
     ) {
     }
 
-    public static function fromModel(User $user): self
+    public static function fromModel(object $model, array $excludedVars = []): object
     {
-        return new self(
-            $user->id,
-            $user->email,
-            $user->firstName,
-            $user->lastName,
-            $user->role
-        );
+        return ResourceFactory::fromModel(self::class, $model);
     }
 }

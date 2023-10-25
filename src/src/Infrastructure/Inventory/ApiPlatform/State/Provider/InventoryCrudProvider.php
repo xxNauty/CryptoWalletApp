@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Currency\ApiPlatform\State\Provider;
+namespace App\Infrastructure\Inventory\ApiPlatform\State\Provider;
 
 use ApiPlatform\Metadata\CollectionOperationInterface;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\Pagination\Pagination;
 use ApiPlatform\State\ProviderInterface;
-use App\Application\Currency\Query\FindCurrencyCollectionQuery;
-use App\Application\Currency\Query\FindCurrencyQuery;
+use App\Application\Inventory\Query\FindInventoryCollectionQuery;
+use App\Application\Inventory\Query\FindInventoryQuery;
 use App\Application\Shared\Query\QueryBusInterface;
-use App\Infrastructure\Currency\ApiPlatform\Resource\CurrencyResource;
+use App\Infrastructure\Inventory\ApiPlatform\Resource\InventoryResource;
 use App\Infrastructure\Shared\ApiPlatform\State\Paginator;
 
-class CurrencyCrudProvider implements ProviderInterface
+class InventoryCrudProvider implements ProviderInterface
 {
     public function __construct(
         private readonly QueryBusInterface $queryBus,
@@ -25,9 +25,9 @@ class CurrencyCrudProvider implements ProviderInterface
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
         if (!$operation instanceof CollectionOperationInterface) {
-            $model = $this->queryBus->ask(new FindCurrencyQuery($uriVariables['id']));
+            $model = $this->queryBus->ask(new FindInventoryQuery($uriVariables['id']));
 
-            return null !== $model ? CurrencyResource::fromModel($model) : null;
+            return null !== $model ? InventoryResource::fromModel($model) : null;
         }
 
         $offset = $limit = null;
@@ -37,11 +37,11 @@ class CurrencyCrudProvider implements ProviderInterface
             $limit = $this->pagination->getLimit($operation, $context);
         }
 
-        $models = $this->queryBus->ask(new FindCurrencyCollectionQuery($offset, $limit));
+        $models = $this->queryBus->ask(new FindInventoryCollectionQuery($offset, $limit));
 
         $resources = [];
         foreach ($models as $model) {
-            $resources[] = CurrencyResource::fromModel($model);
+            $resources[] = InventoryResource::fromModel($model);
         }
 
         if (null !== $paginator = $models->paginator()) {
