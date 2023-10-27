@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "278844e411b8ad3babaa1e513038bcb1",
+    "content-hash": "d108f0ccfdad11ce8d9cec357fffb094",
     "packages": [
         {
             "name": "api-platform/core",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/core.git",
-                "reference": "e10cc5ecf88b98f862222b2e3fea0f4ace94c515"
+                "reference": "6606dd4dd6906820ec96f9e4b0fb9605bafb6bb7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/core/zipball/e10cc5ecf88b98f862222b2e3fea0f4ace94c515",
-                "reference": "e10cc5ecf88b98f862222b2e3fea0f4ace94c515",
+                "url": "https://api.github.com/repos/api-platform/core/zipball/6606dd4dd6906820ec96f9e4b0fb9605bafb6bb7",
+                "reference": "6606dd4dd6906820ec96f9e4b0fb9605bafb6bb7",
                 "shasum": ""
             },
             "require": {
@@ -169,7 +169,7 @@
                 "issues": "https://github.com/api-platform/core/issues",
                 "source": "https://github.com/api-platform/core/tree/main"
             },
-            "time": "2023-10-23T08:25:43+00:00"
+            "time": "2023-10-27T09:51:34+00:00"
         },
         {
             "name": "behat/transliterator",
@@ -7613,16 +7613,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.35.1",
+            "version": "v3.36.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "ec1ccc264994b6764882669973ca435cf05bab08"
+                "reference": "e889301f276c6ce2c391d6aafae9a162e785b064"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/ec1ccc264994b6764882669973ca435cf05bab08",
-                "reference": "ec1ccc264994b6764882669973ca435cf05bab08",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/e889301f276c6ce2c391d6aafae9a162e785b064",
+                "reference": "e889301f276c6ce2c391d6aafae9a162e785b064",
                 "shasum": ""
             },
             "require": {
@@ -7694,7 +7694,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.35.1"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.36.0"
             },
             "funding": [
                 {
@@ -7702,7 +7702,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-10-12T13:47:26+00:00"
+            "time": "2023-10-27T10:12:29+00:00"
         },
         {
             "name": "nikic/php-parser",
