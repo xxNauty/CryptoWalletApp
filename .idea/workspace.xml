@@ -5,6 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4d8c5b5c-64d2-45fb-a6a1-e3ed059dcaf7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/CryptoWallet.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CryptoWallet.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codeception.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeception.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -19,7 +23,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/codetest-container" />
+        <entry key="$PROJECT_DIR$" value="feature/inventory-entity" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -45,8 +49,12 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="feature/inventory-entity" />
-                    <option name="lastUsedInstant" value="1697786922" />
+                    <option name="branchName" value="feature/code-unification-and-refactor" />
+                    <option name="lastUsedInstant" value="1697701255" />
+                  </RecentBranch>
+                  <RecentBranch>
+                    <option name="branchName" value="feature/currency-entity" />
+                    <option name="lastUsedInstant" value="1697380506" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="develop" />
@@ -170,6 +178,9 @@
       <path value="$PROJECT_DIR$/src/vendor/phpstan/phpstan" />
       <path value="$PROJECT_DIR$/src/vendor/friendsofphp/php-cs-fixer" />
       <path value="$PROJECT_DIR$/src/vendor/gesdinet/jwt-refresh-token-bundle" />
+      <path value="$PROJECT_DIR$/src/vendor/gedmo/doctrine-extensions" />
+      <path value="$PROJECT_DIR$/src/vendor/behat/transliterator" />
+      <path value="$PROJECT_DIR$/src/vendor/stof/doctrine-extensions-bundle" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -188,8 +199,8 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/inventory-entity&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/xnauty/Projekty/CryptoWallet&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/user-inventory-relation&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/xnauty/Projekty/CryptoWallet/src/config/packages&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -197,7 +208,7 @@
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;php.override.implement.member.chooser.php.doc&quot;: &quot;NONE&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;fileTemplates&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -207,6 +218,9 @@
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/config/packages" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/config/routes" />
       <recent name="$PROJECT_DIR$/src/config/services" />
@@ -232,12 +246,7 @@
       <workItem from="1697372801291" duration="8675000" />
       <workItem from="1697613274907" duration="11776000" />
       <workItem from="1697723619827" duration="3325000" />
-      <workItem from="1698048764838" duration="5140000" />
-      <workItem from="1698086505744" duration="65000" />
-      <workItem from="1698086578907" duration="4324000" />
-      <workItem from="1698132762729" duration="1886000" />
-      <workItem from="1698139218115" duration="3021000" />
-      <workItem from="1698241401515" duration="363000" />
+      <workItem from="1698396393857" duration="775000" />
     </task>
     <servers />
   </component>

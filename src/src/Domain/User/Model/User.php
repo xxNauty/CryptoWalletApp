@@ -6,16 +6,21 @@ namespace App\Domain\User\Model;
 
 use App\Domain\Inventory\Model\Inventory;
 use App\Domain\Shared\Model\ModelInterface;
+use App\Domain\Shared\Trait\SoftDeletableTrait;
 use App\Infrastructure\User\ApiPlatform\Resource\UserResource;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'user_base')]
+#[Gedmo\SoftDeleteable(fieldName: 'deletedAt', timeAware: false, hardDelete: true)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface, ModelInterface
 {
+    use SoftDeletableTrait;
+
     public const ROLE_ADMIN = 'ROLE_ADMIN';
     public const ROLE_PLAYER = 'ROLE_PLAYER';
 
@@ -35,7 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, ModelIn
     #[ORM\Column(type: Types::STRING, length: 255)]
     private string $password;
 
-    #[ORM\OneToOne(inversedBy: 'owner', targetEntity: Inventory::class)]
+    #[ORM\OneToOne(inversedBy: 'owner', targetEntity: Inventory::class, cascade: ['persist', 'remove'])]
     public Inventory $inventory;
 
     public function __construct(

@@ -5,15 +5,20 @@ declare(strict_types=1);
 namespace App\Domain\Currency\Model;
 
 use App\Domain\Shared\Model\ModelInterface;
+use App\Domain\Shared\Trait\SoftDeletableTrait;
 use App\Infrastructure\Currency\ApiPlatform\Resource\CurrencyResource;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Webmozart\Assert\Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'currency')]
+#[Gedmo\SoftDeleteable(fieldName: 'deletedAt', timeAware: false, hardDelete: true)]
 class Currency implements ModelInterface
 {
+    use SoftDeletableTrait;
+
     #[ORM\Id]
     #[ORM\Column(type: Types::INTEGER)]
     #[ORM\GeneratedValue]
