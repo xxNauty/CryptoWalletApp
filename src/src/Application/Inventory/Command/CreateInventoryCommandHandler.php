@@ -11,7 +11,7 @@ use App\Domain\Inventory\Repository\InventoryRepositoryInterface;
 class CreateInventoryCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private readonly InventoryRepositoryInterface $inventoryRepository
+        private readonly InventoryRepositoryInterface $inventoryRepository,
     ) {
     }
 
@@ -20,6 +20,8 @@ class CreateInventoryCommandHandler implements CommandHandlerInterface
         $inventory = new Inventory(
             $command->owner
         );
+
+        $command->owner->inventory = $inventory;
 
         $this->inventoryRepository->save($inventory);
 

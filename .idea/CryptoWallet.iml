@@ -5,7 +5,9 @@
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/src" isTestSource="false" packagePrefix="App\" />
       <sourceFolder url="file://$MODULE_DIR$/src/tests" isTestSource="true" packagePrefix="App\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/spec" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/api-platform/core" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/lcobucci/clock" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/lcobucci/jwt" />
@@ -33,6 +35,9 @@
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/options-resolver" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/symfony/polyfill-php81" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/gesdinet/jwt-refresh-token-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/behat/transliterator" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/gedmo/doctrine-extensions" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/stof/doctrine-extensions-bundle" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

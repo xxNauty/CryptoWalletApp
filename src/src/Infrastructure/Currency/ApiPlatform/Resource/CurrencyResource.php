@@ -21,14 +21,18 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     shortName: 'Currency',
     operations: [
-        new GetCollection(),
-        new Get(),
+        new GetCollection(
+            security: 'is_granted("PUBLIC_ACCESS")'
+        ),
+        new Get(
+            security: 'is_granted("PUBLIC_ACCESS")'
+        ),
         new Post(),
         new Put(),
         new Patch(),
         new Delete(),
     ],
-    security: 'is_granted("PUBLIC_ACCESS")',
+    security: 'is_granted("ROLE_ADMIN")',
     provider: CurrencyCrudProvider::class,
     processor: CurrencyCrudProcessor::class,
 )]
