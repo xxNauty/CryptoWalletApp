@@ -18,6 +18,4 @@ class CreateCurrencyCommand implements CommandInterface
         Assert::alpha($this->symbol);
         $this->symbol = strtoupper($this->symbol);
     }
-
-    //testsdsfsadfasdfsdfsf
 }
