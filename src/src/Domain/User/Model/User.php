@@ -32,7 +32,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, ModelIn
     #[ORM\Id]
     #[ORM\Column(type: Types::INTEGER)]
     #[ORM\GeneratedValue]
-    public readonly int $id;
+    public int $id;
 
     #[ORM\Column(type: Types::STRING, length: 50)]
     public string $role;

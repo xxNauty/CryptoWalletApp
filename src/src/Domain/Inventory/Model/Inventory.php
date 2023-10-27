@@ -22,7 +22,7 @@ class Inventory implements ModelInterface
     #[ORM\Id]
     #[ORM\Column(type: Types::INTEGER)]
     #[ORM\GeneratedValue]
-    public readonly int $id;
+    public int $id;
 
     #[ORM\Column(type: Types::FLOAT, precision: 2)]
     public float $totalInventoryValue;
