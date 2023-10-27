@@ -53,4 +53,5 @@ class Currency implements ModelInterface
     {
         return CurrencyResource::class;
     }
+
 }
