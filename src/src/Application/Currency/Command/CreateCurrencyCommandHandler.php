@@ -20,7 +20,7 @@ class CreateCurrencyCommandHandler implements CommandHandlerInterface
         $currency = new Currency(
             $command->symbol,
             $command->name,
-            $command->priceUSD,
+            $command->startPriceUSD,
             0,
             0,
             0,
