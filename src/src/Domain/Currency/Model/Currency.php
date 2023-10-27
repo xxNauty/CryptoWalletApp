@@ -22,7 +22,7 @@ class Currency implements ModelInterface
     #[ORM\Id]
     #[ORM\Column(type: Types::INTEGER)]
     #[ORM\GeneratedValue]
-    public readonly int $id;
+    public int $id;
 
     public function __construct(
         #[ORM\Column(type: Types::STRING, length: 3, unique: true)]
@@ -53,5 +53,4 @@ class Currency implements ModelInterface
     {
         return CurrencyResource::class;
     }
-
 }
