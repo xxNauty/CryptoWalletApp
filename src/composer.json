@@ -1,4 +1,6 @@
 {
+    "name": "xxnauty/crypto-wallet-app",
+    "description": "-",
     "type": "project",
     "minimum-stability": "dev",
     "prefer-stable": true,
