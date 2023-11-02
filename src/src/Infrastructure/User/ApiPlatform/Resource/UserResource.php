@@ -25,19 +25,20 @@ use Symfony\Component\Validator\Constraints as Assert;
     shortName: 'User',
     operations: [
         new GetCollection(
+            security: 'is_granted("ROLE_ADMIN")',
             filters: [UserFilter::class]
         ),
-        new Get(
-            security: 'is_granted("IS_AUTHENTICATED_FULLY") and object.id == user.id'
+        new Get(),
+        new Post(
+            security: 'is_granted("PUBLIC_ACCESS")'
         ),
-        new Post(),
         new Put(),
         new Patch(),
         new Delete(),
     ],
     normalizationContext: ['groups' => ['user.read']],
     denormalizationContext: ['groups' => ['user.write']],
-    security: 'is_granted("ROLE_ADMIN")',
+    security: '(is_granted("IS_AUTHENTICATED_FULLY") and object.id == user.id) or is_granted("ROLE_ADMIN")',
     provider: UserCrudProvider::class,
     processor: UserCrudProcessor::class,
 )]
