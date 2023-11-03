@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4d8c5b5c-64d2-45fb-a6a1-e3ed059dcaf7" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/CryptoWallet.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CryptoWallet.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/phpspec.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/phpspec.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="4d8c5b5c-64d2-45fb-a6a1-e3ed059dcaf7" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -292,7 +287,7 @@
       <workItem from="1697723619827" duration="3325000" />
       <workItem from="1698396393857" duration="1159000" />
       <workItem from="1699011936414" duration="6680000" />
-      <workItem from="1699026727530" duration="3278000" />
+      <workItem from="1699026727530" duration="4121000" />
     </task>
     <servers />
   </component>
