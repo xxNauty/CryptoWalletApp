@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4d8c5b5c-64d2-45fb-a6a1-e3ed059dcaf7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/phpunit.yml" afterDir="false" />
-    </list>
+    <list default="true" id="4d8c5b5c-64d2-45fb-a6a1-e3ed059dcaf7" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -215,6 +213,11 @@
       <path value="$PROJECT_DIR$/src/vendor/masterminds/html5" />
       <path value="$PROJECT_DIR$/src/vendor/symfony/http-client" />
       <path value="$PROJECT_DIR$/src/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/src/vendor/justinrainbow/json-schema" />
+      <path value="$PROJECT_DIR$/src/vendor/zenstruck/callback" />
+      <path value="$PROJECT_DIR$/src/vendor/zenstruck/assert" />
+      <path value="$PROJECT_DIR$/src/vendor/zenstruck/foundry" />
+      <path value="$PROJECT_DIR$/src/vendor/fakerphp/faker" />
     </include_path>
   </component>
   <component name="ProjectColorInfo">{
@@ -283,7 +286,8 @@
       <workItem from="1697613274907" duration="11776000" />
       <workItem from="1697723619827" duration="3325000" />
       <workItem from="1698396393857" duration="1159000" />
-      <workItem from="1699011936414" duration="2997000" />
+      <workItem from="1699011936414" duration="6680000" />
+      <workItem from="1699026727530" duration="4121000" />
     </task>
     <servers />
   </component>

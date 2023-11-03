@@ -18,4 +18,21 @@ class GeneralTest extends ApiTestCase
             );
         $this->assertResponseIsSuccessful();
     }
+
+    public function testVerifyingToken(): void
+    {
+        $response = static::createClient()
+            ->request(
+                'POST',
+                '/authentication_token',
+                [
+                    'json' => [
+                        'email' => 'mateusz2003w@gmail.com',
+                        'password' => 'Qwerty123',
+                    ]
+                ]
+        );
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseStatusCodeSame(200);
+    }
 }

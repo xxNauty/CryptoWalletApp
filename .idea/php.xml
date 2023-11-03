@@ -152,6 +152,11 @@
       <path value="$PROJECT_DIR$/src/vendor/masterminds/html5" />
       <path value="$PROJECT_DIR$/src/vendor/symfony/http-client" />
       <path value="$PROJECT_DIR$/src/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/src/vendor/justinrainbow/json-schema" />
+      <path value="$PROJECT_DIR$/src/vendor/zenstruck/callback" />
+      <path value="$PROJECT_DIR$/src/vendor/zenstruck/assert" />
+      <path value="$PROJECT_DIR$/src/vendor/zenstruck/foundry" />
+      <path value="$PROJECT_DIR$/src/vendor/fakerphp/faker" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
