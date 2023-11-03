@@ -4,3 +4,4 @@ framework:
     http_method_override: false
     php_errors:
         log: 4096
+    test: true
