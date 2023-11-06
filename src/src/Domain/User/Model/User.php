@@ -63,7 +63,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, ModelIn
 
     public function eraseCredentials(): void
     {
-        // TODO: Implement eraseCredentials() method.
+
     }
 
     public function getUserIdentifier(): string
