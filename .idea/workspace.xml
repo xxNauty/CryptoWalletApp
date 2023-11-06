@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4d8c5b5c-64d2-45fb-a6a1-e3ed059dcaf7" name="Changes" comment="" />
+    <list default="true" id="4d8c5b5c-64d2-45fb-a6a1-e3ed059dcaf7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,7 +19,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="fix/other-fixes" />
+        <entry key="$PROJECT_DIR$" value="test/phpunit-instalation" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -42,6 +44,10 @@
             <RecentBranchesForRepo>
               <option name="branches">
                 <list>
+                  <RecentBranch>
+                    <option name="branchName" value="fix/architecture" />
+                    <option name="lastUsedInstant" value="1699265951" />
+                  </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="test/phpunit-instalation" />
                     <option name="lastUsedInstant" value="1698955606" />
@@ -236,7 +242,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;test/phpunit-instalation&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;fix/architecture&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/xnauty/Projekty/CryptoWalletApp/src/config/packages/test&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -288,6 +294,7 @@
       <workItem from="1698396393857" duration="1159000" />
       <workItem from="1699011936414" duration="6680000" />
       <workItem from="1699026727530" duration="4121000" />
+      <workItem from="1699279064882" duration="1348000" />
     </task>
     <servers />
   </component>

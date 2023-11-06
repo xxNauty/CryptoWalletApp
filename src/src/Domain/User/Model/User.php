@@ -6,7 +6,7 @@ namespace App\Domain\User\Model;
 
 use App\Domain\Inventory\Model\Inventory;
 use App\Domain\Shared\Model\ModelInterface;
-use App\Domain\Shared\Trait\SoftDeletableTrait;
+use App\Infrastructure\Shared\Trait\SoftDeletableTrait;
 use App\Infrastructure\User\ApiPlatform\Resource\UserResource;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;

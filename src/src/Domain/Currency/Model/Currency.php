@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Currency\Model;
 
 use App\Domain\Shared\Model\ModelInterface;
-use App\Domain\Shared\Trait\SoftDeletableTrait;
 use App\Infrastructure\Currency\ApiPlatform\Resource\CurrencyResource;
+use App\Infrastructure\Shared\Trait\SoftDeletableTrait;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;

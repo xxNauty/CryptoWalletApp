@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Infrastructure\Inventory\ApiPlatform\Resource;
 
 use ApiPlatform\Metadata\ApiProperty;
+use App\Domain\Shared\ApiPlatform\Resource\ResourceInterface;
 use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
-use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 class InventoryResource implements ResourceInterface

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Shared\ApiPlatform\Resource;
+namespace App\Domain\Shared\ApiPlatform\Resource;
 
 interface ResourceInterface
 {

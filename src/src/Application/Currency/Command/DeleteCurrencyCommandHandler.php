@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Currency\Command;
 
-use App\Application\Shared\Command\CommandHandlerInterface;
 use App\Domain\Currency\Repository\CurrencyRepositoryInterface;
+use App\Domain\Shared\Command\CommandHandlerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DeleteCurrencyCommandHandler implements CommandHandlerInterface

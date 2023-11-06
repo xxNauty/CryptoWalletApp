@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Domain\Inventory\Model;
 
 use App\Domain\Shared\Model\ModelInterface;
-use App\Domain\Shared\Trait\SoftDeletableTrait;
 use App\Domain\User\Model\User;
 use App\Infrastructure\Inventory\ApiPlatform\Resource\InventoryResource;
+use App\Infrastructure\Shared\Trait\SoftDeletableTrait;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;

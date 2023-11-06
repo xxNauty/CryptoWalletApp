@@ -10,7 +10,7 @@ use ApiPlatform\State\ProcessorInterface;
 use App\Application\Currency\Command\CreateCurrencyCommand;
 use App\Application\Currency\Command\DeleteCurrencyCommand;
 use App\Application\Currency\Command\UpdateCurrencyCommand;
-use App\Application\Shared\Command\CommandBusInterface;
+use App\Domain\Shared\Command\CommandBusInterface;
 use App\Infrastructure\Currency\ApiPlatform\Resource\CurrencyResource;
 use Webmozart\Assert\Assert;
 

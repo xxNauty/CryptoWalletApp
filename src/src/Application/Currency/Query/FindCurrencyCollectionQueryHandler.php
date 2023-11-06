@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Currency\Query;
 
-use App\Application\Shared\Query\QueryHandlerInterface;
 use App\Domain\Currency\Repository\CurrencyRepositoryInterface;
+use App\Domain\Shared\Query\QueryHandlerInterface;
 
 class FindCurrencyCollectionQueryHandler implements QueryHandlerInterface
 {

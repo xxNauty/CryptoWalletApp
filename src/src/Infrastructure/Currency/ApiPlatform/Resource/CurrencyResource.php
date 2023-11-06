@@ -12,10 +12,10 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
+use App\Domain\Shared\ApiPlatform\Resource\ResourceInterface;
 use App\Infrastructure\Currency\ApiPlatform\State\Processor\CurrencyCrudProcessor;
 use App\Infrastructure\Currency\ApiPlatform\State\Provider\CurrencyCrudProvider;
 use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
-use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(

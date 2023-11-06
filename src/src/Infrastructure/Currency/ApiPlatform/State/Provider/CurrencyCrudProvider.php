@@ -10,7 +10,7 @@ use ApiPlatform\State\Pagination\Pagination;
 use ApiPlatform\State\ProviderInterface;
 use App\Application\Currency\Query\FindCurrencyCollectionQuery;
 use App\Application\Currency\Query\FindCurrencyQuery;
-use App\Application\Shared\Query\QueryBusInterface;
+use App\Domain\Shared\Query\QueryBusInterface;
 use App\Infrastructure\Currency\ApiPlatform\Resource\CurrencyResource;
 use App\Infrastructure\Shared\ApiPlatform\State\Paginator;
 
