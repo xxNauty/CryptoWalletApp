@@ -19,3 +19,4 @@ jobs:
 
       - name: PHPunit
         run: php src/bin/phpunit /src
+#        todo naprawić
