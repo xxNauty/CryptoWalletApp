@@ -7,6 +7,6 @@ framework:
         transports:
             sync: sync://
         routing:
-            App\Application\Shared\Query\QueryInterface: sync
-            App\Application\Shared\Command\CommandInterface: sync
+            App\Domain\Shared\Query\QueryInterface: sync
+            App\Domain\Shared\Command\CommandInterface: sync
         reset_on_message: true
