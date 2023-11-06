@@ -7,10 +7,10 @@ namespace App\Infrastructure\User\ApiPlatform\State\Processor;
 use ApiPlatform\Metadata\DeleteOperationInterface;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\Application\Shared\Command\CommandBusInterface;
 use App\Application\User\Command\CreateUserCommand;
 use App\Application\User\Command\DeleteUserCommand;
 use App\Application\User\Command\UpdateUserCommand;
+use App\Domain\Shared\Command\CommandBusInterface;
 use App\Infrastructure\User\ApiPlatform\Resource\UserResource;
 use Webmozart\Assert\Assert;
 

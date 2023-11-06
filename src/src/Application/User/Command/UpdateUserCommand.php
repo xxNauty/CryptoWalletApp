@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\User\Command;
 
-use App\Application\Shared\Command\CommandInterface;
+use App\Domain\Shared\Command\CommandInterface;
 use Webmozart\Assert\Assert;
 
 class UpdateUserCommand implements CommandInterface

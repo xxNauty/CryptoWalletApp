@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Application\User\Command;
 
 use App\Application\Inventory\Command\CreateInventoryCommand;
-use App\Application\Shared\Command\CommandBusInterface;
-use App\Application\Shared\Command\CommandHandlerInterface;
+use App\Domain\Shared\Command\CommandBusInterface;
+use App\Domain\Shared\Command\CommandHandlerInterface;
 use App\Domain\User\Model\User;
 use App\Domain\User\Repository\UserRepositoryInterface;
 use App\Infrastructure\User\Service\UserPasswordService;
