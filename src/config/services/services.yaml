@@ -17,3 +17,7 @@ services:
             - { name: doctrine.event_listener, event: 'loadClassMetadata' }
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
+
+    App\Infrastructure\Currency\Service\CryptoCurrencyDataDownloadService:
+        arguments:
+            $client: '@monolog.http_client'
