@@ -1,3 +1,4 @@
+## Normal
 ### DATABASE_URL
 ```bash
 psql postgresql://postgres:password@127.0.0.1:15432/database
@@ -8,18 +9,22 @@ psql postgresql://postgres:password@127.0.0.1:15432/database
 docker compose --env-file=../src/.env up
 ```
 
-### DATABASE_URL(for tests)
+---
+
+## Test
+### DATABASE_URL
 ```bash
 psql postgresql://postgres:password@127.0.0.1:15432/test_db
 ```
 
-### DOCKER COMMAND(test environment)
+### DOCKER COMMAND
 ```bash
 docker compose --env-file=../src/.env.test up
 ```
 
 ---
 
+## Commands
 ### CODETEST
 ```bash
 composer codetest
