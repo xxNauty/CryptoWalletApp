@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Infrastructure\Currency\Service;
 
 use App\Domain\Currency\Model\Currency;
@@ -19,7 +18,7 @@ class CryptoCurrencyDataDownloadService implements CryptoCurrencyDataDownloadSer
     public function __construct(
         private readonly HttpClientInterface $client,
         private readonly string $cryptoApiUrl,
-    ){
+    ) {
     }
 
     /**
@@ -43,27 +42,27 @@ class CryptoCurrencyDataDownloadService implements CryptoCurrencyDataDownloadSer
             $response['symbol'],
             $response['name'],
             (float) $response['price_usd'],
-            (float) $response['percent_change_1h'] == 0
+            0 == (float) $response['percent_change_1h']
                 ? 0
                 : (
                     $response['percent_change_1h'] > 0
                         ? 1
                         : -1
-            ),
-            (float) $response['percent_change_24h'] == 0
+                ),
+            0 == (float) $response['percent_change_24h']
                 ? 0
                 : (
-                    $response['percent_change_24h']  > 0
+                    $response['percent_change_24h'] > 0
                         ? 1
                         : -1
-            ),
-            (float) $response['percent_change_7d'] == 0
+                ),
+            0 == (float) $response['percent_change_7d']
                 ? 0
                 : (
                     $response['percent_change_7d'] > 0
                         ? 1
                         : -1
-            ),
+                ),
         );
     }
 
@@ -85,29 +84,29 @@ class CryptoCurrencyDataDownloadService implements CryptoCurrencyDataDownloadSer
 
         $currency->priceUSD = (float) $response['price_usd'];
         $currency->change1h =
-            (float) $response['percent_change_1h'] == 0
+            0 == (float) $response['percent_change_1h']
                 ? 0
                 : (
                     $response['percent_change_1h'] > 0
                         ? 1
                         : -1
-                    );
+                );
         $currency->change24h =
-            (float) $response['percent_change_24h'] == 0
+            0 == (float) $response['percent_change_24h']
                 ? 0
                 : (
                     $response['percent_change_24h'] > 0
                         ? 1
                         : -1
-                    );
+                );
         $currency->change7d =
-            (float) $response['percent_change_7d'] == 0
+            0 == (float) $response['percent_change_7d']
                 ? 0
                 : (
                     $response['percent_change_7d'] > 0
                         ? 1
                         : -1
-                    );
+                );
 
         return $currency;
     }

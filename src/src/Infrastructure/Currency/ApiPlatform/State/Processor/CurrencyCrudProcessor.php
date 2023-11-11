@@ -23,7 +23,7 @@ class CurrencyCrudProcessor implements ProcessorInterface
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = [])
     {
-//        Assert::isInstanceOf($data, CurrencyResource::class);
+        //        Assert::isInstanceOf($data, CurrencyResource::class);
 
         if ($operation instanceof DeleteOperationInterface) {
             $this->commandBus->dispatch(new DeleteCurrencyCommand($uriVariables['id']));

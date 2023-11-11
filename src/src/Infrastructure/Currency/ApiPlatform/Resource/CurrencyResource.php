@@ -11,14 +11,12 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
 use App\Application\Currency\Command\CreateCurrencyCommand;
 use App\Application\Currency\Command\UpdateCurrencyCommand;
 use App\Domain\Shared\ApiPlatform\Resource\ResourceInterface;
 use App\Infrastructure\Currency\ApiPlatform\State\Processor\CurrencyCrudProcessor;
 use App\Infrastructure\Currency\ApiPlatform\State\Provider\CurrencyCrudProvider;
 use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
-use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
@@ -39,7 +37,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Delete(),
     ],
     security: 'is_granted("PUBLIC_ACCESS")',
-//    security: 'is_granted("ROLE_ADMIN")',
+    //    security: 'is_granted("ROLE_ADMIN")',
     provider: CurrencyCrudProvider::class,
     processor: CurrencyCrudProcessor::class,
 )]
