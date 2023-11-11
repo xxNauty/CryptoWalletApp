@@ -19,12 +19,11 @@ class Currency implements ModelInterface
 {
     use SoftDeletableTrait;
 
-    #[ORM\Id]
-    #[ORM\Column(type: Types::INTEGER)]
-    #[ORM\GeneratedValue]
-    public int $id;
-
     public function __construct(
+        #[ORM\Id]
+        #[ORM\Column(type: Types::INTEGER)]
+        public int $id,
+
         #[ORM\Column(type: Types::STRING, length: 3, unique: true)]
         public string $symbol,
 
