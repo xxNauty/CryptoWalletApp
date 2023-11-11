@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Infrastructure\Currency\Service;
 
 use App\Domain\Currency\Model\DolarRatios\USDtoPLN;
@@ -14,17 +13,16 @@ class UpdateDolarRatioService implements UpdateDolarRatioServiceInterface
 {
     public function __construct(
         private readonly HttpClientInterface $client,
-    )
-    {
+    ) {
     }
 
-//todo znaleść api do innych walut
+    // todo znaleść api do innych walut
 
     public function update(string $currency): void
     {
-        Assert::inArray($currency, ['PLN', 'EUR', 'CHF', "GBP"]);
+        Assert::inArray($currency, ['PLN', 'EUR', 'CHF', 'GBP']);
 
-        switch ($currency){
+        switch ($currency) {
             case 'PLN':
                 $response = $this->client->request(
                     'GET',

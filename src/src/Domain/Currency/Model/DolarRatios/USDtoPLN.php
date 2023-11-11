@@ -6,5 +6,4 @@ namespace App\Domain\Currency\Model\DolarRatios;
 
 class USDtoPLN extends DolarRatios
 {
-
 }

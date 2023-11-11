@@ -15,8 +15,7 @@ class GetAllRatiosQueryHandler implements QueryHandlerInterface
 {
     public function __construct(
         private readonly UpdateDolarRatioServiceInterface $dolarRatioService
-    )
-    {
+    ) {
     }
 
     public function __invoke(GetAllRatiosQuery $query): array
@@ -34,10 +33,10 @@ class GetAllRatiosQueryHandler implements QueryHandlerInterface
         $chf->updateValue(0.90);
 
         return [
-            "PLN: ", [$pln->ratio, $pln->lastUpdate->format('Y.m.d|H:i:s')],
-            "EUR: ", [$eur->ratio, $eur->lastUpdate->format('Y.m.d|H:i:s')],
-            "GBP: ", [$gbp->ratio, $gbp->lastUpdate->format('Y.m.d|H:i:s')],
-            "CHF: ", [$chf->ratio, $chf->lastUpdate->format('Y.m.d|H:i:s')],
+            'PLN: ', [$pln->ratio, $pln->lastUpdate->format('Y.m.d|H:i:s')],
+            'EUR: ', [$eur->ratio, $eur->lastUpdate->format('Y.m.d|H:i:s')],
+            'GBP: ', [$gbp->ratio, $gbp->lastUpdate->format('Y.m.d|H:i:s')],
+            'CHF: ', [$chf->ratio, $chf->lastUpdate->format('Y.m.d|H:i:s')],
         ];
     }
 }

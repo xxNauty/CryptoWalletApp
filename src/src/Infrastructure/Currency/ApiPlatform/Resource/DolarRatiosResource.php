@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace App\Infrastructure\Currency\ApiPlatform\Resource;
 
 use ApiPlatform\Metadata\ApiResource;
@@ -20,11 +19,10 @@ use App\Infrastructure\Currency\ApiPlatform\State\Provider\GetRatioProvider;
         new Get(
             uriTemplate: '/api/ratio/{symbol}',
             provider: GetRatioProvider::class,
-        )
+        ),
     ],
     security: 'is_granted("PUBLIC_ACCESS")'
 )]
 class DolarRatiosResource
 {
-
 }
