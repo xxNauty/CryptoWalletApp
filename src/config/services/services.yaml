@@ -5,6 +5,9 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+        bind:
+            $cryptoApiUrl: '%env(string:MAIN_API_URL)%'
+
     App\:
         resource: '../../src/'
         exclude:
@@ -21,3 +24,4 @@ services:
     App\Infrastructure\Currency\Service\CryptoCurrencyDataDownloadService:
         arguments:
             $client: '@monolog.http_client'
+
