@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4d8c5b5c-64d2-45fb-a6a1-e3ed059dcaf7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/CryptoWallet.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CryptoWallet.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -19,7 +20,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="test/phpunit-instalation" />
+        <entry key="$PROJECT_DIR$" value="feature/currency-data-download" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -45,6 +46,10 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
+                    <option name="branchName" value="feature/USD-ratios" />
+                    <option name="lastUsedInstant" value="1699478645" />
+                  </RecentBranch>
+                  <RecentBranch>
                     <option name="branchName" value="fix/architecture" />
                     <option name="lastUsedInstant" value="1699265951" />
                   </RecentBranch>
@@ -59,10 +64,6 @@
                   <RecentBranch>
                     <option name="branchName" value="develop" />
                     <option name="lastUsedInstant" value="1698955052" />
-                  </RecentBranch>
-                  <RecentBranch>
-                    <option name="branchName" value="feature/test" />
-                    <option name="lastUsedInstant" value="1698955016" />
                   </RecentBranch>
                 </list>
               </option>
@@ -242,7 +243,11 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/USD-ratios&quot;,
+<<<<<<< HEAD
+=======
     &quot;git-widget-placeholder&quot;: &quot;feature/currency-data-download&quot;,
+>>>>>>> 2d30a29d2e54ee21821148ffc341ef48709e97d5
     &quot;last_opened_file_path&quot;: &quot;/home/xnauty/Projekty/CryptoWalletApp/src/config/packages/test&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -296,7 +301,20 @@
       <workItem from="1699026727530" duration="4121000" />
       <workItem from="1699279064882" duration="1348000" />
       <workItem from="1699026727530" duration="6028000" />
+      <workItem from="1699294657842" duration="1400000" />
+      <workItem from="1699297222964" duration="8000" />
+      <workItem from="1699297632341" duration="1429000" />
+      <workItem from="1699380216052" duration="600000" />
+      <workItem from="1699437695324" duration="2643000" />
+      <workItem from="1699463589092" duration="1354000" />
+      <workItem from="1699477682879" duration="6150000" />
+      <workItem from="1699516559979" duration="5816000" />
+      <workItem from="1699536384775" duration="466000" />
+      <workItem from="1699539311786" duration="2323000" />
+<<<<<<< HEAD
+=======
       <workItem from="1699557052776" duration="2716000" />
+>>>>>>> 2d30a29d2e54ee21821148ffc341ef48709e97d5
     </task>
     <servers />
   </component>
