@@ -3,7 +3,6 @@ api_platform:
         paths: [
             '%kernel.project_dir%/src/Infrastructure/User/ApiPlatform/Resource/',
             '%kernel.project_dir%/src/Infrastructure/Currency/ApiPlatform/Resource/',
-#            '%kernel.project_dir%/src/Infrastructure/Inventory/ApiPlatform/Resource/',
         ]
     patch_formats:
         json: [

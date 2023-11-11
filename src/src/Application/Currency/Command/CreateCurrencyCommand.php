@@ -12,6 +12,5 @@ class CreateCurrencyCommand implements CommandInterface
     public function __construct(
         public int $apiId,
     ) {
-
     }
 }

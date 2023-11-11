@@ -17,12 +17,10 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class CryptoCurrencyDataDownloadService implements CryptoCurrencyDataDownloadServiceInterface
 {
     public function __construct(
-        private readonly HttpClientInterface $client
-    )
-    {
+        private readonly HttpClientInterface $client,
+        private readonly string $cryptoApiUrl,
+    ){
     }
-
-    private const CRYPTO_DATA_URL = 'https://api.coinlore.net/api/ticker?id='; //todo zmienić na pobieranie z .env
 
     /**
      * @throws TransportExceptionInterface
@@ -31,11 +29,11 @@ class CryptoCurrencyDataDownloadService implements CryptoCurrencyDataDownloadSer
      * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
      */
-    public function create(int $identifier, ?HttpClientInterface $client = null): Currency
+    public function create(int $identifier): Currency
     {
         $response = $this->client->request(
             'GET',
-            self::CRYPTO_DATA_URL.$identifier,
+            $this->cryptoApiUrl.$identifier,
         );
 
         $response = $response->toArray()[0];
@@ -80,7 +78,7 @@ class CryptoCurrencyDataDownloadService implements CryptoCurrencyDataDownloadSer
     {
         $response = $this->client->request(
             'GET',
-            self::CRYPTO_DATA_URL.$currency->id,
+            $this->cryptoApiUrl.$currency->id,
         );
 
         $response = $response->toArray()[0];

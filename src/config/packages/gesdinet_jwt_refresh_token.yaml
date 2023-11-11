@@ -1,3 +1,3 @@
 gesdinet_jwt_refresh_token:
-  refresh_token_class: App\Domain\JWTToken\Model\RefreshToken
-  token_parameter_name: refreshToken
+    refresh_token_class: App\Domain\JWTToken\Model\RefreshToken
+    token_parameter_name: refreshToken

@@ -24,7 +24,7 @@ class Currency implements ModelInterface
         #[ORM\Column(type: Types::INTEGER)]
         public int $id,
 
-        #[ORM\Column(type: Types::STRING, length: 3, unique: true)]
+        #[ORM\Column(type: Types::STRING, length: 4, unique: true)]
         public string $symbol,
 
         #[ORM\Column(type: Types::STRING)]
