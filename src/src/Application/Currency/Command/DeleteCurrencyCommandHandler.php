@@ -18,7 +18,7 @@ class DeleteCurrencyCommandHandler implements CommandHandlerInterface
     public function __invoke(DeleteCurrencyCommand $command): void
     {
         if (null === $currency = $this->currencyRepository->find($command->id)) {
-            throw new NotFoundHttpException('Nie znaleziono waluty o podanym ID');
+            throw new NotFoundHttpException('There is no currency with that ID');
         }
 
         $this->currencyRepository->remove($currency);
