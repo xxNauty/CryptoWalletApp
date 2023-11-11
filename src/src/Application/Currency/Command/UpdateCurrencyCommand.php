@@ -11,10 +11,6 @@ class UpdateCurrencyCommand implements CommandInterface
 {
     public function __construct(
         public readonly int $id,
-        public ?string $symbol = null,
-        public readonly ?string $name = null,
     ) {
-        Assert::nullOrLength($this->symbol, 3);
-        $this->symbol = strtoupper($this->symbol);
     }
 }

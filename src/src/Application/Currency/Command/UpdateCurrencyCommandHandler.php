@@ -6,13 +6,15 @@ namespace App\Application\Currency\Command;
 
 use App\Domain\Currency\Model\Currency;
 use App\Domain\Currency\Repository\CurrencyRepositoryInterface;
+use App\Domain\Currency\Service\CryptoCurrencyDataDownloadServiceInterface;
 use App\Domain\Shared\Command\CommandHandlerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UpdateCurrencyCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private readonly CurrencyRepositoryInterface $currencyRepository
+        private readonly CurrencyRepositoryInterface $currencyRepository,
+        private readonly CryptoCurrencyDataDownloadServiceInterface $cryptoCurrencyDataDownloadService
     ) {
     }
 
@@ -21,11 +23,10 @@ class UpdateCurrencyCommandHandler implements CommandHandlerInterface
         $currency = $this->currencyRepository->find($command->id);
 
         if (null === $currency) {
-            throw new NotFoundHttpException('Nie znaleziono waluty o podanym ID');
+            throw new NotFoundHttpException('There is no currency with that ID');
         }
 
-        $currency->symbol = $command->symbol ?? $currency->symbol;
-        $currency->name = $command->name ?? $currency->name;
+        $currency = $this->cryptoCurrencyDataDownloadService->update($currency);
 
         $this->currencyRepository->save($currency);
 

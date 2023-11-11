@@ -10,12 +10,8 @@ use Webmozart\Assert\Assert;
 class CreateCurrencyCommand implements CommandInterface
 {
     public function __construct(
-        public string $symbol,
-        public readonly string $name,
-        public readonly float $startPriceUSD,
+        public int $apiId,
     ) {
-        Assert::length($this->symbol, 3);
-        Assert::alpha($this->symbol);
-        $this->symbol = strtoupper($this->symbol);
+
     }
 }
