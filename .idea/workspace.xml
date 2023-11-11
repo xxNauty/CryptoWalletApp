@@ -244,6 +244,10 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;feature/USD-ratios&quot;,
+<<<<<<< HEAD
+=======
+    &quot;git-widget-placeholder&quot;: &quot;feature/currency-data-download&quot;,
+>>>>>>> 2d30a29d2e54ee21821148ffc341ef48709e97d5
     &quot;last_opened_file_path&quot;: &quot;/home/xnauty/Projekty/CryptoWalletApp/src/config/packages/test&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -307,6 +311,10 @@
       <workItem from="1699516559979" duration="5816000" />
       <workItem from="1699536384775" duration="466000" />
       <workItem from="1699539311786" duration="2323000" />
+<<<<<<< HEAD
+=======
+      <workItem from="1699557052776" duration="2716000" />
+>>>>>>> 2d30a29d2e54ee21821148ffc341ef48709e97d5
     </task>
     <servers />
   </component>
