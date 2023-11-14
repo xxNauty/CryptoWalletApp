@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Currency\Query;
 
-use App\Domain\Currency\Model\Currency;
+use App\Domain\Currency\Model\CryptoCurrency;
 use App\Domain\Currency\Repository\CurrencyRepositoryInterface;
 use App\Domain\Shared\Query\QueryHandlerInterface;
 
@@ -15,7 +15,7 @@ class FindCurrencyQueryHandler implements QueryHandlerInterface
     ) {
     }
 
-    public function __invoke(FindCurrencyQuery $query): ?Currency
+    public function __invoke(FindCurrencyQuery $query): ?CryptoCurrency
     {
         return $this->currencyRepository->find($query->id);
     }

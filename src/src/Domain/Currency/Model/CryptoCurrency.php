@@ -15,7 +15,7 @@ use Webmozart\Assert\Assert;
 #[ORM\Entity]
 #[ORM\Table(name: 'currency')]
 #[Gedmo\SoftDeleteable(fieldName: 'deletedAt', timeAware: false, hardDelete: true)]
-class Currency implements ModelInterface
+class CryptoCurrency implements ModelInterface
 {
     use SoftDeletableTrait;
 

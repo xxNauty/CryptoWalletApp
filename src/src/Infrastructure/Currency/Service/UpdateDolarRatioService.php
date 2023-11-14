@@ -6,6 +6,7 @@ namespace App\Infrastructure\Currency\Service;
 
 use App\Domain\Currency\Model\DolarRatios\USDtoPLN;
 use App\Domain\Currency\Service\UpdateDolarRatioServiceInterface;
+use Exception;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Webmozart\Assert\Assert;
 
@@ -18,7 +19,7 @@ class UpdateDolarRatioService implements UpdateDolarRatioServiceInterface
 
     // todo znaleść api do innych walut
 
-    public function update(string $currency): void
+    public function update(string $currency): float
     {
         Assert::inArray($currency, ['PLN', 'EUR', 'CHF', 'GBP']);
 
@@ -28,8 +29,8 @@ class UpdateDolarRatioService implements UpdateDolarRatioServiceInterface
                     'GET',
                     'http://api.nbp.pl/api/exchangerates/rates/A/USD'
                 );
-                $pln = USDtoPLN::getInstance();
-                $pln->updateValue(round($response->toArray()['rates'][0]['mid'], 2));
+                return round($response->toArray()['rates'][0]['mid'], 2);
         }
+        return -1;
     }
 }

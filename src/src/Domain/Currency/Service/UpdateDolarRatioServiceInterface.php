@@ -6,5 +6,5 @@ namespace App\Domain\Currency\Service;
 
 interface UpdateDolarRatioServiceInterface
 {
-    public function update(string $currency): void;
+    public function update(string $currency): float;
 }
