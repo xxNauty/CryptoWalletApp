@@ -2,22 +2,22 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Currency\ApiPlatform\State\Provider;
+namespace App\Infrastructure\Currency\ApiPlatform\State\Provider\DolarRatio;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use App\Application\Currency\Query\DolarRatios\GetAllRatiosQuery;
+use App\Application\Currency\Query\DolarRatios\GetRatioQuery;
 use App\Domain\Shared\Query\QueryBusInterface;
 
-class GetAllRatiosProvider implements ProviderInterface
+class GetRatioProvider implements ProviderInterface
 {
     public function __construct(
-        private readonly QueryBusInterface $queryBus,
+        private QueryBusInterface $queryBus,
     ) {
     }
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        return $this->queryBus->ask(new GetAllRatiosQuery());
+        return $this->queryBus->ask(new GetRatioQuery(strtoupper($uriVariables['symbol'])));
     }
 }

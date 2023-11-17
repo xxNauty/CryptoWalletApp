@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Currency\Command;
 
-use App\Domain\Currency\Model\Currency;
+use App\Domain\Currency\Model\CryptoCurrency;
 use App\Domain\Currency\Repository\CurrencyRepositoryInterface;
 use App\Domain\Currency\Service\CryptoCurrencyDataDownloadServiceInterface;
 use App\Domain\Shared\Command\CommandHandlerInterface;
@@ -17,7 +17,7 @@ class CreateCurrencyCommandHandler implements CommandHandlerInterface
     ) {
     }
 
-    public function __invoke(CreateCurrencyCommand $command): Currency
+    public function __invoke(CreateCurrencyCommand $command): CryptoCurrency
     {
         $currency = $this->cryptoCurrencyDataDownloadService->create($command->apiId);
 

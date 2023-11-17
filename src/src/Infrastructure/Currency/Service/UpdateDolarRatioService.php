@@ -4,32 +4,47 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Currency\Service;
 
-use App\Domain\Currency\Model\DolarRatios\USDtoPLN;
 use App\Domain\Currency\Service\UpdateDolarRatioServiceInterface;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Webmozart\Assert\Assert;
 
-class UpdateDolarRatioService implements UpdateDolarRatioServiceInterface
+readonly class UpdateDolarRatioService implements UpdateDolarRatioServiceInterface
 {
     public function __construct(
-        private readonly HttpClientInterface $client,
+        private HttpClientInterface $client,
+        private string              $dolarRatioApiUrl,
     ) {
     }
 
-    // todo znaleść api do innych walut
-
-    public function update(string $currency): void
+    /**
+     * @throws TransportExceptionInterface
+     * @throws ServerExceptionInterface
+     * @throws RedirectionExceptionInterface
+     * @throws DecodingExceptionInterface
+     * @throws ClientExceptionInterface
+     */
+    public function update(string $currency): float
     {
         Assert::inArray($currency, ['PLN', 'EUR', 'CHF', 'GBP']);
 
-        switch ($currency) {
-            case 'PLN':
-                $response = $this->client->request(
-                    'GET',
-                    'http://api.nbp.pl/api/exchangerates/rates/A/USD'
-                );
-                $pln = USDtoPLN::getInstance();
-                $pln->updateValue(round($response->toArray()['rates'][0]['mid'], 2));
-        }
+        $response = $this->client->request(
+            'GET',
+            $this->dolarRatioApiUrl
+        );
+        $rates = $response->toArray()['data'];
+
+        return match ($currency) {
+            'PLN' => $rates['PLN'],
+            'EUR' => $rates['EUR'],
+            'GBP' => $rates['GBP'],
+            'CHF' => $rates['CHF'],
+            default => -1,
+        };
+
     }
 }

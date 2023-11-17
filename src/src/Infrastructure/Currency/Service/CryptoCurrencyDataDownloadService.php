@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Currency\Service;
 
-use App\Domain\Currency\Model\Currency;
+use App\Domain\Currency\Model\CryptoCurrency;
 use App\Domain\Currency\Service\CryptoCurrencyDataDownloadServiceInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -28,7 +28,7 @@ class CryptoCurrencyDataDownloadService implements CryptoCurrencyDataDownloadSer
      * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
      */
-    public function create(int $identifier): Currency
+    public function create(int $identifier): CryptoCurrency
     {
         $response = $this->client->request(
             'GET',
@@ -37,7 +37,7 @@ class CryptoCurrencyDataDownloadService implements CryptoCurrencyDataDownloadSer
 
         $response = $response->toArray()[0];
 
-        return new Currency(
+        return new CryptoCurrency(
             $identifier,
             $response['symbol'],
             $response['name'],
@@ -73,7 +73,7 @@ class CryptoCurrencyDataDownloadService implements CryptoCurrencyDataDownloadSer
      * @throws DecodingExceptionInterface
      * @throws ClientExceptionInterface
      */
-    public function update(Currency $currency): Currency
+    public function update(CryptoCurrency $currency): CryptoCurrency
     {
         $response = $this->client->request(
             'GET',

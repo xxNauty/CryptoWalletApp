@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Domain\Currency\Repository;
 
-use App\Domain\Currency\Model\Currency;
+use App\Domain\Currency\Model\CryptoCurrency;
 use App\Domain\Shared\Repository\RepositoryInterface;
 
 interface CurrencyRepositoryInterface extends RepositoryInterface
 {
-    public function save(Currency $currency): void;
+    public function save(CryptoCurrency $currency): void;
 
-    public function remove(Currency $currency): void;
+    public function remove(CryptoCurrency $currency): void;
 
-    public function find(int $id): ?Currency;
+    public function find(int $id): ?CryptoCurrency;
 }
