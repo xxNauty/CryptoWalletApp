@@ -36,8 +36,7 @@ use Symfony\Component\Validator\Constraints as Assert;
         ),
         new Delete(),
     ],
-    security: 'is_granted("PUBLIC_ACCESS")',
-    //    security: 'is_granted("ROLE_ADMIN")',
+    security: 'is_granted("ROLE_ADMIN")',
     provider: CurrencyCrudProvider::class,
     processor: CurrencyCrudProcessor::class,
 )]

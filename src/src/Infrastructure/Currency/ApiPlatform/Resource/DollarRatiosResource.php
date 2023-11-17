@@ -12,7 +12,7 @@ use App\Infrastructure\Currency\ApiPlatform\State\Provider\DolarRatio\GetAllRati
 use App\Infrastructure\Currency\ApiPlatform\State\Provider\DolarRatio\GetRatioProvider;
 
 #[ApiResource(
-    shortName: 'DolarRatios',
+    shortName: 'DollarRatios',
     operations: [
         new Get(
             uriTemplate: '/api/ratios',
@@ -27,8 +27,8 @@ use App\Infrastructure\Currency\ApiPlatform\State\Provider\DolarRatio\GetRatioPr
             processor: UpdateAllRatiosProcessor::class
         ),
     ],
-    security: 'is_granted("PUBLIC_ACCESS")'
+    security: 'is_granted("ROLE_ADMIN")'
 )]
-class DolarRatiosResource
+class DollarRatiosResource
 {
 }

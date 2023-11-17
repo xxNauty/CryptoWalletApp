@@ -874,7 +874,7 @@ return array(
     'App\\Domain\\User\\Repository\\UserRepositoryInterface' => $baseDir . '/src/Domain/User/Repository/UserRepositoryInterface.php',
     'App\\Domain\\User\\Service\\UserPasswordServiceInterface' => $baseDir . '/src/Domain/User/Service/UserPasswordServiceInterface.php',
     'App\\Infrastructure\\Currency\\ApiPlatform\\Resource\\CurrencyResource' => $baseDir . '/src/Infrastructure/Currency/ApiPlatform/Resource/CurrencyResource.php',
-    'App\\Infrastructure\\Currency\\ApiPlatform\\Resource\\DolarRatiosResource' => $baseDir . '/src/Infrastructure/Currency/ApiPlatform/Resource/DolarRatiosResource.php',
+    'App\\Infrastructure\\Currency\\ApiPlatform\\Resource\\DolarRatiosResource' => $baseDir . '/src/Infrastructure/Currency/ApiPlatform/Resource/DollarRatiosResource.php',
     'App\\Infrastructure\\Currency\\ApiPlatform\\State\\Processor\\CurrencyCrudProcessor' => $baseDir . '/src/Infrastructure/Currency/ApiPlatform/State/Processor/CurrencyCrudProcessor.php',
     'App\\Infrastructure\\Currency\\ApiPlatform\\State\\Processor\\DolarRatio\\UpdateAllRatiosProcessor' => $baseDir . '/src/Infrastructure/Currency/ApiPlatform/State/Processor/DolarRatio/UpdateAllRatiosProcessor.php',
     'App\\Infrastructure\\Currency\\ApiPlatform\\State\\Provider\\CurrencyCrudProvider' => $baseDir . '/src/Infrastructure/Currency/ApiPlatform/State/Provider/CurrencyCrudProvider.php',
@@ -7824,5 +7824,5 @@ return array(
     'phpDocumentor\\Reflection\\Types\\This' => $vendorDir . '/phpdocumentor/type-resolver/src/Types/This.php',
     'phpDocumentor\\Reflection\\Types\\Void_' => $vendorDir . '/phpdocumentor/type-resolver/src/Types/Void_.php',
     'phpDocumentor\\Reflection\\Utils' => $vendorDir . '/phpdocumentor/reflection-docblock/src/Utils.php',
-    '©' => $vendorDir . '/symfony/cache/Traits/ValueWrapper.php',
+    'ï¿½' => $vendorDir . '/symfony/cache/Traits/ValueWrapper.php',
 );
