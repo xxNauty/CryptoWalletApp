@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Currency\Model;
 
-use DateTimeImmutable;
 use Webmozart\Assert\Assert;
 
 class DolarRatio
@@ -24,12 +23,11 @@ class DolarRatio
     public function __construct(
         public string $currencyTo,
         public float $ratio,
-        public DateTimeImmutable $lastUpdate,
-    )
-    {
+        public \DateTimeImmutable $lastUpdate,
+    ) {
         Assert::inArray($this->currencyTo, self::SUPPORTED_CURRENCIES);
         $this->ratio = round($ratio, 2);
-        $this->lastUpdate = new DateTimeImmutable('now');
+        $this->lastUpdate = new \DateTimeImmutable('now');
     }
 
     public function toArray(): array

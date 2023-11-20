@@ -31,8 +31,8 @@ class Inventory implements ModelInterface
     public ?array $content = null;
 
     public function __construct(
-        #[ORM\OneToOne(mappedBy: 'inventory', targetEntity: User::class, cascade: ['persist'])]
-        public User $owner,
+        //        #[ORM\OneToOne(mappedBy: 'inventory', targetEntity: User::class, cascade: ['persist'])]
+        //        public User $owner,
     ) {
         $this->totalInventoryValue = 0;
     }

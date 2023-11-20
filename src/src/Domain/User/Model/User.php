@@ -40,7 +40,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, ModelIn
     #[ORM\Column(type: Types::STRING, length: 255)]
     private string $password;
 
-    #[ORM\OneToOne(inversedBy: 'owner', targetEntity: Inventory::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: Inventory::class, cascade: ['persist', 'remove'])]
     public Inventory $inventory;
 
     public function __construct(

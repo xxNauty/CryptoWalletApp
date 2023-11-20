@@ -16,7 +16,6 @@ class GetRatioQueryHandler implements QueryHandlerInterface
 
     public function __invoke(GetRatioQuery $query): array
     {
-        return [
-            $query->symbol => $this->dolarRatioManager->getData($query->symbol)];
+        return [$query->symbol => $this->dolarRatioManager->getData($query->symbol)];
     }
 }
