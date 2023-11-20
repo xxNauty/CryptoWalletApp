@@ -17,7 +17,7 @@ readonly class UpdateDolarRatioService implements UpdateDolarRatioServiceInterfa
 {
     public function __construct(
         private HttpClientInterface $client,
-        private string              $dolarRatioApiUrl,
+        private string $dolarRatioApiUrl,
     ) {
     }
 
@@ -45,6 +45,5 @@ readonly class UpdateDolarRatioService implements UpdateDolarRatioServiceInterfa
             'CHF' => $rates['CHF'],
             default => -1,
         };
-
     }
 }

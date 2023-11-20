@@ -15,19 +15,20 @@ use App\Infrastructure\Currency\ApiPlatform\State\Provider\DolarRatio\GetRatioPr
     shortName: 'DollarRatios',
     operations: [
         new Get(
-            uriTemplate: '/api/ratios',
+            uriTemplate: '/ratios',
             provider: GetAllRatiosProvider::class,
         ),
         new Get(
-            uriTemplate: '/api/ratio/{symbol}',
+            uriTemplate: '/ratio/{symbol}',
             provider: GetRatioProvider::class,
         ),
         new Post(
-            uriTemplate: '/api/ratio/update',
+            uriTemplate: '/ratio/update',
+            security: 'is_granted("ROLE_ADMIN")',
             processor: UpdateAllRatiosProcessor::class
         ),
     ],
-    security: 'is_granted("ROLE_ADMIN")'
+    security: 'is_granted("PUBLIC_ACCESS")'
 )]
 class DollarRatiosResource
 {

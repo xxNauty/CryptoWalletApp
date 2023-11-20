@@ -14,4 +14,6 @@ interface CurrencyRepositoryInterface extends RepositoryInterface
     public function remove(CryptoCurrency $currency): void;
 
     public function find(int $id): ?CryptoCurrency;
+
+    public function getAllowedCurrencies(): ?array;
 }
