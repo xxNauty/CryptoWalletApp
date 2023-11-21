@@ -26,6 +26,7 @@ class CreateUserCommandHandler implements CommandHandlerInterface
             $command->email,
             $command->firstName,
             $command->lastName,
+            $command->currency,
         );
 
         $this->passwordService->updatePassword($user, $command->password);

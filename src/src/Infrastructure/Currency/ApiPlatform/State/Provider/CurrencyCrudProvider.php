@@ -25,9 +25,7 @@ class CurrencyCrudProvider implements ProviderInterface
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
         if (!$operation instanceof CollectionOperationInterface) {
-            $model = $this->queryBus->ask(new FindCurrencyQuery($uriVariables['id']));
-
-            return null !== $model ? CurrencyResource::fromModel($model) : null;
+            return $this->queryBus->ask(new FindCurrencyQuery($uriVariables['id']));
         }
 
         $offset = $limit = null;

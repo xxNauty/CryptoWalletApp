@@ -66,8 +66,7 @@ class UpdateUserInventoryCommandHandler implements CommandHandlerInterface
             if ($content[$symbol] < $amount) {
                 throw new NotFoundHttpException('You do not have enough currency to sell');
             } else {
-                $content[$symbol] = bcsub($content[$symbol], $amount, 10);
-// -= $amount;
+                $content[$symbol] -= $amount;
             }
         }
     }

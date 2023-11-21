@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Currency\Service;
 
-use App\Domain\Currency\Service\UpdateDollarRatioServiceInterface;
+use App\Domain\Currency\Service\UpdateDolarRatioServiceInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -13,11 +13,11 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Webmozart\Assert\Assert;
 
-readonly class UpdateDollarRatioService implements UpdateDollarRatioServiceInterface
+readonly class UpdateDolarRatioService implements UpdateDolarRatioServiceInterface
 {
     public function __construct(
         private HttpClientInterface $client,
-        private string $dollarRatioApiUrl,
+        private string $dolarRatioApiUrl,
     ) {
     }
 
@@ -34,7 +34,7 @@ readonly class UpdateDollarRatioService implements UpdateDollarRatioServiceInter
 
         $response = $this->client->request(
             'GET',
-            $this->dollarRatioApiUrl
+            $this->dolarRatioApiUrl
         );
         $rates = $response->toArray()['data'];
 

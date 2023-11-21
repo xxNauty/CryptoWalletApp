@@ -7,7 +7,6 @@ namespace App\Application\Inventory\Command;
 use App\Domain\Inventory\Model\Inventory;
 use App\Domain\Inventory\Repository\InventoryRepositoryInterface;
 use App\Domain\Shared\Command\CommandHandlerInterface;
-use Symfony\Component\Security\Core\Security;
 
 class CreateInventoryCommandHandler implements CommandHandlerInterface
 {
@@ -18,7 +17,9 @@ class CreateInventoryCommandHandler implements CommandHandlerInterface
 
     public function __invoke(CreateInventoryCommand $command): Inventory
     {
-        $inventory = new Inventory();
+        $inventory = new Inventory(
+            $command->owner
+        );
 
         $command->owner->inventory = $inventory;
 

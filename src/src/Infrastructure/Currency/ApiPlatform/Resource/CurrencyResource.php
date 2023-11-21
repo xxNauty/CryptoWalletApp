@@ -46,7 +46,7 @@ class CurrencyResource implements ResourceInterface
         #[ApiProperty(identifier: true)]
         public ?int $id = null,
 
-        #[Assert\Length(min: 3, max: 4)]
+        #[Assert\Length(exactly: 3)]
         public ?string $symbol = null,
 
         public ?string $name = null,

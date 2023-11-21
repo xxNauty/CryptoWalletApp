@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Currency\ApiPlatform\State\Processor\DollarRatio;
+namespace App\Infrastructure\Currency\ApiPlatform\State\Processor\DolarRatio;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\Application\Currency\Command\DollarRatio\UpdateRatiosCommand;
+use App\Application\Currency\Command\DolarRatio\UpdateRatiosCommand;
 use App\Domain\Shared\Command\CommandBusInterface;
 
 class UpdateAllRatiosProcessor implements ProcessorInterface

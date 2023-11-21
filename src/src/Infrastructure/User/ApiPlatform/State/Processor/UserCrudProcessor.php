@@ -36,14 +36,16 @@ class UserCrudProcessor implements ProcessorInterface
                 $data->email,
                 $data->firstName,
                 $data->lastName,
-                $data->password
+                $data->password,
+                $data->currency
             )
             : new UpdateUserCommand(
                 $uriVariables['id'],
                 $data->email,
                 $data->firstName,
                 $data->lastName,
-                $data->password
+                $data->password,
+                $data->currency
             )
         ;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Currency\Command\DollarRatio;
+namespace App\Application\Currency\Command\DolarRatio;
 
 use App\Domain\Shared\Command\CommandInterface;
 
