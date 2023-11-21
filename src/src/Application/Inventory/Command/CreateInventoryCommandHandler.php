@@ -17,9 +17,7 @@ class CreateInventoryCommandHandler implements CommandHandlerInterface
 
     public function __invoke(CreateInventoryCommand $command): Inventory
     {
-        $inventory = new Inventory(
-            $command->owner
-        );
+        $inventory = new Inventory();
 
         $command->owner->inventory = $inventory;
 

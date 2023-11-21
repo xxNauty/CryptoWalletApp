@@ -5,20 +5,18 @@ declare(strict_types=1);
 namespace App\Application\Inventory\Query\UserInventory;
 
 use App\Domain\Shared\Query\QueryHandlerInterface;
-use App\Domain\User\Repository\UserRepositoryInterface;
-use Symfony\Component\Security\Core\Security;
+use App\Domain\User\Service\UserSecurityServiceInterface;
 
-class GetUserInventoryQueryHandler implements QueryHandlerInterface
+readonly class GetUserInventoryQueryHandler implements QueryHandlerInterface
 {
     public function __construct(
-        private readonly UserRepositoryInterface $userRepository,
-        private readonly Security $security,
+        private UserSecurityServiceInterface $securityService
     ) {
     }
 
     public function __invoke(GetUserInventoryQuery $query): array
     {
-        $inventory = $this->userRepository->find($this->security->getUser()->id)->inventory;
+        $inventory = $this->securityService->getUser()?->inventory;
 
         $details = [];
         foreach ($inventory->content as $key => $value) {

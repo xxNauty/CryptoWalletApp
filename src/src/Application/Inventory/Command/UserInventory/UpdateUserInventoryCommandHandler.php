@@ -5,17 +5,15 @@ namespace App\Application\Inventory\Command\UserInventory;
 use App\Domain\Currency\Repository\CurrencyRepositoryInterface;
 use App\Domain\Inventory\Repository\InventoryRepositoryInterface;
 use App\Domain\Shared\Command\CommandHandlerInterface;
-use App\Domain\User\Repository\UserRepositoryInterface;
+use App\Domain\User\Service\UserSecurityServiceInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Security;
 
-class UpdateUserInventoryCommandHandler implements CommandHandlerInterface
+readonly class UpdateUserInventoryCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private readonly UserRepositoryInterface $userRepository,
-        private readonly InventoryRepositoryInterface $inventoryRepository,
-        private readonly CurrencyRepositoryInterface $currencyRepository,
-        private readonly Security $security
+        private InventoryRepositoryInterface $inventoryRepository,
+        private CurrencyRepositoryInterface $currencyRepository,
+        private UserSecurityServiceInterface $securityService
     ) {
     }
 
@@ -25,9 +23,7 @@ class UpdateUserInventoryCommandHandler implements CommandHandlerInterface
             throw new NotFoundHttpException('This currency is not supported');
         }
 
-        $inventory = $this->userRepository->find(
-            $this->security->getUser()->id
-        )->inventory;
+        $inventory = $this->securityService->getUser()->inventory;
 
         $content = $inventory->content ?? [];
 

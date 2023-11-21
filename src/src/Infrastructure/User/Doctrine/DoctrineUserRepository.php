@@ -43,4 +43,9 @@ class DoctrineUserRepository extends DoctrineRepository implements UserRepositor
             $qb->where(sprintf('%s.firstName = :firstName', self::ALIAS))->setParameter('firstName', $firstName);
         });
     }
+
+    public function findByEmail(string $email): ?User
+    {
+        return $this->em->getRepository(self::ENTITY_CLASS)->findOneBy(['email' => $email]);
+    }
 }

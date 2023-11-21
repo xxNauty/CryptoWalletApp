@@ -14,6 +14,6 @@ class ExtendedCryptoCurrency
         public int $change1h,
         public int $change24h,
         public int $change7d,
-    ){
+    ) {
     }
 }
