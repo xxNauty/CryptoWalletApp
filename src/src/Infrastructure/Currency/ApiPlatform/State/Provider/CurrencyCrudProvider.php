@@ -4,54 +4,25 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Currency\ApiPlatform\State\Provider;
 
-use ApiPlatform\Metadata\CollectionOperationInterface;
 use ApiPlatform\Metadata\Operation;
-use ApiPlatform\State\Pagination\Pagination;
 use ApiPlatform\State\ProviderInterface;
-use App\Application\Currency\Query\FindCurrencyCollectionQuery;
+use App\Application\Currency\Command\UpdateCurrencyCommand;
 use App\Application\Currency\Query\FindCurrencyQuery;
+use App\Domain\Shared\Command\CommandBusInterface;
 use App\Domain\Shared\Query\QueryBusInterface;
-use App\Infrastructure\Currency\ApiPlatform\Resource\CurrencyResource;
-use App\Infrastructure\Shared\ApiPlatform\State\Paginator;
 
-class CurrencyCrudProvider implements ProviderInterface
+readonly class CurrencyCrudProvider implements ProviderInterface
 {
     public function __construct(
-        private readonly QueryBusInterface $queryBus,
-        private readonly Pagination $pagination,
+        private QueryBusInterface $queryBus,
+        private CommandBusInterface $commandBus
     ) {
     }
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        if (!$operation instanceof CollectionOperationInterface) {
-            return $this->queryBus->ask(new FindCurrencyQuery($uriVariables['id']));
-        }
+        $this->commandBus->dispatch(new UpdateCurrencyCommand($uriVariables['id']));
 
-        $offset = $limit = null;
-
-        if ($this->pagination->isEnabled($operation, $context)) {
-            $offset = $this->pagination->getPage($context);
-            $limit = $this->pagination->getLimit($operation, $context);
-        }
-
-        $models = $this->queryBus->ask(new FindCurrencyCollectionQuery($offset, $limit));
-
-        $resources = [];
-        foreach ($models as $model) {
-            $resources[] = CurrencyResource::fromModel($model);
-        }
-
-        if (null !== $paginator = $models->paginator()) {
-            $resources = new Paginator(
-                $resources,
-                (float) $paginator->getCurrentPage(),
-                (float) $paginator->getItemsPerPage(),
-                (float) $paginator->getLastPage(),
-                (float) $paginator->getTotalItems(),
-            );
-        }
-
-        return $resources;
+        return $this->queryBus->ask(new FindCurrencyQuery($uriVariables['id']));
     }
 }

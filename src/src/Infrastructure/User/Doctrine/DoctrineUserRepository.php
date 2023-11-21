@@ -44,8 +44,12 @@ class DoctrineUserRepository extends DoctrineRepository implements UserRepositor
         });
     }
 
-    public function findByEmail(string $email): ?User
+    public function findByEmail(?string $email): ?User
     {
-        return $this->em->getRepository(self::ENTITY_CLASS)->findOneBy(['email' => $email]);
+        if (null != $email) {
+            return $this->em->getRepository(self::ENTITY_CLASS)->findOneBy(['email' => $email]);
+        }
+
+        return null;
     }
 }
