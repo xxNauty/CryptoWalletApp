@@ -12,7 +12,7 @@ class GetUserCurrencyQueryHandler implements QueryHandlerInterface
     public function __construct(
         private readonly UserRepositoryInterface $userRepository,
         private readonly Security $security
-    ) {
+    ){
     }
 
     public function __invoke(GetUserCurrencyQuery $query): array
@@ -21,7 +21,7 @@ class GetUserCurrencyQueryHandler implements QueryHandlerInterface
             $this->security->getUser()->id
         )->inventory;
 
-        if (!array_key_exists($query->symbol, $inventory->content)) {
+        if(!array_key_exists($query->symbol, $inventory->content)){
             throw new NotFoundHttpException('You do not have this currency');
         }
 

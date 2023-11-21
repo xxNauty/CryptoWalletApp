@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Application\Currency\Query\DollarRatios;
+namespace App\Application\Currency\Query\DolarRatios;
 
 use App\Domain\Shared\Query\QueryInterface;
 

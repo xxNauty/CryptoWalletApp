@@ -52,6 +52,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, ModelIn
 
         #[ORM\Column(type: Types::STRING, length: 50)]
         public string $lastName,
+
+        #[ORM\Column(type: Types::STRING, length: 3)]
+        public string $currency,
     ) {
         $this->role = self::ROLE_PLAYER;
     }

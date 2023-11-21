@@ -30,6 +30,7 @@ class UpdateUserCommandHandler implements CommandHandlerInterface
         $user->firstName = $command->firstName ?? $user->firstName;
         $user->lastName = $command->lastName ?? $user->lastName;
         $this->passwordService->updatePassword($user, $command->password);
+        $user->currency = $command->currency ?? $user->currency;
 
         $this->userRepository->save($user);
 

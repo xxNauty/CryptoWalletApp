@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Currency\Service;
 
-use App\Domain\Currency\Model\DollarRatio;
-use App\Domain\Currency\Service\DollarRatioManagerInterface;
-use App\Domain\Currency\Service\UpdateDollarRatioServiceInterface;
+use App\Domain\Currency\Model\DolarRatio;
+use App\Domain\Currency\Service\DolarRatioManagerInterface;
+use App\Domain\Currency\Service\UpdateDolarRatioServiceInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
-readonly class DollarRatioManager implements DollarRatioManagerInterface
+readonly class DolarRatioManager implements DolarRatioManagerInterface
 {
     public function __construct(
-        private UpdateDollarRatioServiceInterface $updateDolarRatioService,
+        private UpdateDolarRatioServiceInterface $updateDolarRatioService,
         private Filesystem $filesystem
     ) {
         if (!$this->filesystem->exists('dollar_rates')) {
@@ -36,7 +36,7 @@ readonly class DollarRatioManager implements DollarRatioManagerInterface
 
     public function updateAll(bool $initial = false): void
     {
-        foreach (DollarRatio::SUPPORTED_CURRENCIES as $currency) {
+        foreach (DolarRatio::SUPPORTED_CURRENCIES as $currency) {
             $this->update($currency, $initial);
         }
     }
@@ -47,7 +47,7 @@ readonly class DollarRatioManager implements DollarRatioManagerInterface
             $this->filesystem->touch('dollar_rates/'.$currency.'_rate.json');
         }
 
-        $ratio = new DollarRatio(
+        $ratio = new DolarRatio(
             $currency,
             $initial ? 0 : $this->updateDolarRatioService->update($currency),
             new \DateTimeImmutable('now'),
