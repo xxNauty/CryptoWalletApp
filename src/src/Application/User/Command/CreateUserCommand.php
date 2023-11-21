@@ -6,7 +6,6 @@ namespace App\Application\User\Command;
 
 use App\Domain\Currency\Model\DolarRatio;
 use App\Domain\Shared\Command\CommandInterface;
-use ContainerODEX8Ql\getMessenger_Middleware_RejectRedeliveredMessageMiddlewareService;
 use Webmozart\Assert\Assert;
 
 class CreateUserCommand implements CommandInterface

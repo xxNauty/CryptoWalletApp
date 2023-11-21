@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Application\Currency\Query\DolarRatios;
 
-use App\Domain\Currency\Model\DolarRatio;
 use App\Domain\Currency\Service\DolarRatioManagerInterface;
 use App\Domain\Shared\Query\QueryHandlerInterface;
-use Symfony\Component\Security\Core\Security;
 
 class GetRatioQueryHandler implements QueryHandlerInterface
 {
