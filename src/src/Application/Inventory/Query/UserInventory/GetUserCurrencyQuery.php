@@ -8,6 +8,6 @@ class GetUserCurrencyQuery implements QueryInterface
 {
     public function __construct(
         public string $symbol,
-    ){
+    ) {
     }
 }

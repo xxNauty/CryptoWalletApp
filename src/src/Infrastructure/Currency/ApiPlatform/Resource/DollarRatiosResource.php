@@ -7,9 +7,9 @@ namespace App\Infrastructure\Currency\ApiPlatform\Resource;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
-use App\Infrastructure\Currency\ApiPlatform\State\Processor\DolarRatio\UpdateAllRatiosProcessor;
-use App\Infrastructure\Currency\ApiPlatform\State\Provider\DolarRatio\GetAllRatiosProvider;
-use App\Infrastructure\Currency\ApiPlatform\State\Provider\DolarRatio\GetRatioProvider;
+use App\Infrastructure\Currency\ApiPlatform\State\Processor\DollarRatio\UpdateAllRatiosProcessor;
+use App\Infrastructure\Currency\ApiPlatform\State\Provider\DollarRatio\GetAllRatiosProvider;
+use App\Infrastructure\Currency\ApiPlatform\State\Provider\DollarRatio\GetRatioProvider;
 
 #[ApiResource(
     shortName: 'DollarRatios',
