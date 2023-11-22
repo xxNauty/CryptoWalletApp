@@ -35,6 +35,10 @@ class CryptoCurrencyDataDownloadService implements CryptoCurrencyDataDownloadSer
             $this->cryptoApiUrl.$identifier,
         );
 
+        if($response->getContent() == '' || $response->getContent() == '[]'){
+            throw new \Exception("There is no currency with this ID");
+        }
+
         $response = $response->toArray()[0];
 
         return new CryptoCurrency(

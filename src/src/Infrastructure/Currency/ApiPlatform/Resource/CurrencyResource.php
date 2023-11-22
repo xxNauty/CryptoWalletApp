@@ -8,7 +8,6 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Application\Currency\Command\CreateCurrencyCommand;
@@ -20,11 +19,8 @@ use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
-    shortName: 'Currency',
+    shortName: 'CryptoCurrency',
     operations: [
-        new GetCollection(
-            security: 'is_granted("PUBLIC_ACCESS")'
-        ),
         new Get(
             security: 'is_granted("PUBLIC_ACCESS")'
         ),

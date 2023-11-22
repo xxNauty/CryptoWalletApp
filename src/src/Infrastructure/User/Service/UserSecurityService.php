@@ -18,7 +18,7 @@ readonly class UserSecurityService implements UserSecurityServiceInterface
     public function getUser(): ?User
     {
         return $this->userRepository->findByEmail(
-            $this->security->getUser()->getUserIdentifier()
+            $this->security->getUser()?->getUserIdentifier()
         );
     }
 }

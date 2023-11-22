@@ -41,7 +41,8 @@
         "symfony/uid": "^6.1",
         "symfony/validator": "^6.1",
         "symfony/yaml": "^6.1",
-        "webmozart/assert": "^1.10"
+        "webmozart/assert": "^1.10",
+        "ext-bcmath": "*"
     },
     "config": {
         "allow-plugins": {
