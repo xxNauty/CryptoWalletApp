@@ -4,7 +4,7 @@ namespace App\Application\Currency\Query;
 
 use App\Domain\Shared\Query\QueryInterface;
 
-class FindAvailableCurrenciesQuery implements QueryInterface
+class FindAvailableRemoteCurrenciesQuery implements QueryInterface
 {
     public function __construct()
     {

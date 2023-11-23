@@ -7,6 +7,7 @@ services:
 
         bind:
             $cryptoApiUrl: '%env(string:MAIN_API_URL)%'
+            $cryptoApiUrlGetAll: '%env(string:MAIN_API_URL_GET_ALL)%'
             $dolarRatioApiUrl: '%env(string:USD_RATIO_API)%'
 
     App\:

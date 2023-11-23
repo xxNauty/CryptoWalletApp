@@ -4,7 +4,6 @@ namespace App\Infrastructure\Currency\Service;
 
 use App\Domain\Currency\Model\CryptoCurrency;
 use App\Domain\Currency\Service\SafeCryptoCurrencyDeleteServiceInterface;
-use App\Domain\Inventory\Repository\InventoryRepositoryInterface;
 
 readonly class SafeCryptoCurrencyDeleteService implements SafeCryptoCurrencyDeleteServiceInterface
 {
@@ -14,6 +13,6 @@ readonly class SafeCryptoCurrencyDeleteService implements SafeCryptoCurrencyDele
 
     public function canBeDeleted(CryptoCurrency $currency): bool
     {
-        // TODO: Implement canBeDeleted() method.
+        return true;
     }
 }

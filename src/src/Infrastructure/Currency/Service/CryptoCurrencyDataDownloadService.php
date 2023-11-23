@@ -17,7 +17,7 @@ readonly class CryptoCurrencyDataDownloadService implements CryptoCurrencyDataDo
 {
     public function __construct(
         private HttpClientInterface $client,
-        private string              $cryptoApiUrl,
+        private string $cryptoApiUrl,
     ) {
     }
 
@@ -35,8 +35,8 @@ readonly class CryptoCurrencyDataDownloadService implements CryptoCurrencyDataDo
             $this->cryptoApiUrl.$identifier,
         );
 
-        if($response->getContent() == '' || $response->getContent() == '[]'){
-            throw new \Exception("There is no currency with this ID");
+        if ('' == $response->getContent() || '[]' == $response->getContent()) {
+            throw new \Exception('There is no currency with this ID');
         }
 
         $response = $response->toArray()[0];
