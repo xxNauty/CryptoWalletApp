@@ -882,7 +882,7 @@ return array(
     'App\\Infrastructure\\Currency\\ApiPlatform\\Resource\\DollarRatiosResource' => $baseDir . '/src/Infrastructure/Currency/ApiPlatform/Resource/DollarRatiosResource.php',
     'App\\Infrastructure\\Currency\\ApiPlatform\\State\\Processor\\CurrencyCrudProcessor' => $baseDir . '/src/Infrastructure/Currency/ApiPlatform/State/Processor/CurrencyCrudProcessor.php',
     'App\\Infrastructure\\Currency\\ApiPlatform\\State\\Processor\\DolarRatio\\UpdateAllRatiosProcessor' => $baseDir . '/src/Infrastructure/Currency/ApiPlatform/State/Processor/DolarRatio/UpdateAllRatiosProcessor.php',
-    'App\\Infrastructure\\Currency\\ApiPlatform\\State\\Provider\\CurrencyCrudProvider' => $baseDir . '/src/Infrastructure/Currency/ApiPlatform/State/Provider/CurrencyCrudProvider.php',
+    'App\\Infrastructure\\Currency\\ApiPlatform\\State\\Provider\\CryptoCurrency\\CurrencyCrudProvider' => $baseDir . '/src/Infrastructure/Currency/ApiPlatform/State/Provider/CurrencyCrudProvider.php',
     'App\\Infrastructure\\Currency\\ApiPlatform\\State\\Provider\\DolarRatio\\GetAllRatiosProvider' => $baseDir . '/src/Infrastructure/Currency/ApiPlatform/State/Provider/DolarRatio/GetAllRatiosProvider.php',
     'App\\Infrastructure\\Currency\\ApiPlatform\\State\\Provider\\DolarRatio\\GetRatioProvider' => $baseDir . '/src/Infrastructure/Currency/ApiPlatform/State/Provider/DolarRatio/GetRatioProvider.php',
     'App\\Infrastructure\\Currency\\Doctrine\\DoctrineCurrencyRepository' => $baseDir . '/src/Infrastructure/Currency/Doctrine/DoctrineCurrencyRepository.php',
@@ -7837,5 +7837,5 @@ return array(
     'phpDocumentor\\Reflection\\Types\\This' => $vendorDir . '/phpdocumentor/type-resolver/src/Types/This.php',
     'phpDocumentor\\Reflection\\Types\\Void_' => $vendorDir . '/phpdocumentor/type-resolver/src/Types/Void_.php',
     'phpDocumentor\\Reflection\\Utils' => $vendorDir . '/phpdocumentor/reflection-docblock/src/Utils.php',
-    '©' => $vendorDir . '/symfony/cache/Traits/ValueWrapper.php',
+    'ï¿½' => $vendorDir . '/symfony/cache/Traits/ValueWrapper.php',
 );

@@ -39,14 +39,14 @@ class DoctrineCurrencyRepository extends DoctrineRepository implements CurrencyR
     public function getAllowedCurrencies(): ?array
     {
         $currencies = $this->query()
-            ->select('currency.symbol')
+            ->select('currency.name')
             ->getQuery()
             ->getArrayResult();
 
         $symbols = [];
 
         foreach ($currencies as $currency) {
-            $symbols[] = $currency['symbol'];
+            $symbols[] = $currency['name'];
         }
 
         return $symbols;
