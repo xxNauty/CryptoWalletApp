@@ -829,8 +829,6 @@ return array(
     'App\\Application\\Currency\\Query\\DolarRatios\\GetAllRatiosQueryHandler' => $baseDir . '/src/Application/Currency/Query/DolarRatios/GetAllRatiosQueryHandler.php',
     'App\\Application\\Currency\\Query\\DolarRatios\\GetRatioQuery' => $baseDir . '/src/Application/Currency/Query/DolarRatios/GetRatioQuery.php',
     'App\\Application\\Currency\\Query\\DolarRatios\\GetRatioQueryHandler' => $baseDir . '/src/Application/Currency/Query/DolarRatios/GetRatioQueryHandler.php',
-    'App\\Application\\Currency\\Query\\FindCurrencyCollectionQuery' => $baseDir . '/src/Application/Currency/Query/FindCurrencyCollectionQuery.php',
-    'App\\Application\\Currency\\Query\\FindCurrencyCollectionQueryHandler' => $baseDir . '/src/Application/Currency/Query/FindCurrencyCollectionQueryHandler.php',
     'App\\Application\\Currency\\Query\\FindCurrencyQuery' => $baseDir . '/src/Application/Currency/Query/FindCurrencyQuery.php',
     'App\\Application\\Currency\\Query\\FindCurrencyQueryHandler' => $baseDir . '/src/Application/Currency/Query/FindCurrencyQueryHandler.php',
     'App\\Application\\Inventory\\Command\\CreateInventoryCommand' => $baseDir . '/src/Application/Inventory/Command/CreateInventoryCommand.php',
