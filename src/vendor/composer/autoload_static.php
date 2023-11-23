@@ -1469,8 +1469,6 @@ class ComposerStaticInitd108f0ccfdad11ce8d9cec357fffb094
         'App\\Application\\Currency\\Query\\DolarRatios\\GetAllRatiosQueryHandler' => __DIR__ . '/../..' . '/src/Application/Currency/Query/DolarRatios/GetAllRatiosQueryHandler.php',
         'App\\Application\\Currency\\Query\\DolarRatios\\GetRatioQuery' => __DIR__ . '/../..' . '/src/Application/Currency/Query/DolarRatios/GetRatioQuery.php',
         'App\\Application\\Currency\\Query\\DolarRatios\\GetRatioQueryHandler' => __DIR__ . '/../..' . '/src/Application/Currency/Query/DolarRatios/GetRatioQueryHandler.php',
-        'App\\Application\\Currency\\Query\\FindCurrencyCollectionQuery' => __DIR__ . '/../..' . '/src/Application/Currency/Query/FindCurrencyCollectionQuery.php',
-        'App\\Application\\Currency\\Query\\FindCurrencyCollectionQueryHandler' => __DIR__ . '/../..' . '/src/Application/Currency/Query/FindCurrencyCollectionQueryHandler.php',
         'App\\Application\\Currency\\Query\\FindCurrencyQuery' => __DIR__ . '/../..' . '/src/Application/Currency/Query/FindCurrencyQuery.php',
         'App\\Application\\Currency\\Query\\FindCurrencyQueryHandler' => __DIR__ . '/../..' . '/src/Application/Currency/Query/FindCurrencyQueryHandler.php',
         'App\\Application\\Inventory\\Command\\CreateInventoryCommand' => __DIR__ . '/../..' . '/src/Application/Inventory/Command/CreateInventoryCommand.php',

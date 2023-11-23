@@ -13,11 +13,11 @@ use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class CryptoCurrencyDataDownloadService implements CryptoCurrencyDataDownloadServiceInterface
+readonly class CryptoCurrencyDataDownloadService implements CryptoCurrencyDataDownloadServiceInterface
 {
     public function __construct(
-        private readonly HttpClientInterface $client,
-        private readonly string $cryptoApiUrl,
+        private HttpClientInterface $client,
+        private string              $cryptoApiUrl,
     ) {
     }
 
