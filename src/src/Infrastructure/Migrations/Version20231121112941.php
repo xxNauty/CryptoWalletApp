@@ -20,7 +20,7 @@ final class Version20231121112941 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE user_base ADD currency VARCHAR(3) NOT NULL');
+        $this->addSql('ALTER TABLE user_base ADD currency VARCHAR(3) DEFAULT NULL');
     }
 
     public function down(Schema $schema): void

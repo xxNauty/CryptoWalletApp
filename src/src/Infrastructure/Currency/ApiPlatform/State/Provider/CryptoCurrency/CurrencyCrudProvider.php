@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Currency\ApiPlatform\State\Provider;
+namespace App\Infrastructure\Currency\ApiPlatform\State\Provider\CryptoCurrency;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;

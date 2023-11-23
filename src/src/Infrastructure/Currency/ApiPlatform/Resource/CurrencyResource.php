@@ -14,7 +14,8 @@ use App\Application\Currency\Command\CreateCurrencyCommand;
 use App\Application\Currency\Command\UpdateCurrencyCommand;
 use App\Domain\Shared\ApiPlatform\Resource\ResourceInterface;
 use App\Infrastructure\Currency\ApiPlatform\State\Processor\CurrencyCrudProcessor;
-use App\Infrastructure\Currency\ApiPlatform\State\Provider\CurrencyCrudProvider;
+use App\Infrastructure\Currency\ApiPlatform\State\Provider\CryptoCurrency\CurrencyCrudProvider;
+use App\Infrastructure\Currency\ApiPlatform\State\Provider\CryptoCurrency\GetAllowedCurrenciesProvider;
 use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -31,6 +32,11 @@ use Symfony\Component\Validator\Constraints as Assert;
             input: UpdateCurrencyCommand::class
         ),
         new Delete(),
+        new Get(
+            uriTemplate: '/allowed',
+            security: 'is_granted("PUBLIC_ACCESS")',
+            provider: GetAllowedCurrenciesProvider::class
+        )
     ],
     security: 'is_granted("ROLE_ADMIN")',
     provider: CurrencyCrudProvider::class,

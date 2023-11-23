@@ -1522,7 +1522,7 @@ class ComposerStaticInitd108f0ccfdad11ce8d9cec357fffb094
         'App\\Infrastructure\\Currency\\ApiPlatform\\Resource\\DollarRatiosResource' => __DIR__ . '/../..' . '/src/Infrastructure/Currency/ApiPlatform/Resource/DollarRatiosResource.php',
         'App\\Infrastructure\\Currency\\ApiPlatform\\State\\Processor\\CurrencyCrudProcessor' => __DIR__ . '/../..' . '/src/Infrastructure/Currency/ApiPlatform/State/Processor/CurrencyCrudProcessor.php',
         'App\\Infrastructure\\Currency\\ApiPlatform\\State\\Processor\\DolarRatio\\UpdateAllRatiosProcessor' => __DIR__ . '/../..' . '/src/Infrastructure/Currency/ApiPlatform/State/Processor/DolarRatio/UpdateAllRatiosProcessor.php',
-        'App\\Infrastructure\\Currency\\ApiPlatform\\State\\Provider\\CurrencyCrudProvider' => __DIR__ . '/../..' . '/src/Infrastructure/Currency/ApiPlatform/State/Provider/CurrencyCrudProvider.php',
+        'App\\Infrastructure\\Currency\\ApiPlatform\\State\\Provider\\CryptoCurrency\\CurrencyCrudProvider' => __DIR__ . '/../..' . '/src/Infrastructure/Currency/ApiPlatform/State/Provider/CurrencyCrudProvider.php',
         'App\\Infrastructure\\Currency\\ApiPlatform\\State\\Provider\\DolarRatio\\GetAllRatiosProvider' => __DIR__ . '/../..' . '/src/Infrastructure/Currency/ApiPlatform/State/Provider/DolarRatio/GetAllRatiosProvider.php',
         'App\\Infrastructure\\Currency\\ApiPlatform\\State\\Provider\\DolarRatio\\GetRatioProvider' => __DIR__ . '/../..' . '/src/Infrastructure/Currency/ApiPlatform/State/Provider/DolarRatio/GetRatioProvider.php',
         'App\\Infrastructure\\Currency\\Doctrine\\DoctrineCurrencyRepository' => __DIR__ . '/../..' . '/src/Infrastructure/Currency/Doctrine/DoctrineCurrencyRepository.php',
@@ -8477,7 +8477,7 @@ class ComposerStaticInitd108f0ccfdad11ce8d9cec357fffb094
         'phpDocumentor\\Reflection\\Types\\This' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/This.php',
         'phpDocumentor\\Reflection\\Types\\Void_' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/Void_.php',
         'phpDocumentor\\Reflection\\Utils' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/Utils.php',
-        '©' => __DIR__ . '/..' . '/symfony/cache/Traits/ValueWrapper.php',
+        'ï¿½' => __DIR__ . '/..' . '/symfony/cache/Traits/ValueWrapper.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
