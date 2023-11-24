@@ -26,7 +26,6 @@ use Symfony\Component\Validator\Constraints as Assert;
     operations: [
         new GetCollection(
             security: 'is_granted("ROLE_ADMIN")',
-            filters: [UserFilter::class]
         ),
         new Get(),
         new Post(

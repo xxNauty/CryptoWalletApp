@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\User\Command;
 
-use App\Domain\Currency\Model\DolarRatio;
+use App\Domain\DolarRatio\Model\DolarRatio;
 use App\Domain\Shared\Command\CommandInterface;
 use Webmozart\Assert\Assert;
 

@@ -14,9 +14,9 @@ use App\Application\Currency\Command\CreateCurrencyCommand;
 use App\Application\Currency\Command\UpdateCurrencyCommand;
 use App\Domain\Shared\ApiPlatform\Resource\ResourceInterface;
 use App\Infrastructure\Currency\ApiPlatform\State\Processor\CurrencyCrudProcessor;
-use App\Infrastructure\Currency\ApiPlatform\State\Provider\CryptoCurrency\CurrencyCrudProvider;
-use App\Infrastructure\Currency\ApiPlatform\State\Provider\CryptoCurrency\GetAllowedCurrenciesProvider;
-use App\Infrastructure\Currency\ApiPlatform\State\Provider\CryptoCurrency\GetAllowedRemoteCurrenciesProvider;
+use App\Infrastructure\Currency\ApiPlatform\State\Provider\CurrencyCrudProvider;
+use App\Infrastructure\Currency\ApiPlatform\State\Provider\GetAllowedCurrenciesProvider;
+use App\Infrastructure\Currency\ApiPlatform\State\Provider\GetAllowedRemoteCurrenciesProvider;
 use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
 use Symfony\Component\Validator\Constraints as Assert;
 
