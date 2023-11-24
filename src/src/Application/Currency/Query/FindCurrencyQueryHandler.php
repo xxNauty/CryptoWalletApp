@@ -6,9 +6,9 @@ namespace App\Application\Currency\Query;
 
 use App\Application\Currency\DTO\CryptoCurrency;
 use App\Application\Currency\DTO\ExtendedCryptoCurrency;
-use App\Domain\Currency\Model\DolarRatio;
 use App\Domain\Currency\Repository\CurrencyRepositoryInterface;
-use App\Domain\Currency\Service\DolarRatioManagerInterface;
+use App\Domain\DolarRatio\Model\DolarRatio;
+use App\Domain\DolarRatio\Service\DolarRatioManagerInterface;
 use App\Domain\Shared\Query\QueryHandlerInterface;
 use App\Domain\User\Service\UserSecurityServiceInterface;
 
