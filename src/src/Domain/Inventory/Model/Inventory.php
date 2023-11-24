@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Inventory\Model;
 
+use App\Domain\Purchase\Model\Purchase;
 use App\Domain\Shared\Model\ModelInterface;
 use App\Domain\User\Model\User;
 use App\Infrastructure\Inventory\ApiPlatform\Resource\InventoryResource;
@@ -27,13 +28,11 @@ class Inventory implements ModelInterface
     #[ORM\Column(type: Types::FLOAT, precision: 2)]
     public float $totalInventoryValue;
 
-    #[ORM\Column(type: Types::JSON, nullable: true)]
-    public ?array $content = null;
+    #[ORM\OneToMany(mappedBy: 'inventory', targetEntity: Purchase::class)]
+    public ?iterable $content = null;
 
-    public function __construct(
-        //        #[ORM\OneToOne(mappedBy: 'inventory', targetEntity: User::class, cascade: ['persist'])]
-        //        public User $owner,
-    ) {
+    public function __construct()
+    {
         $this->totalInventoryValue = 0;
     }
 

@@ -35,3 +35,9 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Domain/Inventory/Model'
                 prefix: 'App\Domain\Inventory\Model'
                 alias: 'Inventory'
+            Purchase:
+                is_bundle: false
+                type: attribute
+                dir: '%kernel.project_dir%/src/Domain/Purchase/Model'
+                prefix: 'App\Domain\Purchase\Model'
+                alias: 'Purchase'

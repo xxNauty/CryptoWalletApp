@@ -4,6 +4,8 @@ namespace App\Application\Inventory\Command\UserInventory;
 
 use App\Domain\Currency\Repository\CurrencyRepositoryInterface;
 use App\Domain\Inventory\Repository\InventoryRepositoryInterface;
+use App\Domain\Purchase\Model\Purchase;
+use App\Domain\Purchase\Resource\PurchaseRepositoryInterface;
 use App\Domain\Shared\Command\CommandHandlerInterface;
 use App\Domain\User\Service\UserSecurityServiceInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -13,7 +15,8 @@ readonly class UpdateUserInventoryCommandHandler implements CommandHandlerInterf
     public function __construct(
         private InventoryRepositoryInterface $inventoryRepository,
         private CurrencyRepositoryInterface $currencyRepository,
-        private UserSecurityServiceInterface $securityService
+        private UserSecurityServiceInterface $securityService,
+        private PurchaseRepositoryInterface $purchaseRepository,
     ) {
     }
 
@@ -25,45 +28,19 @@ readonly class UpdateUserInventoryCommandHandler implements CommandHandlerInterf
 
         $inventory = $this->securityService->getUser()->inventory;
 
-        $content = $inventory->content ?? [];
-
-        switch ($command->action) {
-            case 'buy':
-                $this->addCurrencyAmount($content, $command->amount, $command->symbol);
-                break;
-
-            case 'sell':
-                $this->subtractCurrencyAmount($content, $command->amount, $command->symbol);
-                break;
-
-            default:
-                throw new \Exception('Only sell and buy are allowed here');
-        }
-
-        $inventory->content = $content;
+        $purchase = new Purchase(
+            $command->symbol,
+            $command->amount,
+            $this->currencyRepository->findBy(['symbol' => $command->symbol])->priceUSD,
+            new \DateTimeImmutable('now'),
+            match ($command->action){
+                'buy' => false,
+                'sell' => true,
+            },
+            $inventory
+        );
 
         $this->inventoryRepository->save($inventory);
-    }
-
-    private function addCurrencyAmount(array &$content, float $amount, string $symbol): void
-    {
-        if (!array_key_exists($symbol, $content)) {
-            $content[$symbol] = $amount;
-        } else {
-            $content[$symbol] += $amount;
-        }
-    }
-
-    private function subtractCurrencyAmount(array &$content, float $amount, string $symbol): void
-    {
-        if (!array_key_exists($symbol, $content)) {
-            throw new NotFoundHttpException('You do not have any of this currency');
-        } else {
-            if ($content[$symbol] < $amount) {
-                throw new NotFoundHttpException('You do not have enough currency to sell');
-            } else {
-                $content[$symbol] -= $amount;
-            }
-        }
+        $this->purchaseRepository->save($purchase);
     }
 }

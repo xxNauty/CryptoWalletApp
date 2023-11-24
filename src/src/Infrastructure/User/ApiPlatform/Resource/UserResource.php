@@ -44,42 +44,40 @@ use Symfony\Component\Validator\Constraints as Assert;
 )]
 class UserResource implements ResourceInterface
 {
-    public function __construct(
-        #[ApiProperty(writable: false, identifier: true)]
-        #[Groups(['user.read'])]
-        public ?int $id = null,
+    #[ApiProperty(writable: false, identifier: true)]
+    #[Groups(['user.read'])]
+    public ?int $id = null;
 
-        #[Assert\NotNull]
-        #[Assert\Email]
-        #[Assert\Length(min: 5, max: 100)]
-        #[Groups(['user.read', 'user.write'])]
-        public ?string $email = null,
+    #[Assert\NotNull]
+    #[Assert\Email]
+    #[Assert\Length(min: 5, max: 100)]
+    #[Groups(['user.read', 'user.write'])]
+    public ?string $email = null;
 
-        #[Assert\NotNull]
-        #[Assert\Length(min: 1, max: 50)]
-        #[Groups(['user.read', 'user.write'])]
-        public ?string $firstName = null,
+    #[Assert\NotNull]
+    #[Assert\Length(min: 1, max: 50)]
+    #[Groups(['user.read', 'user.write'])]
+    public ?string $firstName = null;
 
-        #[Assert\NotNull]
-        #[Assert\Length(min: 1, max: 50)]
-        #[Groups(['user.read', 'user.write'])]
-        public ?string $lastName = null,
+    #[Assert\NotNull]
+    #[Assert\Length(min: 1, max: 50)]
+    #[Groups(['user.read', 'user.write'])]
+    public ?string $lastName = null;
 
-        #[Assert\NotNull]
-        #[Assert\Length(min: 1, max: 50)]
-        #[Groups(['user.write'])]
-        public ?string $password = null,
+    #[Assert\NotNull]
+    #[Assert\Length(min: 1, max: 50)]
+    #[Groups(['user.write'])]
+    public ?string $password = null;
 
-        #[Assert\Length(min: 1, max: 50)]
-        public ?string $role = null,
+    #[Assert\Length(min: 1, max: 50)]
+    public ?string $role = null;
 
-        #[Groups(['user.read'])]
-        public ?InventoryResource $inventory = null,
+    #[Groups(['user.read'])]
+    public ?InventoryResource $inventory = null;
 
-        #[Groups(['user.read', 'user.write'])]
-        public ?string $currency = null,
-    ) {
-    }
+    #[Groups(['user.read', 'user.write'])]
+    public ?string $currency = null;
+
 
     public static function fromModel(object $model, array $excludedVars = []): object
     {

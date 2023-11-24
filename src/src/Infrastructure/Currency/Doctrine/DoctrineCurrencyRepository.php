@@ -39,6 +39,22 @@ class DoctrineCurrencyRepository extends DoctrineRepository implements CurrencyR
     public function getAllowedCurrencies(): ?array
     {
         $currencies = $this->query()
+            ->select('currency.symbol')
+            ->getQuery()
+            ->getArrayResult();
+
+        $symbols = [];
+
+        foreach ($currencies as $currency) {
+            $symbols[] = $currency['symbol'];
+        }
+
+        return $symbols;
+    }
+
+    public function getAllowedCurrenciesNames(): ?array
+    {
+        $currencies = $this->query()
             ->select('currency.name')
             ->getQuery()
             ->getArrayResult();
@@ -50,5 +66,10 @@ class DoctrineCurrencyRepository extends DoctrineRepository implements CurrencyR
         }
 
         return $symbols;
+    }
+
+    public function findBy(array $params): ?CryptoCurrency
+    {
+        return $this->em->getRepository(self::ENTITY_CLASS)->findOneBy($params);
     }
 }
