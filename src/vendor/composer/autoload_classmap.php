@@ -4468,6 +4468,7 @@ return array(
     'PhpCsFixer\\Tokenizer\\Analyzer\\NamespacesAnalyzer' => $vendorDir . '/friendsofphp/php-cs-fixer/src/Tokenizer/Analyzer/NamespacesAnalyzer.php',
     'PhpCsFixer\\Tokenizer\\Analyzer\\RangeAnalyzer' => $vendorDir . '/friendsofphp/php-cs-fixer/src/Tokenizer/Analyzer/RangeAnalyzer.php',
     'PhpCsFixer\\Tokenizer\\Analyzer\\ReferenceAnalyzer' => $vendorDir . '/friendsofphp/php-cs-fixer/src/Tokenizer/Analyzer/ReferenceAnalyzer.php',
+    'PhpCsFixer\\Tokenizer\\Analyzer\\SwitchAnalyzer' => $vendorDir . '/friendsofphp/php-cs-fixer/src/Tokenizer/Analyzer/SwitchAnalyzer.php',
     'PhpCsFixer\\Tokenizer\\Analyzer\\WhitespacesAnalyzer' => $vendorDir . '/friendsofphp/php-cs-fixer/src/Tokenizer/Analyzer/WhitespacesAnalyzer.php',
     'PhpCsFixer\\Tokenizer\\CT' => $vendorDir . '/friendsofphp/php-cs-fixer/src/Tokenizer/CT.php',
     'PhpCsFixer\\Tokenizer\\CodeHasher' => $vendorDir . '/friendsofphp/php-cs-fixer/src/Tokenizer/CodeHasher.php',
