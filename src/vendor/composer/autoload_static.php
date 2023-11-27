@@ -5108,6 +5108,7 @@ class ComposerStaticInitd108f0ccfdad11ce8d9cec357fffb094
         'PhpCsFixer\\Tokenizer\\Analyzer\\NamespacesAnalyzer' => __DIR__ . '/..' . '/friendsofphp/php-cs-fixer/src/Tokenizer/Analyzer/NamespacesAnalyzer.php',
         'PhpCsFixer\\Tokenizer\\Analyzer\\RangeAnalyzer' => __DIR__ . '/..' . '/friendsofphp/php-cs-fixer/src/Tokenizer/Analyzer/RangeAnalyzer.php',
         'PhpCsFixer\\Tokenizer\\Analyzer\\ReferenceAnalyzer' => __DIR__ . '/..' . '/friendsofphp/php-cs-fixer/src/Tokenizer/Analyzer/ReferenceAnalyzer.php',
+        'PhpCsFixer\\Tokenizer\\Analyzer\\SwitchAnalyzer' => __DIR__ . '/..' . '/friendsofphp/php-cs-fixer/src/Tokenizer/Analyzer/SwitchAnalyzer.php',
         'PhpCsFixer\\Tokenizer\\Analyzer\\WhitespacesAnalyzer' => __DIR__ . '/..' . '/friendsofphp/php-cs-fixer/src/Tokenizer/Analyzer/WhitespacesAnalyzer.php',
         'PhpCsFixer\\Tokenizer\\CT' => __DIR__ . '/..' . '/friendsofphp/php-cs-fixer/src/Tokenizer/CT.php',
         'PhpCsFixer\\Tokenizer\\CodeHasher' => __DIR__ . '/..' . '/friendsofphp/php-cs-fixer/src/Tokenizer/CodeHasher.php',

@@ -157,6 +157,9 @@
       <path value="$PROJECT_DIR$/src/vendor/zenstruck/assert" />
       <path value="$PROJECT_DIR$/src/vendor/zenstruck/foundry" />
       <path value="$PROJECT_DIR$/src/vendor/fakerphp/faker" />
+      <path value="$PROJECT_DIR$/src/vendor/nelmio/api-doc-bundle" />
+      <path value="$PROJECT_DIR$/src/vendor/zircote/swagger-php" />
+      <path value="$PROJECT_DIR$/src/vendor/twig/extra-bundle" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />
