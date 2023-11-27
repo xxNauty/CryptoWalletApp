@@ -26,4 +26,3 @@ services:
     App\Infrastructure\Currency\Service\CryptoCurrencyDataDownloadService:
         arguments:
             $client: '@monolog.http_client'
-

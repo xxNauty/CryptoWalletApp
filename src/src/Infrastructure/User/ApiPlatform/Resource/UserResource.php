@@ -15,7 +15,6 @@ use ApiPlatform\Metadata\Put;
 use App\Domain\Shared\ApiPlatform\Resource\ResourceInterface;
 use App\Infrastructure\Inventory\ApiPlatform\Resource\InventoryResource;
 use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
-use App\Infrastructure\User\ApiPlatform\OpenApi\UserFilter;
 use App\Infrastructure\User\ApiPlatform\State\Processor\UserCrudProcessor;
 use App\Infrastructure\User\ApiPlatform\State\Provider\UserCrudProvider;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -26,7 +25,6 @@ use Symfony\Component\Validator\Constraints as Assert;
     operations: [
         new GetCollection(
             security: 'is_granted("ROLE_ADMIN")',
-            filters: [UserFilter::class]
         ),
         new Get(),
         new Post(
@@ -77,7 +75,6 @@ class UserResource implements ResourceInterface
 
     #[Groups(['user.read', 'user.write'])]
     public ?string $currency = null;
-
 
     public static function fromModel(object $model, array $excludedVars = []): object
     {

@@ -4,7 +4,7 @@ namespace App\Infrastructure\Inventory\ApiPlatform\State\Provider;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use App\Application\Inventory\Query\UserInventory\GetUserCurrencyQuery;
+use App\Application\Inventory\Query\GetUserCurrencyQuery;
 use App\Domain\Shared\Query\QueryBusInterface;
 
 class GetUserCurrencyProvider implements ProviderInterface

@@ -6,7 +6,6 @@ namespace App\Domain\Inventory\Model;
 
 use App\Domain\Purchase\Model\Purchase;
 use App\Domain\Shared\Model\ModelInterface;
-use App\Domain\User\Model\User;
 use App\Infrastructure\Inventory\ApiPlatform\Resource\InventoryResource;
 use App\Infrastructure\Shared\Trait\SoftDeletableTrait;
 use Doctrine\DBAL\Types\Types;

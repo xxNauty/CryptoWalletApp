@@ -8,13 +8,12 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Put;
-use App\Application\Inventory\Command\UserInventory\UpdateUserInventoryCommand;
+use App\Application\Inventory\Command\UpdateUserInventoryCommand;
 use App\Domain\Shared\ApiPlatform\Resource\ResourceInterface;
 use App\Infrastructure\Inventory\ApiPlatform\State\Processor\UpdateUserInventoryProcessor;
 use App\Infrastructure\Inventory\ApiPlatform\State\Provider\GetUserCurrencyProvider;
 use App\Infrastructure\Inventory\ApiPlatform\State\Provider\GetUserInventoryProvider;
 use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
-use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
@@ -47,7 +46,6 @@ class InventoryResource implements ResourceInterface
 
     #[Groups(['user.read', 'inventory.read'])]
     public ?iterable $content = null;
-
 
     public static function fromModel(object $model, array $excludedVars = []): object
     {

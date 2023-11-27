@@ -4,7 +4,7 @@ namespace App\Infrastructure\Inventory\ApiPlatform\State\Processor;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use App\Application\Inventory\Command\UserInventory\UpdateUserInventoryCommand;
+use App\Application\Inventory\Command\UpdateUserInventoryCommand;
 use App\Domain\Shared\Command\CommandBusInterface;
 
 class UpdateUserInventoryProcessor implements ProcessorInterface

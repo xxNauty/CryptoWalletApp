@@ -3,7 +3,6 @@
 namespace App\Application\Purchase\Command;
 
 use App\Domain\Shared\Command\CommandInterface;
-use DateTimeImmutable;
 
 class CreatePurchaseCommand implements CommandInterface
 {
@@ -11,7 +10,8 @@ class CreatePurchaseCommand implements CommandInterface
         public string $symbol,
         public float $amount,
         public float $singlePrice,
-        public DateTimeImmutable $boughtAt,
+        public \DateTimeImmutable $boughtAt,
         public bool $sold,
-    ){}
+    ) {
+    }
 }
