@@ -21,7 +21,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     operations: [
         new Get(
             uriTemplate: '/inventories/get',
-            provider: GetUserInventoryProvider::class
+            provider: GetUserInventoryProvider::class,
         ),
         new Get(
             uriTemplate: '/inventories/get/{symbol}',
@@ -34,24 +34,23 @@ use Symfony\Component\Serializer\Annotation\Groups;
             processor: UpdateUserInventoryProcessor::class
         ),
     ],
-    security: 'is_granted("IS_AUTHENTICATED_FULLY")'
+    security: 'is_granted("IS_AUTHENTICATED_FULLY")',
 )]
 class InventoryResource implements ResourceInterface
 {
-    public function __construct(
-        #[ApiProperty(writable: false, identifier: true)]
-        public ?int $id = null,
+    #[ApiProperty(writable: false, identifier: true)]
+    public ?int $id = null;
 
-        #[Groups(['user.read'])]
-        public ?float $totalInventoryValue = null,
+    #[Groups(['user.read', 'inventory.read'])]
+    public ?float $totalInventoryValue = null;
 
-        #[Groups(['user.read'])]
-        public ?array $content = null,
-    ) {
-    }
+    #[Groups(['user.read', 'inventory.read'])]
+    public ?iterable $content = null;
 
     public static function fromModel(object $model, array $excludedVars = []): object
     {
-        return ResourceFactory::fromModel(self::class, $model);
+        $excludedVars[] = 'inventory';
+
+        return ResourceFactory::fromModel(self::class, $model, $excludedVars);
     }
 }

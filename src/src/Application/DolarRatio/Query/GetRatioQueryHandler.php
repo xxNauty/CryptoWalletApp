@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\DolarRatio\Query;
 
-use App\Domain\Currency\Service\DolarRatioManagerInterface;
+use App\Domain\DolarRatio\Service\DolarRatioManagerInterface;
 use App\Domain\Shared\Query\QueryHandlerInterface;
 
 class GetRatioQueryHandler implements QueryHandlerInterface

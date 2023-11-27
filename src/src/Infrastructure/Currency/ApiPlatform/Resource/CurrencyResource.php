@@ -18,7 +18,6 @@ use App\Infrastructure\Currency\ApiPlatform\State\Provider\CurrencyCrudProvider;
 use App\Infrastructure\Currency\ApiPlatform\State\Provider\GetAllowedCurrenciesProvider;
 use App\Infrastructure\Currency\ApiPlatform\State\Provider\GetAllowedRemoteCurrenciesProvider;
 use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
     shortName: 'CryptoCurrency',
@@ -53,7 +52,6 @@ class CurrencyResource implements ResourceInterface
         #[ApiProperty(identifier: true)]
         public ?int $id = null,
 
-        #[Assert\Length(exactly: 3)]
         public ?string $symbol = null,
 
         public ?string $name = null,
@@ -70,6 +68,8 @@ class CurrencyResource implements ResourceInterface
 
     public static function fromModel(object $model, array $excludedVars = []): object
     {
-        return ResourceFactory::fromModel(self::class, $model);
+        $excludedVars[] = 'currency';
+
+        return ResourceFactory::fromModel(self::class, $model, $excludedVars);
     }
 }

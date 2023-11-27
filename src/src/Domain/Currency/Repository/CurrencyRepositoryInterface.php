@@ -16,4 +16,6 @@ interface CurrencyRepositoryInterface extends RepositoryInterface
     public function find(int $id): ?CryptoCurrency;
 
     public function getAllowedCurrencies(): ?array;
+
+    public function findBy(array $params): ?CryptoCurrency;
 }
