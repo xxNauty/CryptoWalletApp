@@ -15,7 +15,6 @@ use ApiPlatform\Metadata\Put;
 use App\Domain\Shared\ApiPlatform\Resource\ResourceInterface;
 use App\Infrastructure\Inventory\ApiPlatform\Resource\InventoryResource;
 use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
-use App\Infrastructure\User\ApiPlatform\OpenApi\UserFilter;
 use App\Infrastructure\User\ApiPlatform\State\Processor\UserCrudProcessor;
 use App\Infrastructure\User\ApiPlatform\State\Provider\UserCrudProvider;
 use Symfony\Component\Serializer\Annotation\Groups;
