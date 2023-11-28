@@ -8,7 +8,6 @@ use App\Domain\User\Model\User;
 use App\Domain\User\Repository\UserRepositoryInterface;
 use App\Infrastructure\Shared\Doctrine\DoctrineRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\QueryBuilder;
 
 class DoctrineUserRepository extends DoctrineRepository implements UserRepositoryInterface
 {
@@ -35,13 +34,6 @@ class DoctrineUserRepository extends DoctrineRepository implements UserRepositor
     public function find(int $id): ?User
     {
         return $this->em->find(self::ENTITY_CLASS, $id);
-    }
-
-    public function withFirstName(string $firstName): static
-    {
-        return $this->filter(static function (QueryBuilder $qb) use ($firstName): void {
-            $qb->where(sprintf('%s.firstName = :firstName', self::ALIAS))->setParameter('firstName', $firstName);
-        });
     }
 
     public function findByEmail(?string $email): ?User

@@ -21,4 +21,13 @@ readonly class UserSecurityService implements UserSecurityServiceInterface
             $this->security->getUser()?->getUserIdentifier()
         );
     }
+
+    public function isLogged(): bool
+    {
+        if (is_null($this->security->getUser())) {
+            return true;
+        }
+
+        return false;
+    }
 }

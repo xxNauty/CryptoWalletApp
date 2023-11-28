@@ -8,10 +8,10 @@ use App\Domain\Shared\Query\QueryHandlerInterface;
 use App\Domain\User\Model\User;
 use App\Domain\User\Repository\UserRepositoryInterface;
 
-class FindUserQueryHandler implements QueryHandlerInterface
+readonly class FindUserQueryHandler implements QueryHandlerInterface
 {
     public function __construct(
-        private readonly UserRepositoryInterface $userRepository
+        private UserRepositoryInterface $userRepository
     ) {
     }
 

@@ -6,12 +6,11 @@ namespace App\Application\User\Query;
 
 use App\Domain\Shared\Query\QueryInterface;
 
-class FindUserCollectionQuery implements QueryInterface
+readonly class FindUserCollectionQuery implements QueryInterface
 {
     public function __construct(
-        public readonly ?string $firstName = null,
-        public readonly ?int $page = null,
-        public readonly ?int $itemsPerPage = null,
+        public ?int $page = null,
+        public ?int $itemsPerPage = null,
     ) {
     }
 }

@@ -11,68 +11,72 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Put;
 use App\Domain\Shared\ApiPlatform\Resource\ResourceInterface;
-use App\Infrastructure\Inventory\ApiPlatform\Resource\InventoryResource;
 use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
-use App\Infrastructure\User\ApiPlatform\State\Processor\UserCrudProcessor;
-use App\Infrastructure\User\ApiPlatform\State\Provider\UserCrudProvider;
-use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
+use App\Infrastructure\User\ApiPlatform\State\Processor\CreateUserProcessor;
+use App\Infrastructure\User\ApiPlatform\State\Processor\DeleteUserProcessor;
+use App\Infrastructure\User\ApiPlatform\State\Processor\UpdateUserProcessor;
+use App\Infrastructure\User\ApiPlatform\State\Provider\GetUserCollectionProvider;
+use App\Infrastructure\User\ApiPlatform\State\Provider\GetUserProvider;
 
 #[ApiResource(
     shortName: 'User',
     operations: [
         new GetCollection(
+            uriTemplate: '/users/get_all',
             security: 'is_granted("ROLE_ADMIN")',
+            provider: GetUserCollectionProvider::class
         ),
-        new Get(),
+        new Get(
+            uriTemplate: '/users/get/{id}',
+            uriVariables: 'id',
+            security: 'is_granted("ROLE_ADMIN") or is_granted("ROLE_PLAYER")',
+            provider: GetUserProvider::class
+        ),
         new Post(
-            security: 'is_granted("PUBLIC_ACCESS")'
+            uriTemplate: '/users/create',
+            security: 'is_granted("PUBLIC_ACCESS")',
+            processor: CreateUserProcessor::class,
         ),
-        new Patch(),
-        new Delete(),
+        new Patch(
+            uriTemplate: '/users/update/{id}',
+            uriVariables: 'id',
+            security: 'is_granted("IS_AUTHENTICATED_FULLY")',
+            read: false,
+            processor: UpdateUserProcessor::class
+        ),
+        new Post( // todo poprawić na delete
+            uriTemplate: '/users/remove/{id}',
+            uriVariables: 'id',
+            security: 'is_granted("IS_AUTHENTICATED_FULLY")',
+            processor: DeleteUserProcessor::class
+        ),
+//        new Delete(
+//            uriTemplate: '/users/remove/{id}',
+//            uriVariables: 'id',
+//            security: 'is_granted("IS_AUTHENTICATED_FULLY")',
+//            read: false,
+//            processor: DeleteUserProcessor::class
+//        ),
     ],
-    normalizationContext: ['groups' => ['user.read']],
-    denormalizationContext: ['groups' => ['user.write']],
-    security: '(is_granted("IS_AUTHENTICATED_FULLY") and object.id == user.id) or is_granted("ROLE_ADMIN")',
-    provider: UserCrudProvider::class,
-    processor: UserCrudProcessor::class,
 )]
 class UserResource implements ResourceInterface
 {
     #[ApiProperty(writable: false, identifier: true)]
-    #[Groups(['user.read'])]
     public ?int $id = null;
 
-    #[Assert\NotNull]
-    #[Assert\Email]
-    #[Assert\Length(min: 5, max: 100)]
-    #[Groups(['user.read', 'user.write'])]
     public ?string $email = null;
 
-    #[Assert\NotNull]
-    #[Assert\Length(min: 1, max: 50)]
-    #[Groups(['user.read', 'user.write'])]
     public ?string $firstName = null;
 
-    #[Assert\NotNull]
-    #[Assert\Length(min: 1, max: 50)]
-    #[Groups(['user.read', 'user.write'])]
     public ?string $lastName = null;
 
-    #[Assert\NotNull]
-    #[Assert\Length(min: 1, max: 50)]
-    #[Groups(['user.write'])]
     public ?string $password = null;
 
-    #[Assert\Length(min: 1, max: 50)]
     public ?string $role = null;
 
-    #[Groups(['user.read'])]
-    public ?InventoryResource $inventory = null;
+    public ?iterable $inventory = null;
 
-    #[Groups(['user.read', 'user.write'])]
     public ?string $currency = null;
 
     public static function fromModel(object $model, array $excludedVars = []): object
