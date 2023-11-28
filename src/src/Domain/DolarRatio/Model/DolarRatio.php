@@ -19,7 +19,6 @@ class DolarRatio
         self::CURRENCY_EUR,
         self::CURRENCY_CHF,
         self::CURRENCY_GBP,
-        self::DEFAULT_CURRENCY,
     ];
 
     public function __construct(
