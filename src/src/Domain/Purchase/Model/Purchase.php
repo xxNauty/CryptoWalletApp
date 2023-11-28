@@ -2,8 +2,8 @@
 
 namespace App\Domain\Purchase\Model;
 
-use App\Domain\Inventory\Model\Inventory;
 use App\Domain\Shared\Model\ModelInterface;
+use App\Domain\User\Model\User;
 use App\Infrastructure\Purchase\ApiPlatform\Resource\PurchaseResource;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -19,9 +19,6 @@ class Purchase implements ModelInterface
     #[ORM\Column(type: Types::INTEGER)]
     public int $id;
 
-    #[ORM\ManyToOne(targetEntity: Inventory::class, inversedBy: 'content')]
-    private Inventory $inventory;
-
     public function __construct(
         #[ORM\Column(type: Types::STRING)]
         public string $symbol,
@@ -36,18 +33,21 @@ class Purchase implements ModelInterface
         public \DateTimeImmutable $boughtAt,
 
         #[ORM\Column(type: Types::BOOLEAN)]
-        public bool $sold // jeśli true => sprzedaż, jeśli false => kupno
+        public bool $sold, // jeśli true => sprzedaż, jeśli false => kupno
+
+        #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'inventory')]
+        private User $owner,
     ) {
     }
 
-    public function getInventory(): Inventory
+    public function getOwner(): User
     {
-        return $this->inventory;
+        return $this->owner;
     }
 
-    public function setInventory(Inventory $inventory): void
+    public function setOwner(User $owner): void
     {
-        $this->inventory = $inventory;
+        $this->owner = $owner;
     }
 
     public function getResource(): string

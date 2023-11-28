@@ -1,38 +1,25 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Infrastructure\User\ApiPlatform\State\Provider;
 
-use ApiPlatform\Metadata\CollectionOperationInterface;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\Pagination\Pagination;
 use ApiPlatform\State\ProviderInterface;
 use App\Application\User\Query\FindUserCollectionQuery;
-use App\Application\User\Query\FindUserQuery;
 use App\Domain\Shared\Query\QueryBusInterface;
-use App\Domain\User\Model\User;
 use App\Infrastructure\Shared\ApiPlatform\State\Paginator;
 use App\Infrastructure\User\ApiPlatform\Resource\UserResource;
 
-class UserCrudProvider implements ProviderInterface
+readonly class GetUserCollectionProvider implements ProviderInterface
 {
     public function __construct(
-        private readonly QueryBusInterface $queryBus,
-        private readonly Pagination $pagination,
+        private QueryBusInterface $queryBus,
+        private Pagination $pagination,
     ) {
     }
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        if (!$operation instanceof CollectionOperationInterface) {
-            /** @var User|null $model */
-            $model = $this->queryBus->ask(new FindUserQuery($uriVariables['id']));
-
-            return null !== $model ? UserResource::fromModel($model) : null;
-        }
-
-        $firstName = $context['filters']['firstName'] ?? null;
         $offset = $limit = null;
 
         if ($this->pagination->isEnabled($operation, $context)) {
@@ -40,7 +27,7 @@ class UserCrudProvider implements ProviderInterface
             $limit = $this->pagination->getLimit($operation, $context);
         }
 
-        $models = $this->queryBus->ask(new FindUserCollectionQuery($firstName, $offset, $limit));
+        $models = $this->queryBus->ask(new FindUserCollectionQuery($offset, $limit));
 
         $resources = [];
         foreach ($models as $model) {

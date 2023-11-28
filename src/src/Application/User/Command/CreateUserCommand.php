@@ -8,14 +8,14 @@ use App\Domain\DolarRatio\Model\DolarRatio;
 use App\Domain\Shared\Command\CommandInterface;
 use Webmozart\Assert\Assert;
 
-class CreateUserCommand implements CommandInterface
+readonly class CreateUserCommand implements CommandInterface
 {
     public function __construct(
-        public readonly string $email,
-        public readonly string $firstName,
-        public readonly string $lastName,
-        public readonly string $password,
-        public readonly string $currency
+        public string $email,
+        public string $firstName,
+        public string $lastName,
+        public string $password,
+        public string $currency
     ) {
         Assert::lengthBetween($email, 5, 100);
         Assert::lengthBetween($firstName, 2, 50);

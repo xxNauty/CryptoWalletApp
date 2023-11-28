@@ -1,15 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Application\User\Query;
 
 use App\Domain\Shared\Query\QueryInterface;
+use App\Domain\User\Model\User;
 
-readonly class FindUserQuery implements QueryInterface
+readonly class FindOwnDataQuery implements QueryInterface
 {
     public function __construct(
-        public int $id,
+        public User $user
     ) {
     }
 }

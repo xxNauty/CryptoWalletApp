@@ -13,19 +13,19 @@ class PurchaseResource implements ResourceInterface
         #[ApiProperty(identifier: true)]
         public ?int $id = null,
 
-        #[Groups(['user.read', 'inventory.read'])]
+        #[Groups(['user.read'])]
         public ?string $symbol = null,
 
-        #[Groups(['user.read', 'inventory.read'])]
+        #[Groups(['user.read'])]
         public ?float $amount = null,
 
-        #[Groups(['user.read', 'inventory.read'])]
+        #[Groups(['user.read'])]
         public ?float $singlePrice = null,
 
-        #[Groups(['user.read', 'inventory.read'])]
+        #[Groups(['user.read'])]
         public ?\DateTimeImmutable $boughtAt = null,
 
-        #[Groups(['user.read', 'inventory.read'])]
+        #[Groups(['user.read'])]
         public ?bool $sold = null,
     ) {
     }

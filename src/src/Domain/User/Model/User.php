@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\User\Model;
 
-use App\Domain\Inventory\Model\Inventory;
+use App\Domain\Purchase\Model\Purchase;
 use App\Domain\Shared\Model\ModelInterface;
 use App\Infrastructure\Shared\Trait\SoftDeletableTrait;
 use App\Infrastructure\User\ApiPlatform\Resource\UserResource;
@@ -40,8 +40,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, ModelIn
     #[ORM\Column(type: Types::STRING, length: 255)]
     private string $password;
 
-    #[ORM\OneToOne(targetEntity: Inventory::class, cascade: ['persist', 'remove'])]
-    public Inventory $inventory;
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Purchase::class)]
+    public ?iterable $inventory = null;
 
     public function __construct(
         #[ORM\Column(type: Types::STRING, length: 100, unique: true)]

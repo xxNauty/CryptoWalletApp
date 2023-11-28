@@ -10,11 +10,11 @@ use App\Domain\User\Repository\UserRepositoryInterface;
 use App\Infrastructure\User\Service\UserPasswordService;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class UpdateUserCommandHandler implements CommandHandlerInterface
+readonly class UpdateUserCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private readonly UserRepositoryInterface $userRepository,
-        private readonly UserPasswordService $passwordService
+        private UserRepositoryInterface $userRepository,
+        private UserPasswordService $passwordService
     ) {
     }
 

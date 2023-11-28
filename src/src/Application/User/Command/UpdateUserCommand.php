@@ -8,15 +8,15 @@ use App\Domain\DolarRatio\Model\DolarRatio;
 use App\Domain\Shared\Command\CommandInterface;
 use Webmozart\Assert\Assert;
 
-class UpdateUserCommand implements CommandInterface
+readonly class UpdateUserCommand implements CommandInterface
 {
     public function __construct(
-        public readonly int $id,
-        public readonly ?string $email = null,
-        public readonly ?string $firstName = null,
-        public readonly ?string $lastName = null,
-        public readonly ?string $password = null,
-        public readonly ?string $currency = null,
+        public int $id,
+        public ?string $email = null,
+        public ?string $firstName = null,
+        public ?string $lastName = null,
+        public ?string $password = null,
+        public ?string $currency = null,
     ) {
         Assert::nullOrLengthBetween($email, 5, 100);
         Assert::nullOrLengthBetween($firstName, 2, 50);
