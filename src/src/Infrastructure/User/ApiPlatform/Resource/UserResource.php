@@ -30,7 +30,6 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Post(
             security: 'is_granted("PUBLIC_ACCESS")'
         ),
-        new Put(),
         new Patch(),
         new Delete(),
     ],

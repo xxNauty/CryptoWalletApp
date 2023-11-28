@@ -23,6 +23,7 @@ use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
     shortName: 'CryptoCurrency',
     operations: [
         new Get(
+            uriTemplate: '/crypto_currencies/get/{id}',
             security: 'is_granted("PUBLIC_ACCESS")'
         ),
         new Post(
