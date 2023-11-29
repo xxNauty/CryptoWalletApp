@@ -36,7 +36,7 @@ class DoctrineCurrencyRepository extends DoctrineRepository implements CurrencyR
         return $this->em->find(self::ENTITY_CLASS, $id);
     }
 
-    public function getAllowedCurrencies(): ?array
+    public function getAvailableCurrencies(): ?array
     {
         $currencies = $this->query()
             ->select('currency.symbol')
@@ -52,7 +52,7 @@ class DoctrineCurrencyRepository extends DoctrineRepository implements CurrencyR
         return $symbols;
     }
 
-    public function getAllowedCurrenciesNames(): ?array
+    public function getAvailableCurrenciesNames(): ?array
     {
         $currencies = $this->query()
             ->select('currency.name')
