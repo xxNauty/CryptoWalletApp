@@ -14,6 +14,6 @@ readonly class FindAvailableCurrenciesQueryHandler implements QueryHandlerInterf
 
     public function __invoke(FindAvailableCurrenciesQuery $query): ?array
     {
-        return $this->currencyRepository->getAllowedCurrencies();
+        return $this->currencyRepository->getAvailableCurrencies();
     }
 }

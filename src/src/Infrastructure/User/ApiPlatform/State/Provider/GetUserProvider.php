@@ -15,7 +15,7 @@ readonly class GetUserProvider implements ProviderInterface
 {
     public function __construct(
         private QueryBusInterface $queryBus,
-        private UserSecurityServiceInterface $securityService
+        private UserSecurityServiceInterface $securityService,
     ) {
     }
 
