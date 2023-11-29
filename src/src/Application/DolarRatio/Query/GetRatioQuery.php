@@ -8,7 +8,7 @@ use App\Domain\DolarRatio\Model\DolarRatio;
 use App\Domain\Shared\Query\QueryInterface;
 use Webmozart\Assert\Assert;
 
-class GetRatioQuery implements QueryInterface
+readonly class GetRatioQuery implements QueryInterface
 {
     public function __construct(
         public string $symbol

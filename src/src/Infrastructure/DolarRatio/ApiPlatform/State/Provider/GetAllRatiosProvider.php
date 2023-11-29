@@ -8,16 +8,24 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use App\Application\DolarRatio\Query\GetAllRatiosQuery;
 use App\Domain\Shared\Query\QueryBusInterface;
+use App\Infrastructure\DolarRatio\ApiPlatform\Resource\DollarRatiosResource;
 
-class GetAllRatiosProvider implements ProviderInterface
+readonly class GetAllRatiosProvider implements ProviderInterface
 {
     public function __construct(
-        private readonly QueryBusInterface $queryBus,
+        private QueryBusInterface $queryBus,
     ) {
     }
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        return $this->queryBus->ask(new GetAllRatiosQuery());
+        $resources = [];
+        $models = $this->queryBus->ask(new GetAllRatiosQuery());
+
+        foreach ($models as $model) {
+            $resources[] = DollarRatiosResource::fromModel($model);
+        }
+
+        return $resources;
     }
 }
