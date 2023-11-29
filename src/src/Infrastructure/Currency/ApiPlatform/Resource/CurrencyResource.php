@@ -13,7 +13,10 @@ use ApiPlatform\Metadata\Post;
 use App\Application\Currency\Command\CreateCurrencyCommand;
 use App\Application\Currency\Command\UpdateCurrencyCommand;
 use App\Domain\Shared\ApiPlatform\Resource\ResourceInterface;
+use App\Infrastructure\Currency\ApiPlatform\State\Processor\CreateCurrencyProcessor;
 use App\Infrastructure\Currency\ApiPlatform\State\Processor\CurrencyCrudProcessor;
+use App\Infrastructure\Currency\ApiPlatform\State\Processor\DeleteCurrencyProcessor;
+use App\Infrastructure\Currency\ApiPlatform\State\Processor\UpdateCurrencyProcessor;
 use App\Infrastructure\Currency\ApiPlatform\State\Provider\CurrencyCrudProvider;
 use App\Infrastructure\Currency\ApiPlatform\State\Provider\GetAllowedCurrenciesProvider;
 use App\Infrastructure\Currency\ApiPlatform\State\Provider\GetAllowedRemoteCurrenciesProvider;
@@ -24,15 +27,22 @@ use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
     operations: [
         new Get(
             uriTemplate: '/crypto_currencies/get/{id}',
-            security: 'is_granted("PUBLIC_ACCESS")'
+            security: 'is_granted("PUBLIC_ACCESS")',
+            provider: CurrencyCrudProvider::class,
         ),
         new Post(
-            input: CreateCurrencyCommand::class,
+            uriTemplate: '/crypto_currencies/create',
+            processor: CreateCurrencyProcessor::class
         ),
         new Patch(
-            input: UpdateCurrencyCommand::class
+            uriTemplate: '/crypto_currencies/update/{id}',
+            read: false,
+            processor: UpdateCurrencyProcessor::class,
         ),
-        new Delete(),
+        new Post(
+            uriTemplate: '/crypto_currencies/delete/{id}',
+            processor: DeleteCurrencyProcessor::class,
+        ),
         new Get(
             uriTemplate: '/crypto_currencies/allowed',
             security: 'is_granted("PUBLIC_ACCESS")',
@@ -44,8 +54,6 @@ use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
         ),
     ],
     security: 'is_granted("ROLE_ADMIN")',
-    provider: CurrencyCrudProvider::class,
-    processor: CurrencyCrudProcessor::class,
 )]
 class CurrencyResource implements ResourceInterface
 {

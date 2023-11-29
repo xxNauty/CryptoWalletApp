@@ -66,4 +66,20 @@ class DoctrinePurchaseRepository extends DoctrineRepository implements PurchaseR
 
         return array_unique($returnArray);
     }
+
+    public function findUsedCurrencies(): ?array
+    {
+        $data = $this->query()
+            ->select(sprintf('%s.symbol', self::ALIAS))
+            ->getQuery()
+            ->getResult();
+
+        $returnArray = [];
+
+        foreach ($data as $item) {
+            $returnArray[] = $item['symbol'];
+        }
+
+        return array_unique($returnArray);
+    }
 }

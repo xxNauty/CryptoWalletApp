@@ -16,4 +16,6 @@ interface PurchaseRepositoryInterface
     public function getValueOfCurrency(User $user, string $symbol): string;
 
     public function getUsersCurrencies(User $user): array;
+
+    public function findUsedCurrencies(): ?array;
 }
