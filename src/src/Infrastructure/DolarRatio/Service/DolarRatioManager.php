@@ -19,17 +19,18 @@ class DolarRatioManager implements DolarRatioManagerInterface
         }
     }
 
-    public function getData(string $chosenCurrency): array
+    public function getData(string $chosenCurrency): DolarRatio
     {
         $path = 'dollar_rates/'.strtoupper($chosenCurrency).'_rate.json';
         if (!$this->filesystem->exists($path)) {
             $this->update($chosenCurrency, true);
         }
 
-        return [
-            'ratio' => json_decode(file_get_contents($path))->ratio,
-            'last update' => json_decode(file_get_contents($path))->updatedAt,
-        ];
+        return new DolarRatio(
+            $chosenCurrency,
+            json_decode(file_get_contents($path))->ratio,
+            \DateTimeImmutable::createFromFormat('Y.m.d H:i:s', json_decode(file_get_contents($path))->updatedAt)
+        );
     }
 
     public function updateAll(bool $initial = false): void
