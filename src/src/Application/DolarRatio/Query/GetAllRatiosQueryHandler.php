@@ -17,10 +17,10 @@ readonly class GetAllRatiosQueryHandler implements QueryHandlerInterface
     public function __invoke(GetAllRatiosQuery $query): array
     {
         return [
-            ['PLN: ' => $this->dolarRatioManager->getData('PLN')],
-            ['EUR: ' => $this->dolarRatioManager->getData('EUR')],
-            ['GBP: ' => $this->dolarRatioManager->getData('GBP')],
-            ['CHF: ' => $this->dolarRatioManager->getData('CHF')],
+            $this->dolarRatioManager->getData('PLN'),
+            $this->dolarRatioManager->getData('EUR'),
+            $this->dolarRatioManager->getData('GBP'),
+            $this->dolarRatioManager->getData('CHF'),
         ];
     }
 }
