@@ -7,7 +7,9 @@ namespace App\Application\Currency\Command;
 use App\Domain\Currency\Repository\CurrencyRepositoryInterface;
 use App\Domain\Purchase\Resource\PurchaseRepositoryInterface;
 use App\Domain\Shared\Command\CommandHandlerInterface;
+use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
+use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DeleteCurrencyCommandHandler implements CommandHandlerInterface
