@@ -11,10 +11,12 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Application\User\Command\UpdateUserPasswordCommand;
 use App\Domain\Shared\ApiPlatform\Resource\ResourceInterface;
 use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
 use App\Infrastructure\User\ApiPlatform\State\Processor\CreateUserProcessor;
 use App\Infrastructure\User\ApiPlatform\State\Processor\DeleteUserProcessor;
+use App\Infrastructure\User\ApiPlatform\State\Processor\PasswordChangeProcessor;
 use App\Infrastructure\User\ApiPlatform\State\Processor\UpdateUserProcessor;
 use App\Infrastructure\User\ApiPlatform\State\Provider\GetUserCollectionProvider;
 use App\Infrastructure\User\ApiPlatform\State\Provider\GetUserProvider;
@@ -41,14 +43,12 @@ use App\Infrastructure\User\ApiPlatform\State\Provider\GetUserProvider;
         new Patch(
             uriTemplate: '/users/update/{id}',
             uriVariables: 'id',
-            security: 'is_granted("IS_AUTHENTICATED_FULLY")',
             read: false,
             processor: UpdateUserProcessor::class
         ),
         new Post( // todo poprawić na delete
             uriTemplate: '/users/remove/{id}',
             uriVariables: 'id',
-            security: 'is_granted("IS_AUTHENTICATED_FULLY")',
             processor: DeleteUserProcessor::class
         ),
 //        new Delete(
@@ -58,7 +58,14 @@ use App\Infrastructure\User\ApiPlatform\State\Provider\GetUserProvider;
 //            read: false,
 //            processor: DeleteUserProcessor::class
 //        ),
+        new Post(
+            uriTemplate: '/users/password',
+            input: UpdateUserPasswordCommand::class,
+            processor: PasswordChangeProcessor::class
+        )
+
     ],
+    security: 'is_granted("IS_AUTHENTICATED_FULLY")',
 )]
 class UserResource implements ResourceInterface
 {
