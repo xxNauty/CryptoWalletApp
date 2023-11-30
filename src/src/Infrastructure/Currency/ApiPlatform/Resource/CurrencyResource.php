@@ -32,7 +32,7 @@ use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
             processor: CreateCurrencyProcessor::class
         ),
         new Patch(
-            uriTemplate: '/crypto_currencies/update/{id}',
+            uriTemplate: '/crypto_currencies/update',
             read: false,
             processor: UpdateCurrencyProcessor::class,
         ),
@@ -54,23 +54,20 @@ use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
 )]
 class CurrencyResource implements ResourceInterface
 {
-    public function __construct(
-        #[ApiProperty(identifier: true)]
-        public ?int $id = null,
+    #[ApiProperty(identifier: true)]
+    public ?int $id = null;
 
-        public ?string $symbol = null,
+    public ?string $symbol = null;
 
-        public ?string $name = null,
+    public ?string $name = null;
 
-        public ?float $priceUSD = null,
+    public ?float $priceUSD = null;
 
-        public ?int $change1h = null,
+    public ?int $change1h = null;
 
-        public ?int $change24h = null,
+    public ?int $change24h = null;
 
-        public ?int $change7d = null,
-    ) {
-    }
+    public ?int $change7d = null;
 
     public static function fromModel(object $model, array $excludedVars = []): object
     {

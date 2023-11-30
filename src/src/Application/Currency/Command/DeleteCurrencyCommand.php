@@ -6,10 +6,10 @@ namespace App\Application\Currency\Command;
 
 use App\Domain\Shared\Command\CommandInterface;
 
-class DeleteCurrencyCommand implements CommandInterface
+readonly class DeleteCurrencyCommand implements CommandInterface
 {
     public function __construct(
-        public readonly int $id,
+        public int $id,
     ) {
     }
 }

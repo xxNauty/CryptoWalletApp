@@ -12,11 +12,11 @@ use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class DeleteCurrencyCommandHandler implements CommandHandlerInterface
+readonly class DeleteCurrencyCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private readonly CurrencyRepositoryInterface $currencyRepository,
-        private readonly PurchaseRepositoryInterface $purchaseRepository
+        private CurrencyRepositoryInterface $currencyRepository,
+        private PurchaseRepositoryInterface $purchaseRepository
     ) {
     }
 

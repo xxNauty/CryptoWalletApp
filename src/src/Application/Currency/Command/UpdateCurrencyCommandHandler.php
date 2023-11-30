@@ -10,17 +10,17 @@ use App\Domain\Currency\Service\CryptoCurrencyDataDownloadServiceInterface;
 use App\Domain\Shared\Command\CommandHandlerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class UpdateCurrencyCommandHandler implements CommandHandlerInterface
+readonly class UpdateCurrencyCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private readonly CurrencyRepositoryInterface $currencyRepository,
-        private readonly CryptoCurrencyDataDownloadServiceInterface $cryptoCurrencyDataDownloadService
+        private CurrencyRepositoryInterface                $currencyRepository,
+        private CryptoCurrencyDataDownloadServiceInterface $cryptoCurrencyDataDownloadService
     ) {
     }
 
     public function __invoke(UpdateCurrencyCommand $command): CryptoCurrency
     {
-        $currency = $this->currencyRepository->find($command->id);
+        $currency = $this->currencyRepository->findBy(['symbol' => $command->symbol]);
 
         if (null === $currency) {
             throw new NotFoundHttpException('There is no currency with that ID');
