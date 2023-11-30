@@ -24,7 +24,7 @@ class DeleteCurrencyCommandHandler implements CommandHandlerInterface
             throw new NotFoundHttpException('There is no currency with that ID');
         }
 
-        if(in_array($currency->symbol, $this->purchaseRepository->findUsedCurrencies())){
+        if (in_array($currency->symbol, $this->purchaseRepository->findUsedCurrencies())) {
             throw new AccessDeniedException("You can not delete currency which is in somebody's wallet");
         }
 

@@ -8,7 +8,6 @@ readonly class GetCurrencyAmountQuery implements QueryInterface
 {
     public function __construct(
         public string $symbol
-    )
-    {
+    ) {
     }
 }

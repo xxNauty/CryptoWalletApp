@@ -10,11 +10,8 @@ use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use App\Application\Currency\Command\CreateCurrencyCommand;
-use App\Application\Currency\Command\UpdateCurrencyCommand;
 use App\Domain\Shared\ApiPlatform\Resource\ResourceInterface;
 use App\Infrastructure\Currency\ApiPlatform\State\Processor\CreateCurrencyProcessor;
-use App\Infrastructure\Currency\ApiPlatform\State\Processor\CurrencyCrudProcessor;
 use App\Infrastructure\Currency\ApiPlatform\State\Processor\DeleteCurrencyProcessor;
 use App\Infrastructure\Currency\ApiPlatform\State\Processor\UpdateCurrencyProcessor;
 use App\Infrastructure\Currency\ApiPlatform\State\Provider\CurrencyCrudProvider;
@@ -39,17 +36,17 @@ use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
             read: false,
             processor: UpdateCurrencyProcessor::class,
         ),
-        new Post(
+        new Post( // todo zamienić na delete
             uriTemplate: '/crypto_currencies/delete/{id}',
             processor: DeleteCurrencyProcessor::class,
         ),
         new Get(
-            uriTemplate: '/crypto_currencies/allowed',
+            uriTemplate: '/crypto_currencies/available',
             security: 'is_granted("PUBLIC_ACCESS")',
             provider: GetAllowedCurrenciesProvider::class
         ),
         new Get(
-            uriTemplate: '/crypto_currencies/allowed/remote',
+            uriTemplate: '/crypto_currencies/available/remote',
             provider: GetAllowedRemoteCurrenciesProvider::class
         ),
     ],

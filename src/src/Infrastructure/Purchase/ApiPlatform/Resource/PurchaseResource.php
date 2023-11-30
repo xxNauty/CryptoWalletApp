@@ -27,7 +27,7 @@ use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
             uriTemplate: '/inventory/{symbol}',
             uriVariables: 'symbol',
             provider: InventoryPartProvider::class
-        )
+        ),
     ],
 )]
 class PurchaseResource implements ResourceInterface

@@ -7,5 +7,6 @@ class InventoryPart
     public function __construct(
         public string $symbol,
         public float $amount
-    ){}
+    ) {
+    }
 }

@@ -35,7 +35,7 @@ class DoctrinePurchaseRepository extends DoctrineRepository implements PurchaseR
         return $this->em->find(self::ENTITY_CLASS, $id);
     }
 
-    public function getValueOfCurrency(User $user, string $symbol): string
+    public function getValueOfCurrency(User $user, string $symbol): float
     {
         $data = $this->query()
             ->select(sprintf('sum(%s.amount)', self::ALIAS))
@@ -46,7 +46,7 @@ class DoctrinePurchaseRepository extends DoctrineRepository implements PurchaseR
             ->getQuery()
             ->getResult();
 
-        return $data[0]['1'];
+        return floatval($data[0]['1']);
     }
 
     public function getUsersCurrencies(User $user): array

@@ -2,10 +2,8 @@
 
 namespace App\Infrastructure\Purchase\ApiPlatform\State\Provider;
 
-use ApiPlatform\Metadata\CollectionOperationInterface;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
-use App\Application\Purchase\Query\GetCurrencyAmountQuery;
 use App\Application\Purchase\Query\GetInventoryQuery;
 use App\Domain\Shared\Query\QueryBusInterface;
 

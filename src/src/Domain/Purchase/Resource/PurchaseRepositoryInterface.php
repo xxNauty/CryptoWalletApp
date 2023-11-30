@@ -13,7 +13,7 @@ interface PurchaseRepositoryInterface
 
     public function find(int $id): ?Purchase;
 
-    public function getValueOfCurrency(User $user, string $symbol): string;
+    public function getValueOfCurrency(User $user, string $symbol): float;
 
     public function getUsersCurrencies(User $user): array;
 
