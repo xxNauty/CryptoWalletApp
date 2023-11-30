@@ -926,7 +926,6 @@ return array(
     'App\\Infrastructure\\Shared\\Trait\\SoftDeletableTrait' => $baseDir . '/src/Infrastructure/Shared/Trait/SoftDeletableTrait.php',
     'App\\Infrastructure\\User\\ApiPlatform\\Resource\\UserResource' => $baseDir . '/src/Infrastructure/User/ApiPlatform/Resource/UserResource.php',
     'App\\Infrastructure\\User\\ApiPlatform\\State\\Processor\\CreateUserProcessor' => $baseDir . '/src/Infrastructure/User/ApiPlatform/State/Processor/CreateUserProcessor.php',
-    'App\\Infrastructure\\User\\ApiPlatform\\State\\Processor\\DeleteUserProcessor' => $baseDir . '/src/Infrastructure/User/ApiPlatform/State/Processor/DeleteUserProcessor.php',
     'App\\Infrastructure\\User\\ApiPlatform\\State\\Processor\\UpdateUserProcessor' => $baseDir . '/src/Infrastructure/User/ApiPlatform/State/Processor/UpdateUserProcessor.php',
     'App\\Infrastructure\\User\\ApiPlatform\\State\\Provider\\GetUserCollectionProvider' => $baseDir . '/src/Infrastructure/User/ApiPlatform/State/Provider/GetUserCollectionProvider.php',
     'App\\Infrastructure\\User\\ApiPlatform\\State\\Provider\\GetUserProvider' => $baseDir . '/src/Infrastructure/User/ApiPlatform/State/Provider/GetUserProvider.php',

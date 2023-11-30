@@ -7,13 +7,14 @@ namespace App\Application\User\Command;
 use App\Domain\Shared\Command\CommandHandlerInterface;
 use App\Domain\User\Model\User;
 use App\Domain\User\Repository\UserRepositoryInterface;
+use App\Domain\User\Service\UserPasswordServiceInterface;
 use App\Infrastructure\User\Service\UserPasswordService;
 
 readonly class CreateUserCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
         private UserRepositoryInterface $userRepository,
-        private UserPasswordService $passwordService,
+        private UserPasswordServiceInterface $passwordService,
     ) {
     }
 
