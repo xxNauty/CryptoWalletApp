@@ -9,7 +9,6 @@ use ApiPlatform\State\ProcessorInterface;
 use App\Application\DolarRatio\Command\UpdateRatiosCommand;
 use App\Domain\Shared\Command\CommandBusInterface;
 use App\Infrastructure\DolarRatio\ApiPlatform\Resource\DollarRatiosResource;
-use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Webmozart\Assert\Assert;
 
@@ -21,7 +20,7 @@ class UpdateAllRatiosProcessor implements ProcessorInterface
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): JsonResponse
     {

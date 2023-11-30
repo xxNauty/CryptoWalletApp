@@ -6,14 +6,12 @@ namespace App\Infrastructure\DolarRatio\ApiPlatform\Resource;
 
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 use App\Domain\Shared\ApiPlatform\Resource\ResourceInterface;
 use App\Infrastructure\DolarRatio\ApiPlatform\State\Processor\UpdateAllRatiosProcessor;
 use App\Infrastructure\DolarRatio\ApiPlatform\State\Provider\GetAllRatiosProvider;
 use App\Infrastructure\DolarRatio\ApiPlatform\State\Provider\GetRatioProvider;
 use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
-use DateTimeImmutable;
 
 #[ApiResource(
     shortName: 'DollarRatios',
@@ -40,7 +38,7 @@ class DollarRatiosResource implements ResourceInterface
 
     public ?float $ratio;
 
-    public ?DateTimeImmutable $lastUpdate;
+    public ?\DateTimeImmutable $lastUpdate;
 
     public static function fromModel(object $model, array $excludedVars = []): object
     {
