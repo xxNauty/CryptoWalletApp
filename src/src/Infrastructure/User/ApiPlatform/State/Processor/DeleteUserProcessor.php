@@ -26,7 +26,12 @@ readonly class DeleteUserProcessor implements ProcessorInterface
 
         /* @var UserResource $data */
         try {
-            $this->commandBus->dispatch(new DeleteUserCommand($uriVariables['id']));
+            $this->commandBus->dispatch(
+                new DeleteUserCommand(
+                    $uriVariables['id'],
+                    $data->password,
+                )
+            );
         } catch (\Exception $exception) {
             throw new \Exception($exception->getMessage());
         }

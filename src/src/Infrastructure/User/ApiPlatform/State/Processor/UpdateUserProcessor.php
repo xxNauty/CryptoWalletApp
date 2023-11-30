@@ -29,10 +29,10 @@ readonly class UpdateUserProcessor implements ProcessorInterface
             $this->commandBus->dispatch(
                 new UpdateUserCommand(
                     $uriVariables['id'],
+                    $data->password,
                     $data->email,
                     $data->firstName,
                     $data->lastName,
-                    $data->password,
                     $data->currency
                 )
             );

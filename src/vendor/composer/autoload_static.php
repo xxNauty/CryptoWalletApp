@@ -1568,7 +1568,6 @@ class ComposerStaticInitd108f0ccfdad11ce8d9cec357fffb094
         'App\\Infrastructure\\Shared\\Trait\\SoftDeletableTrait' => __DIR__ . '/../..' . '/src/Infrastructure/Shared/Trait/SoftDeletableTrait.php',
         'App\\Infrastructure\\User\\ApiPlatform\\Resource\\UserResource' => __DIR__ . '/../..' . '/src/Infrastructure/User/ApiPlatform/Resource/UserResource.php',
         'App\\Infrastructure\\User\\ApiPlatform\\State\\Processor\\CreateUserProcessor' => __DIR__ . '/../..' . '/src/Infrastructure/User/ApiPlatform/State/Processor/CreateUserProcessor.php',
-        'App\\Infrastructure\\User\\ApiPlatform\\State\\Processor\\DeleteUserProcessor' => __DIR__ . '/../..' . '/src/Infrastructure/User/ApiPlatform/State/Processor/DeleteUserProcessor.php',
         'App\\Infrastructure\\User\\ApiPlatform\\State\\Processor\\UpdateUserProcessor' => __DIR__ . '/../..' . '/src/Infrastructure/User/ApiPlatform/State/Processor/UpdateUserProcessor.php',
         'App\\Infrastructure\\User\\ApiPlatform\\State\\Provider\\GetUserCollectionProvider' => __DIR__ . '/../..' . '/src/Infrastructure/User/ApiPlatform/State/Provider/GetUserCollectionProvider.php',
         'App\\Infrastructure\\User\\ApiPlatform\\State\\Provider\\GetUserProvider' => __DIR__ . '/../..' . '/src/Infrastructure/User/ApiPlatform/State/Provider/GetUserProvider.php',
