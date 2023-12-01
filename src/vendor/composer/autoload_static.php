@@ -1553,6 +1553,7 @@ class ComposerStaticInitd108f0ccfdad11ce8d9cec357fffb094
         'App\\Infrastructure\\Migrations\\Version20231124102034' => __DIR__ . '/../..' . '/src/Infrastructure/Migrations/Version20231124102034.php',
         'App\\Infrastructure\\Migrations\\Version20231124113600' => __DIR__ . '/../..' . '/src/Infrastructure/Migrations/Version20231124113600.php',
         'App\\Infrastructure\\Migrations\\Version20231128160753' => __DIR__ . '/../..' . '/src/Infrastructure/Migrations/Version20231128160753.php',
+        'App\\Infrastructure\\Migrations\\Version20231130111747' => __DIR__ . '/../..' . '/src/Infrastructure/Migrations/Version20231130111747.php',
         'App\\Infrastructure\\Purchase\\ApiPlatform\\Resource\\PurchaseResource' => __DIR__ . '/../..' . '/src/Infrastructure/Purchase/ApiPlatform/Resource/PurchaseResource.php',
         'App\\Infrastructure\\Purchase\\ApiPlatform\\State\\Processor\\PurchaseProcessor' => __DIR__ . '/../..' . '/src/Infrastructure/Purchase/ApiPlatform/State/Processor/PurchaseProcessor.php',
         'App\\Infrastructure\\Purchase\\ApiPlatform\\State\\Provider\\CompleteInventoryProvider' => __DIR__ . '/../..' . '/src/Infrastructure/Purchase/ApiPlatform/State/Provider/CompleteInventoryProvider.php',

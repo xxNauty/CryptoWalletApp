@@ -4,6 +4,7 @@ namespace App\Infrastructure\User\ApiPlatform\State\Provider;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
+use App\Application\Purchase\Query\GetInventoryQuery;
 use App\Application\User\Query\FindOwnDataQuery;
 use App\Application\User\Query\FindUserQuery;
 use App\Domain\Shared\Query\QueryBusInterface;
@@ -28,6 +29,13 @@ readonly class GetUserProvider implements ProviderInterface
             ? $this->queryBus->ask(new FindOwnDataQuery($user))
             : $this->queryBus->ask(new FindUserQuery($uriVariables['id']));
 
-        return null !== $model ? UserResource::fromModel($model) : null;
+        /** @var UserResource $resource */
+        $resource = $model !== null ? UserResource::fromModel($model) : null;
+
+        if($resource !== null){
+            $resource->inventory = $this->queryBus->ask(new GetInventoryQuery());
+        }
+
+        return $resource;
     }
 }

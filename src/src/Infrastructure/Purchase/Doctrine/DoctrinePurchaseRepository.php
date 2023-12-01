@@ -7,6 +7,7 @@ use App\Domain\Purchase\Resource\PurchaseRepositoryInterface;
 use App\Domain\User\Model\User;
 use App\Infrastructure\Shared\Doctrine\DoctrineRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 class DoctrinePurchaseRepository extends DoctrineRepository implements PurchaseRepositoryInterface
 {
@@ -35,18 +36,29 @@ class DoctrinePurchaseRepository extends DoctrineRepository implements PurchaseR
         return $this->em->find(self::ENTITY_CLASS, $id);
     }
 
-    public function getValueOfCurrency(User $user, string $symbol): float
+    public function getAmountOfCurrency(User $user, string $symbol): float
     {
-        $data = $this->query()
+        $bought = $this->query()
             ->select(sprintf('sum(%s.amount)', self::ALIAS))
             ->where(sprintf('%s.owner = :owner', self::ALIAS))
+            ->andWhere(sprintf('%s.sold = false', self::ALIAS))
             ->andWhere(sprintf('%s.symbol = :symbol', self::ALIAS))
             ->setParameter('owner', $user)
             ->setParameter('symbol', $symbol)
             ->getQuery()
             ->getResult();
 
-        return floatval($data[0]['1']);
+        $sold = $this->query()
+            ->select(sprintf('sum(%s.amount)', self::ALIAS))
+            ->where(sprintf('%s.owner = :owner', self::ALIAS))
+            ->andWhere(sprintf('%s.sold = true', self::ALIAS))
+            ->andWhere(sprintf('%s.symbol = :symbol', self::ALIAS))
+            ->setParameter('owner', $user)
+            ->setParameter('symbol', $symbol)
+            ->getQuery()
+            ->getResult();
+
+        return bcsub($bought[0]['1'], $sold[0]['1'], 10);
     }
 
     public function getUsersCurrencies(User $user): array
