@@ -913,6 +913,7 @@ return array(
     'App\\Infrastructure\\Migrations\\Version20231124102034' => $baseDir . '/src/Infrastructure/Migrations/Version20231124102034.php',
     'App\\Infrastructure\\Migrations\\Version20231124113600' => $baseDir . '/src/Infrastructure/Migrations/Version20231124113600.php',
     'App\\Infrastructure\\Migrations\\Version20231128160753' => $baseDir . '/src/Infrastructure/Migrations/Version20231128160753.php',
+    'App\\Infrastructure\\Migrations\\Version20231130111747' => $baseDir . '/src/Infrastructure/Migrations/Version20231130111747.php',
     'App\\Infrastructure\\Purchase\\ApiPlatform\\Resource\\PurchaseResource' => $baseDir . '/src/Infrastructure/Purchase/ApiPlatform/Resource/PurchaseResource.php',
     'App\\Infrastructure\\Purchase\\ApiPlatform\\State\\Processor\\PurchaseProcessor' => $baseDir . '/src/Infrastructure/Purchase/ApiPlatform/State/Processor/PurchaseProcessor.php',
     'App\\Infrastructure\\Purchase\\ApiPlatform\\State\\Provider\\CompleteInventoryProvider' => $baseDir . '/src/Infrastructure/Purchase/ApiPlatform/State/Provider/CompleteInventoryProvider.php',

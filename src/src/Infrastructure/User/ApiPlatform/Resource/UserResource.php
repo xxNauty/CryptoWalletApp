@@ -12,6 +12,7 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use App\Application\User\Command\UpdateUserPasswordCommand;
+use App\Domain\Purchase\ValueObject\InventoryPart;
 use App\Domain\Shared\ApiPlatform\Resource\ResourceInterface;
 use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
 use App\Infrastructure\User\ApiPlatform\State\Processor\CreateUserProcessor;
@@ -85,6 +86,8 @@ class UserResource implements ResourceInterface
     public ?iterable $inventory = null;
 
     public ?string $currency = null;
+
+//    public ?array $inventory = null;
 
     public static function fromModel(object $model, array $excludedVars = []): object
     {

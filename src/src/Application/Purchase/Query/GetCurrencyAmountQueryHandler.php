@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Purchase\Query;
 
+use App\Domain\Currency\Repository\CurrencyRepositoryInterface;
 use App\Domain\Purchase\Resource\PurchaseRepositoryInterface;
 use App\Domain\Purchase\ValueObject\InventoryPart;
 use App\Domain\Shared\Query\QueryHandlerInterface;
@@ -14,7 +15,8 @@ readonly class GetCurrencyAmountQueryHandler implements QueryHandlerInterface
 {
     public function __construct(
         private UserSecurityServiceInterface $securityService,
-        private PurchaseRepositoryInterface $purchaseRepository
+        private PurchaseRepositoryInterface $purchaseRepository,
+        private CurrencyRepositoryInterface $currencyRepository
     ) {
     }
 
@@ -27,9 +29,18 @@ readonly class GetCurrencyAmountQueryHandler implements QueryHandlerInterface
             $this->purchaseRepository->getUsersCurrencies($user)
         );
 
+        $amount = $this->purchaseRepository->getAmountOfCurrency($user, $query->symbol);
+
         return new InventoryPart(
             $query->symbol,
-            $this->purchaseRepository->getValueOfCurrency($user, $query->symbol),
+            $amount,
+            floatval(
+                bcmul(
+                    strval($amount),
+                    strval($this->currencyRepository->findBy(['symbol' => $query->symbol])->priceUSD),
+                    10
+                )
+            )
         );
     }
 }
