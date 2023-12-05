@@ -10,24 +10,25 @@ use App\Application\DolarRatio\Command\UpdateRatiosCommand;
 use App\Domain\Shared\Command\CommandBusInterface;
 use App\Infrastructure\DolarRatio\ApiPlatform\Resource\DollarRatiosResource;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Webmozart\Assert\Assert;
 
-class UpdateAllRatiosProcessor implements ProcessorInterface
+readonly class UpdateAllRatiosProcessor implements ProcessorInterface
 {
     public function __construct(
-        private readonly CommandBusInterface $commandBus
+        private CommandBusInterface $commandBus
     ) {
     }
 
-    /**
-     * @throws \Exception
-     */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): JsonResponse
     {
         Assert::isInstanceOf($data, DollarRatiosResource::class);
+        /** @var DollarRatiosResource $data */
 
-        $this->commandBus->dispatch(new UpdateRatiosCommand());
+        $this->commandBus->dispatch(
+            new UpdateRatiosCommand()
+        );
 
-        return new JsonResponse('Updated', 200);
+        return new JsonResponse('Updated', Response::HTTP_OK);
     }
 }

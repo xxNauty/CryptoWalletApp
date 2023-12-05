@@ -6,6 +6,7 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProviderInterface;
 use App\Application\Purchase\Query\GetCurrencyAmountQuery;
 use App\Domain\Shared\Query\QueryBusInterface;
+use App\Infrastructure\Purchase\ApiPlatform\Resource\PurchaseResource;
 
 readonly class InventoryPartProvider implements ProviderInterface
 {
@@ -16,6 +17,8 @@ readonly class InventoryPartProvider implements ProviderInterface
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        return $this->queryBus->ask(new GetCurrencyAmountQuery($uriVariables['symbol']));
+        $model = $this->queryBus->ask(new GetCurrencyAmountQuery($uriVariables['symbol']));
+
+        return PurchaseResource::fromModel($model);
     }
 }

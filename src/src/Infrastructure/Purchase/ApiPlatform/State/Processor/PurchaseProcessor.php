@@ -9,18 +9,21 @@ use App\Application\Purchase\Command\PurchaseSaleCommand;
 use App\Domain\Shared\Command\CommandBusInterface;
 use App\Infrastructure\Purchase\ApiPlatform\Resource\PurchaseResource;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Webmozart\Assert\Assert;
 
-class PurchaseProcessor implements ProcessorInterface
+readonly class PurchaseProcessor implements ProcessorInterface
 {
     public function __construct(
-        private readonly CommandBusInterface $commandBus
+        private CommandBusInterface $commandBus
     ) {
     }
 
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): JsonResponse
     {
         Assert::isInstanceOf($data, PurchaseResource::class);
+        /** @var PurchaseResource $data */
+
         if ($data->sold) {
             $this->commandBus->dispatch(
                 new PurchaseSaleCommand(
@@ -29,7 +32,7 @@ class PurchaseProcessor implements ProcessorInterface
                 )
             );
 
-            return new JsonResponse('Sold', 201);
+            return new JsonResponse('Sold', Response::HTTP_CREATED);
         } else {
             $this->commandBus->dispatch(
                 new PurchaseCommand(
@@ -38,7 +41,7 @@ class PurchaseProcessor implements ProcessorInterface
                 )
             );
 
-            return new JsonResponse('Bought', 201);
+            return new JsonResponse('Bought', Response::HTTP_CREATED);
         }
     }
 }

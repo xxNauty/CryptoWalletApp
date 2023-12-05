@@ -11,18 +11,17 @@ use App\Domain\User\Service\UserSecurityServiceInterface;
 readonly class UpdateUserPasswordCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private UserRepositoryInterface      $userRepository,
+        private UserRepositoryInterface $userRepository,
         private UserSecurityServiceInterface $securityService,
         private UserPasswordServiceInterface $passwordService
-    )
-    {
+    ) {
     }
 
     public function __invoke(UpdateUserPasswordCommand $command): void
     {
         $user = $this->securityService->getUser();
 
-        if(!$this->passwordService->verifyPassword($user, $command->oldPassword)){
+        if (!$this->passwordService->verifyPassword($user, $command->oldPassword)) {
             throw new AccessDeniedException('Password incorrect');
         }
 

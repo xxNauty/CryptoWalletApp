@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 readonly class UpdateCurrencyCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private CurrencyRepositoryInterface                $currencyRepository,
+        private CurrencyRepositoryInterface $currencyRepository,
         private CryptoCurrencyDataDownloadServiceInterface $cryptoCurrencyDataDownloadService
     ) {
     }

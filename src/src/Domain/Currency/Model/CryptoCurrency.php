@@ -6,10 +6,8 @@ namespace App\Domain\Currency\Model;
 
 use App\Domain\Shared\Model\ModelInterface;
 use App\Infrastructure\Currency\ApiPlatform\Resource\CurrencyResource;
-use App\Infrastructure\Shared\Trait\SoftDeletableTrait;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Webmozart\Assert\Assert;
 
 #[ORM\Entity]

@@ -24,9 +24,10 @@ readonly class UserPasswordService implements UserPasswordServiceInterface
 
     public function verifyPassword(User $user, string $password): bool
     {
-        if($this->passwordHasher->isPasswordValid($user, $password)){
+        if ($this->passwordHasher->isPasswordValid($user, $password)) {
             return true;
         }
+
         return false;
     }
 }
