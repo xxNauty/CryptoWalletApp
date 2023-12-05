@@ -11,8 +11,6 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use App\Application\User\Command\UpdateUserPasswordCommand;
-use App\Domain\Purchase\ValueObject\InventoryPart;
 use App\Domain\Shared\ApiPlatform\Resource\ResourceInterface;
 use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
 use App\Infrastructure\User\ApiPlatform\State\Processor\CreateUserProcessor;
@@ -32,8 +30,6 @@ use App\Infrastructure\User\ApiPlatform\State\Provider\GetUserProvider;
         ),
         new Get(
             uriTemplate: '/users/get/{id}',
-            uriVariables: 'id',
-            security: 'is_granted("ROLE_ADMIN") or is_granted("ROLE_PLAYER")',
             provider: GetUserProvider::class
         ),
         new Post(
@@ -43,28 +39,22 @@ use App\Infrastructure\User\ApiPlatform\State\Provider\GetUserProvider;
         ),
         new Patch(
             uriTemplate: '/users/update/{id}',
-            uriVariables: 'id',
             read: false,
             processor: UpdateUserProcessor::class
         ),
-        new Post( // todo poprawić na delete
+        // todo poprawić na delete
+        new Post(
             uriTemplate: '/users/remove/{id}',
-            uriVariables: 'id',
             processor: DeleteUserProcessor::class
         ),
 //        new Delete(
 //            uriTemplate: '/users/remove/{id}',
-//            uriVariables: 'id',
-//            security: 'is_granted("IS_AUTHENTICATED_FULLY")',
-//            read: false,
 //            processor: DeleteUserProcessor::class
 //        ),
         new Post(
             uriTemplate: '/users/password',
-            input: UpdateUserPasswordCommand::class,
             processor: PasswordChangeProcessor::class
-        )
-
+        ),
     ],
     security: 'is_granted("IS_AUTHENTICATED_FULLY")',
 )]
@@ -81,13 +71,13 @@ class UserResource implements ResourceInterface
 
     public ?string $password = null;
 
+    public ?string $newPassword = null;
+
     public ?string $role = null;
 
     public ?iterable $inventory = null;
 
     public ?string $currency = null;
-
-//    public ?array $inventory = null;
 
     public static function fromModel(object $model, array $excludedVars = []): object
     {

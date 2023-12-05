@@ -19,7 +19,12 @@ readonly class GetUserCollectionProvider implements ProviderInterface
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        $models = $this->queryBus->ask(new FindUserCollectionQuery($uriVariables['page'], $uriVariables['itemsPerPage']));
+        $models = $this->queryBus->ask(
+          new FindUserCollectionQuery(
+            $uriVariables['page'], 
+            $uriVariables['itemsPerPage']
+          )
+        );
         $resources = [];
 
         foreach ($models as $model) {

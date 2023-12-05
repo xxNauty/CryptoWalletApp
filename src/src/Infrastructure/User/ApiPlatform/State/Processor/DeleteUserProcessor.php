@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Infrastructure\User\ApiPlatform\State\Processor;
 
 use ApiPlatform\Metadata\Operation;
@@ -8,6 +10,7 @@ use App\Application\User\Command\DeleteUserCommand;
 use App\Domain\Shared\Command\CommandBusInterface;
 use App\Infrastructure\User\ApiPlatform\Resource\UserResource;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Webmozart\Assert\Assert;
 
 readonly class DeleteUserProcessor implements ProcessorInterface
@@ -17,25 +20,18 @@ readonly class DeleteUserProcessor implements ProcessorInterface
     ) {
     }
 
-    /**
-     * @throws \Exception
-     */
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): JsonResponse
     {
         Assert::isInstanceOf($data, UserResource::class);
-
         /* @var UserResource $data */
-        try {
-            $this->commandBus->dispatch(
-                new DeleteUserCommand(
-                    $uriVariables['id'],
-                    $data->password,
-                )
-            );
-        } catch (\Exception $exception) {
-            throw new \Exception($exception->getMessage());
-        }
 
-        return new JsonResponse('Deleted', 204);
+        $this->commandBus->dispatch(
+            new DeleteUserCommand(
+                $uriVariables['id'],
+                $data->password,
+            )
+        );
+
+        return new JsonResponse('Deleted', Response::HTTP_OK);
     }
 }

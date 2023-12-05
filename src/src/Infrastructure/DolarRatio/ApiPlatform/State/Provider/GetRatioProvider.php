@@ -19,6 +19,12 @@ readonly class GetRatioProvider implements ProviderInterface
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        return DollarRatiosResource::fromModel($this->queryBus->ask(new GetRatioQuery(strtoupper($uriVariables['symbol']))));
+        $model = $this->queryBus->ask(
+            new GetRatioQuery(
+                $uriVariables['symbol']
+            )
+        );
+
+        return DollarRatiosResource::fromModel($model);
     }
 }

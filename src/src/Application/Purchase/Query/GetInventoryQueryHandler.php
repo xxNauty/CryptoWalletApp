@@ -11,7 +11,6 @@ use App\Domain\User\Service\UserSecurityServiceInterface;
 readonly class GetInventoryQueryHandler implements QueryHandlerInterface
 {
     public function __construct(
-        private UserSecurityServiceInterface $securityService,
         private PurchaseRepositoryInterface $purchaseRepository,
         private CurrencyRepositoryInterface $currencyRepository
     ) {
@@ -19,7 +18,7 @@ readonly class GetInventoryQueryHandler implements QueryHandlerInterface
 
     public function __invoke(GetInventoryQuery $query): ?array
     {
-        $user = $this->securityService->getUser();
+        $user = $query->user;
         $inventory = [];
 
         $currencies = $this->purchaseRepository->getUsersCurrencies($user);

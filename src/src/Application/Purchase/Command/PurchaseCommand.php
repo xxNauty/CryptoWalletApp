@@ -11,6 +11,5 @@ readonly class PurchaseCommand implements CommandInterface
         public string $symbol,
         public float $amount
     ) {
-        Assert::lengthBetween($this->symbol, 3, 4);
     }
 }

@@ -19,8 +19,10 @@ readonly class GetAllRatiosProvider implements ProviderInterface
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
+        $models = $this->queryBus->ask(
+            new GetAllRatiosQuery()
+        );
         $resources = [];
-        $models = $this->queryBus->ask(new GetAllRatiosQuery());
 
         foreach ($models as $model) {
             $resources[] = DollarRatiosResource::fromModel($model);

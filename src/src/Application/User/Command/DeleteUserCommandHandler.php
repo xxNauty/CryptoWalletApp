@@ -27,11 +27,11 @@ readonly class DeleteUserCommandHandler implements CommandHandlerInterface
             throw new NotFoundHttpException('There is no user with given ID');
         }
 
-        if($user !== $this->securityService->getUser()){
+        if ($user !== $this->securityService->getUser()) {
             throw new AccessDeniedException('It is not your account!');
         }
 
-        if(!$this->passwordService->verifyPassword($user, $command->password)){
+        if (!$this->passwordService->verifyPassword($user, $command->password)) {
             throw new AccessDeniedException('Given password is not correct');
         }
 

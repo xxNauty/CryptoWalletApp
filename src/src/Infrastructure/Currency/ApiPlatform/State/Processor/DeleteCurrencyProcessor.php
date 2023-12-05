@@ -7,9 +7,8 @@ use ApiPlatform\State\ProcessorInterface;
 use App\Application\Currency\Command\DeleteCurrencyCommand;
 use App\Domain\Shared\Command\CommandBusInterface;
 use App\Infrastructure\Currency\ApiPlatform\Resource\CurrencyResource;
-use Symfony\Component\DependencyInjection\Attribute\AsDecorator;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpKernel\Attribute\AsController;
+use Symfony\Component\HttpFoundation\Response;
 use Webmozart\Assert\Assert;
 
 readonly class DeleteCurrencyProcessor implements ProcessorInterface
@@ -22,9 +21,14 @@ readonly class DeleteCurrencyProcessor implements ProcessorInterface
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): JsonResponse
     {
         Assert::isInstanceOf($data, CurrencyResource::class);
+        /** @var CurrencyResource $data */
 
-        $this->commandBus->dispatch(new DeleteCurrencyCommand($uriVariables['id']));
+        $this->commandBus->dispatch(
+            new DeleteCurrencyCommand(
+                $uriVariables['id']
+            )
+        );
 
-        return new JsonResponse('', 204);
+        return new JsonResponse('Currency deleted', Response::HTTP_OK);
     }
 }
