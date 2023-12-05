@@ -6,23 +6,29 @@ use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use App\Application\Currency\Command\CreateCurrencyCommand;
 use App\Domain\Shared\Command\CommandBusInterface;
+use App\Infrastructure\Currency\ApiPlatform\Resource\CurrencyResource;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Webmozart\Assert\Assert;
 
-class CreateCurrencyProcessor implements ProcessorInterface
+readonly class CreateCurrencyProcessor implements ProcessorInterface
 {
     public function __construct(
-        private readonly CommandBusInterface $commandBus
+        private CommandBusInterface $commandBus
     ) {
     }
 
-    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = [])
+    public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): JsonResponse
     {
+        Assert::isInstanceOf($data, CurrencyResource::class);
+        /** @var CurrencyResource $data */
+
         $this->commandBus->dispatch(
             new CreateCurrencyCommand(
                 $data->id,
             )
         );
 
-        return new JsonResponse('', 201);
+        return new JsonResponse('Currency created', Response::HTTP_CREATED);
     }
 }

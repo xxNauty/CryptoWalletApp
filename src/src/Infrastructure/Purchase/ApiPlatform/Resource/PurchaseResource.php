@@ -43,7 +43,9 @@ class PurchaseResource implements ResourceInterface
 
     public ?\DateTimeImmutable $boughtAt = null;
 
-    public bool $sold = false;
+    public ?bool $sold = null;
+
+    public ?float $currentValue = null;
 
     public static function fromModel(object $model, array $excludedVars = []): object
     {

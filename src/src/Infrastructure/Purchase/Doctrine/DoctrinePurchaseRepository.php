@@ -7,7 +7,6 @@ use App\Domain\Purchase\Resource\PurchaseRepositoryInterface;
 use App\Domain\User\Model\User;
 use App\Infrastructure\Shared\Doctrine\DoctrineRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 class DoctrinePurchaseRepository extends DoctrineRepository implements PurchaseRepositoryInterface
 {
@@ -58,7 +57,7 @@ class DoctrinePurchaseRepository extends DoctrineRepository implements PurchaseR
             ->getQuery()
             ->getResult();
 
-        return bcsub($bought[0]['1'], $sold[0]['1'], 10);
+        return floatval(bcsub($bought[0]['1'], $sold[0]['1'], 10));
     }
 
     public function getUsersCurrencies(User $user): array

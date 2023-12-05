@@ -6,10 +6,10 @@ namespace App\Application\Currency\Query;
 
 use App\Domain\Shared\Query\QueryInterface;
 
-class FindCurrencyQuery implements QueryInterface
+readonly class FindCurrencyQuery implements QueryInterface
 {
     public function __construct(
-        public readonly int $id,
+        public int $id,
     ) {
     }
 }

@@ -12,7 +12,7 @@ use App\Domain\Shared\Command\CommandHandlerInterface;
 readonly class CreateCurrencyCommandHandler implements CommandHandlerInterface
 {
     public function __construct(
-        private CurrencyRepositoryInterface                $currencyRepository,
+        private CurrencyRepositoryInterface $currencyRepository,
         private CryptoCurrencyDataDownloadServiceInterface $cryptoCurrencyDataDownloadService
     ) {
     }

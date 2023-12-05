@@ -2,15 +2,15 @@
 
 namespace App\Application\User\Command;
 
-use App\Domain\Shared\Command\CommandBusInterface;
 use App\Domain\Shared\Command\CommandInterface;
+use Webmozart\Assert\Assert;
 
-class UpdateUserPasswordCommand implements CommandInterface
+readonly class UpdateUserPasswordCommand implements CommandInterface
 {
     public function __construct(
-        public readonly string $oldPassword,
-        public readonly string $newPassword,
-    )
-    {
+        public string $oldPassword,
+        public string $newPassword,
+    ) {
+        Assert::minLength($this->newPassword, 8);
     }
 }

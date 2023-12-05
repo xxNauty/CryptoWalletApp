@@ -24,6 +24,10 @@ readonly class PurchaseSaleCommandHandler implements CommandHandlerInterface
     {
         $user = $this->securityService->getUser();
 
+        if(!in_array($command->symbol, $this->purchaseRepository->getUsersCurrencies($user))){
+            throw new UnprocessableEntityHttpException('You do not have any of this currency');
+        }
+
         if ($command->amount > $this->inventoryValueService->getCountOfCurrency($user, $command->symbol)) {
             throw new UnprocessableEntityHttpException('You do not have enough currency to sell');
         }

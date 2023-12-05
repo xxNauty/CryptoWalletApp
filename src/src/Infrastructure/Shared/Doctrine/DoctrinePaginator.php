@@ -15,15 +15,15 @@ final class DoctrinePaginator implements PaginatorInterface
     public function __construct(
         private readonly Paginator $paginator
     ) {
-        //        $this->firstResult = $paginator->getQuery()->getFirstResult();
-        //        $this->maxResults = $paginator->getQuery()->getMaxResults();
-        $this->firstResult = 1;
-        $this->maxResults = 100;
-        // todo: poprawić to
+        $this->firstResult = $paginator->getQuery()->getFirstResult();
+        $this->maxResults = $paginator->getQuery()->getMaxResults();
+//        $this->firstResult = 1;
+//        $this->maxResults = 100;
+//        // todo: poprawić to
 
-        //        if (null == $this->firstResult || null === $this->maxResults) {
-        //            throw new \InvalidArgumentException('Missing firstResult and maxResults from the query.');
-        //        }
+        if (null == $this->firstResult || null === $this->maxResults) {
+            throw new \InvalidArgumentException('Missing firstResult and maxResults from the query.');
+        }
     }
 
     public function getItemsPerPage(): int

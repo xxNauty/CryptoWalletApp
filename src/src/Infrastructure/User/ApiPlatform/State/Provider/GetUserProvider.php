@@ -24,16 +24,26 @@ readonly class GetUserProvider implements ProviderInterface
     {
         $user = $this->securityService->getUser();
 
-        /** @var User|null $model */
-        $model = (User::ROLE_PLAYER == $user->role)
-            ? $this->queryBus->ask(new FindOwnDataQuery($user))
-            : $this->queryBus->ask(new FindUserQuery($uriVariables['id']));
+        $model = User::ROLE_ADMIN === $user->role
+            ?  $this->queryBus->ask(
+                new FindUserQuery(
+                    $uriVariables['id']
+                )
+            )
+            : $this->queryBus->ask(
+                new FindOwnDataQuery(
+                    $user
+                )
+            );
 
-        /** @var UserResource $resource */
-        $resource = $model !== null ? UserResource::fromModel($model) : null;
+        $resource = null !== $model ? UserResource::fromModel($model) : null;
 
-        if($resource !== null){
-            $resource->inventory = $this->queryBus->ask(new GetInventoryQuery());
+        if (null !== $resource) {
+            $this->queryBus->ask(
+                new GetInventoryQuery(
+                    $model
+                )
+            );
         }
 
         return $resource;

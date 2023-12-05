@@ -3,10 +3,13 @@
 namespace App\Application\Purchase\Query;
 
 use App\Domain\Shared\Query\QueryInterface;
+use App\Domain\User\Model\User;
 
-class GetInventoryQuery implements QueryInterface
+readonly class GetInventoryQuery implements QueryInterface
 {
-    public function __construct()
+    public function __construct(
+        public User $user
+    )
     {
     }
 }

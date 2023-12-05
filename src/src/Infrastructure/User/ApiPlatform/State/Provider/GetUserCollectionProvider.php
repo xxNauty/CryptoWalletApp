@@ -27,7 +27,12 @@ readonly class GetUserCollectionProvider implements ProviderInterface
             $limit = $this->pagination->getLimit($operation, $context);
         }
 
-        $models = $this->queryBus->ask(new FindUserCollectionQuery($offset, $limit));
+        $models = $this->queryBus->ask(
+            new FindUserCollectionQuery(
+                $offset,
+                $limit
+            )
+        );
 
         $resources = [];
         foreach ($models as $model) {

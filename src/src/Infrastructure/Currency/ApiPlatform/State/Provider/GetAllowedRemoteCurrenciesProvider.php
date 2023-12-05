@@ -16,6 +16,8 @@ readonly class GetAllowedRemoteCurrenciesProvider implements ProviderInterface
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        return $this->queryBus->ask(new FindAvailableRemoteCurrenciesQuery());
+        return $this->queryBus->ask(
+            new FindAvailableRemoteCurrenciesQuery()
+        );
     }
 }

@@ -10,7 +10,6 @@ use App\Domain\User\Model\User;
 use App\Domain\User\Repository\UserRepositoryInterface;
 use App\Domain\User\Service\UserPasswordServiceInterface;
 use App\Domain\User\Service\UserSecurityServiceInterface;
-use App\Infrastructure\User\Service\UserPasswordService;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 readonly class UpdateUserCommandHandler implements CommandHandlerInterface
@@ -28,11 +27,11 @@ readonly class UpdateUserCommandHandler implements CommandHandlerInterface
             throw new NotFoundHttpException('There is no user with given ID');
         }
 
-        if($user !== $this->securityService->getUser()){
+        if ($user !== $this->securityService->getUser()) {
             throw new AccessDeniedException('It is not your account!');
         }
 
-        if(!$this->passwordService->verifyPassword($user, $command->password)){
+        if (!$this->passwordService->verifyPassword($user, $command->password)) {
             throw new AccessDeniedException('Given password is not correct');
         }
 
