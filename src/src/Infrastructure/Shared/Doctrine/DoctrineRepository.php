@@ -50,7 +50,11 @@ abstract class DoctrineRepository implements RepositoryInterface
             return null;
         }
 
-        $firstResult = $this->page * $this->itemsPerPage;
+        $firstResult =
+            $this->page > 1
+                ? $this->page - 1 + $this->itemsPerPage
+                : 1;
+        ;
         $maxResults = $this->itemsPerPage;
 
         $repository = $this->filter(static function (QueryBuilder $qb) use ($firstResult, $maxResults) {

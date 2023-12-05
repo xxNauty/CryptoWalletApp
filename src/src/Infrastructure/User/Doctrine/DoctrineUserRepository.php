@@ -44,4 +44,9 @@ class DoctrineUserRepository extends DoctrineRepository implements UserRepositor
 
         return null;
     }
+
+    public function getAll(): ?array
+    {
+        return $this->em->getRepository(self::ENTITY_CLASS)->findAll();
+    }
 }

@@ -23,8 +23,8 @@ use App\Infrastructure\User\ApiPlatform\State\Provider\GetUserProvider;
 #[ApiResource(
     shortName: 'User',
     operations: [
-        new GetCollection(
-            uriTemplate: '/users/get_all',
+        new GetCollection( //todo spróbować rozwiązać to lepiej
+            uriTemplate: '/users/get_all/{page}/{itemsPerPage}',
             security: 'is_granted("ROLE_ADMIN")',
             provider: GetUserCollectionProvider::class
         ),

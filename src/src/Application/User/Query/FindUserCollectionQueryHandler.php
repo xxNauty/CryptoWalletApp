@@ -14,14 +14,14 @@ readonly class FindUserCollectionQueryHandler implements QueryHandlerInterface
     ) {
     }
 
-    public function __invoke(FindUserCollectionQuery $query): UserRepositoryInterface
+    public function __invoke(FindUserCollectionQuery $query): ?array
     {
-        $userRepository = $this->userRepository;
+        $users = $this->userRepository->getAll();
 
-        if (null !== $query->page && null !== $query->itemsPerPage) {
-            $userRepository = $userRepository->withPagination($query->page, $query->itemsPerPage);
-        }
+        $firstElement = $query->page > 1
+            ? $query->itemsPerPage + $query->page - 1
+            : 0;
 
-        return $userRepository;
+        return array_slice($users, $firstElement, $query->itemsPerPage);
     }
 }
