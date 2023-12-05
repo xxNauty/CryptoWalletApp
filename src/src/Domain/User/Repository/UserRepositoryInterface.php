@@ -7,7 +7,7 @@ namespace App\Domain\User\Repository;
 use App\Domain\Shared\Repository\RepositoryInterface;
 use App\Domain\User\Model\User;
 
-interface UserRepositoryInterface extends RepositoryInterface
+interface UserRepositoryInterface// extends RepositoryInterface
 {
     public function save(User $user): void;
 
@@ -16,4 +16,6 @@ interface UserRepositoryInterface extends RepositoryInterface
     public function find(int $id): ?User;
 
     public function findByEmail(?string $email): ?User;
+
+    public function getAll(): ?array;
 }

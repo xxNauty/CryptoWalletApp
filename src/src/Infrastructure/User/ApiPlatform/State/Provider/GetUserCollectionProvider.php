@@ -14,36 +14,17 @@ readonly class GetUserCollectionProvider implements ProviderInterface
 {
     public function __construct(
         private QueryBusInterface $queryBus,
-        private Pagination $pagination,
     ) {
     }
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-        $offset = $limit = null;
-
-        if ($this->pagination->isEnabled($operation, $context)) {
-            $offset = $this->pagination->getPage($context);
-            $limit = $this->pagination->getLimit($operation, $context);
-        }
-
-        $models = $this->queryBus->ask(new FindUserCollectionQuery($offset, $limit));
-
+        $models = $this->queryBus->ask(new FindUserCollectionQuery($uriVariables['page'], $uriVariables['itemsPerPage']));
         $resources = [];
+
         foreach ($models as $model) {
             $resources[] = UserResource::fromModel($model);
         }
-
-        if (null !== $paginator = $models->paginator()) {
-            $resources = new Paginator(
-                $resources,
-                (float) $paginator->getCurrentPage(),
-                (float) $paginator->getItemsPerPage(),
-                (float) $paginator->getLastPage(),
-                (float) $paginator->getTotalItems(),
-            );
-        }
-
         return $resources;
     }
 }
