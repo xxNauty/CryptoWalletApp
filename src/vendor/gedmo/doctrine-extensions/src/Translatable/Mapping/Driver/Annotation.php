@@ -63,9 +63,9 @@ class Annotation extends AbstractAnnotationDriver
 
         // property annotations
         foreach ($class->getProperties() as $property) {
-            if ($meta->isMappedSuperclass && !$property->isPrivate() ||
-                $meta->isInheritedField($property->name) ||
-                isset($meta->associationMappings[$property->name]['inherited'])
+            if ($meta->isMappedSuperclass && !$property->isPrivate()
+                || $meta->isInheritedField($property->name)
+                || isset($meta->associationMappings[$property->name]['inherited'])
             ) {
                 continue;
             }
@@ -122,5 +122,7 @@ class Annotation extends AbstractAnnotationDriver
                 throw new InvalidMappingException("Translatable does not support composite identifiers in class - {$meta->getName()}");
             }
         }
+
+        return $config;
     }
 }

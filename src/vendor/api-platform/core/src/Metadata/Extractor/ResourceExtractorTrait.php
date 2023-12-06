@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Metadata\Extractor;
 
-use ApiPlatform\Metadata\Exception\InvalidArgumentException;
+use ApiPlatform\Exception\InvalidArgumentException;
 use Symfony\Component\Config\Util\XmlUtils;
 
 /**
@@ -79,20 +79,6 @@ trait ResourceExtractorTrait
 
         $data = [];
         foreach ($resource->args->arg as $arg) {
-            $data[(string) $arg['id']] = $this->buildValues($arg->values);
-        }
-
-        return $data;
-    }
-
-    private function buildExtraArgs(\SimpleXMLElement $resource): ?array
-    {
-        if (!isset($resource->extraArgs->arg)) {
-            return null;
-        }
-
-        $data = [];
-        foreach ($resource->extraArgs->arg as $arg) {
             $data[(string) $arg['id']] = $this->buildValues($arg->values);
         }
 

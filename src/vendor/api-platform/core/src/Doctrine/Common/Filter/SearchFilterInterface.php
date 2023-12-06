@@ -27,19 +27,9 @@ interface SearchFilterInterface
     public const STRATEGY_EXACT = 'exact';
 
     /**
-     * @var string Exact matching case-insensitive
-     */
-    public const STRATEGY_IEXACT = 'iexact';
-
-    /**
      * @var string The value must be contained in the field
      */
     public const STRATEGY_PARTIAL = 'partial';
-
-    /**
-     * @var string The value must be contained in the field case-insensitive
-     */
-    public const STRATEGY_IPARTIAL = 'partial';
 
     /**
      * @var string Finds fields that are starting with the value
@@ -47,27 +37,12 @@ interface SearchFilterInterface
     public const STRATEGY_START = 'start';
 
     /**
-     * @var string Finds fields that are starting with the value case-insensitive
-     */
-    public const STRATEGY_ISTART = 'start';
-
-    /**
      * @var string Finds fields that are ending with the value
      */
     public const STRATEGY_END = 'end';
 
     /**
-     * @var string Finds fields that are ending with the value case-insensitive
-     */
-    public const STRATEGY_IEND = 'end';
-
-    /**
      * @var string Finds fields that are starting with the word
      */
     public const STRATEGY_WORD_START = 'word_start';
-
-    /**
-     * @var string Finds fields that are starting with the word case-insensitive
-     */
-    public const STRATEGY_IWORD_START = 'word_start';
 }

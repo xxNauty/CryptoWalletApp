@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Symfony\Routing;
 
-use ApiPlatform\Metadata\UrlGeneratorInterface;
+use ApiPlatform\Api\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\Exception\RequestExceptionInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
@@ -24,7 +24,7 @@ use Symfony\Component\Routing\RouterInterface;
 /**
  * Symfony router decorator.
  *
- * @author Kévin Dunglas <dunglas@gmail.com>
+ * Kévin Dunglas <dunglas@gmail.com>
  */
 final class Router implements RouterInterface, UrlGeneratorInterface
 {

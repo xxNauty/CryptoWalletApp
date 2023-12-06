@@ -16,8 +16,7 @@ namespace ApiPlatform\Elasticsearch\Metadata\Document\Factory;
 use ApiPlatform\Elasticsearch\Exception\IndexNotFoundException;
 use ApiPlatform\Elasticsearch\Metadata\Document\DocumentMetadata;
 use ApiPlatform\Metadata\Resource\Factory\ResourceMetadataCollectionFactoryInterface;
-use ApiPlatform\Metadata\Util\Inflector;
-use Elastic\Elasticsearch\Exception\ClientResponseException;
+use ApiPlatform\Util\Inflector;
 use Elasticsearch\Client;
 use Elasticsearch\Common\Exceptions\Missing404Exception;
 
@@ -31,7 +30,6 @@ use Elasticsearch\Common\Exceptions\Missing404Exception;
  */
 final class CatDocumentMetadataFactory implements DocumentMetadataFactoryInterface
 {
-    // @phpstan-ignore-next-line
     public function __construct(private readonly Client $client, private readonly ResourceMetadataCollectionFactoryInterface $resourceMetadataFactory, private readonly ?DocumentMetadataFactoryInterface $decorated = null)
     {
     }
@@ -64,10 +62,8 @@ final class CatDocumentMetadataFactory implements DocumentMetadataFactoryInterfa
         $index = Inflector::tableize($resourceShortName);
 
         try {
-            // @phpstan-ignore-next-line
             $this->client->cat()->indices(['index' => $index]);
-            // @phpstan-ignore-next-line
-        } catch (Missing404Exception|ClientResponseException) {
+        } catch (Missing404Exception) {
             return $this->handleNotFound($documentMetadata, $resourceClass);
         }
 

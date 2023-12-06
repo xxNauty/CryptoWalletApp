@@ -11,6 +11,7 @@ namespace Gedmo\Sluggable;
 
 use Doctrine\Common\EventArgs;
 use Doctrine\Persistence\Event\LoadClassMetadataEventArgs;
+use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\ObjectManager;
 use Gedmo\Exception\InvalidArgumentException;
 use Gedmo\Mapping\MappedEventSubscriber;
@@ -100,7 +101,7 @@ class SluggableListener extends MappedEventSubscriber
      *
      * @phpstan-var array<class-string, array<int, object>>
      */
-    private $persisted = [];
+    private array $persisted = [];
 
     /**
      * List of initialized slug handlers
@@ -109,14 +110,14 @@ class SluggableListener extends MappedEventSubscriber
      *
      * @phpstan-var array<class-string<SlugHandlerInterface>, SlugHandlerInterface>
      */
-    private $handlers = [];
+    private array $handlers = [];
 
     /**
      * List of filters which are manipulated when slugs are generated
      *
      * @var array<string, array<string, mixed>>
      */
-    private $managedFilters = [];
+    private array $managedFilters = [];
 
     /**
      * Specifies the list of events to listen
@@ -225,6 +226,8 @@ class SluggableListener extends MappedEventSubscriber
      * Mapps additional metadata
      *
      * @param LoadClassMetadataEventArgs $eventArgs
+     *
+     * @phpstan-param LoadClassMetadataEventArgs<ClassMetadata<object>, ObjectManager> $eventArgs
      *
      * @return void
      */
@@ -399,9 +402,7 @@ class SluggableListener extends MappedEventSubscriber
                 switch ($options['style']) {
                     case 'camel':
                         $quotedSeparator = preg_quote($options['separator']);
-                        $slug = preg_replace_callback('/^[a-z]|'.$quotedSeparator.'[a-z]/smi', static function ($m) {
-                            return strtoupper($m[0]);
-                        }, $slug);
+                        $slug = preg_replace_callback('/^[a-z]|'.$quotedSeparator.'[a-z]/smi', static fn ($m) => strtoupper($m[0]), $slug);
 
                         break;
 
@@ -502,7 +503,7 @@ class SluggableListener extends MappedEventSubscriber
         }
 
         // load similar slugs
-        $result = array_merge($ea->getSimilarSlugs($object, $meta, $config, $preferredSlug), $similarPersisted);
+        $result = [...$ea->getSimilarSlugs($object, $meta, $config, $preferredSlug), ...$similarPersisted];
 
         // leave only right slugs
 

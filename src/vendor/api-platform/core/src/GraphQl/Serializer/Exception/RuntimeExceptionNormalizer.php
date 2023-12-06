@@ -44,11 +44,4 @@ final class RuntimeExceptionNormalizer implements NormalizerInterface
     {
         return $data instanceof Error && $data->getPrevious() instanceof \RuntimeException;
     }
-
-    public function getSupportedTypes($format): array
-    {
-        return [
-            Error::class => false,
-        ];
-    }
 }

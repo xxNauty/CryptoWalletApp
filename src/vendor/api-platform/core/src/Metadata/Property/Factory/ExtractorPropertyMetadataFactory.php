@@ -13,9 +13,8 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Metadata\Property\Factory;
 
-use ApiPlatform\JsonSchema\Metadata\Property\Factory\SchemaPropertyMetadataFactory;
+use ApiPlatform\Exception\PropertyNotFoundException;
 use ApiPlatform\Metadata\ApiProperty;
-use ApiPlatform\Metadata\Exception\PropertyNotFoundException;
 use ApiPlatform\Metadata\Extractor\PropertyExtractorInterface;
 use Symfony\Component\PropertyInfo\Type;
 
@@ -46,14 +45,14 @@ final class ExtractorPropertyMetadataFactory implements PropertyMetadataFactoryI
         }
 
         if (
-            !property_exists($resourceClass, $property) && !interface_exists($resourceClass)
-            || null === ($propertyMetadata = $this->extractor->getProperties()[$resourceClass][$property] ?? null)
+            !property_exists($resourceClass, $property) && !interface_exists($resourceClass) ||
+            null === ($propertyMetadata = $this->extractor->getProperties()[$resourceClass][$property] ?? null)
         ) {
             return $this->handleNotFound($parentPropertyMetadata, $resourceClass, $property);
         }
 
         if ($parentPropertyMetadata) {
-            return $this->handleUserDefinedSchema($this->update($parentPropertyMetadata, $propertyMetadata));
+            return $this->update($parentPropertyMetadata, $propertyMetadata);
         }
 
         $apiProperty = new ApiProperty();
@@ -70,7 +69,7 @@ final class ExtractorPropertyMetadataFactory implements PropertyMetadataFactoryI
             }
         }
 
-        return $this->handleUserDefinedSchema($apiProperty);
+        return $apiProperty;
     }
 
     /**
@@ -92,22 +91,22 @@ final class ExtractorPropertyMetadataFactory implements PropertyMetadataFactoryI
      */
     private function update(ApiProperty $propertyMetadata, array $metadata): ApiProperty
     {
-        foreach (get_class_methods(ApiProperty::class) as $method) {
-            if (preg_match('/^(?:get|is)(.*)/', (string) $method, $matches) && null !== $val = $metadata[lcfirst($matches[1])]) {
-                $propertyMetadata = $propertyMetadata->{"with{$matches[1]}"}($val);
+        $metadataAccessors = [
+            'description' => 'get',
+            'readable' => 'is',
+            'writable' => 'is',
+            'writableLink' => 'is',
+            'readableLink' => 'is',
+            'required' => 'is',
+            'identifier' => 'is',
+        ];
+
+        foreach ($metadataAccessors as $metadataKey => $accessorPrefix) {
+            if (null === $metadata[$metadataKey]) {
+                continue;
             }
-        }
 
-        return $propertyMetadata;
-    }
-
-    private function handleUserDefinedSchema(ApiProperty $propertyMetadata): ApiProperty
-    {
-        // can't know later if the schema has been defined by the user or by API Platform
-        // store extra key to make this difference
-        if (null !== $propertyMetadata->getSchema()) {
-            $extraProperties = $propertyMetadata->getExtraProperties() ?? [];
-            $propertyMetadata = $propertyMetadata->withExtraProperties([SchemaPropertyMetadataFactory::JSON_SCHEMA_USER_DEFINED => true] + $extraProperties);
+            $propertyMetadata = $propertyMetadata->{'with'.ucfirst($metadataKey)}($metadata[$metadataKey]);
         }
 
         return $propertyMetadata;

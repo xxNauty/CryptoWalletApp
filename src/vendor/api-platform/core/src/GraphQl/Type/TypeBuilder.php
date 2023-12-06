@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace ApiPlatform\GraphQl\Type;
 
+use ApiPlatform\Exception\OperationNotFoundException;
 use ApiPlatform\GraphQl\Serializer\ItemNormalizer;
 use ApiPlatform\Metadata\CollectionOperationInterface;
-use ApiPlatform\Metadata\Exception\OperationNotFoundException;
 use ApiPlatform\Metadata\GraphQl\Mutation;
 use ApiPlatform\Metadata\GraphQl\Operation;
 use ApiPlatform\Metadata\GraphQl\Query;
@@ -147,9 +147,6 @@ final class TypeBuilder implements TypeBuilderInterface, TypeBuilderEnumInterfac
                 if ($input && $operation instanceof Mutation && null !== $mutationArgs = $operation->getArgs()) {
                     return $fieldsBuilder->resolveResourceArgs($mutationArgs, $operation) + ['clientMutationId' => $fields['clientMutationId']];
                 }
-                if ($input && $operation instanceof Mutation && null !== $extraMutationArgs = $operation->getExtraArgs()) {
-                    return $fields + $fieldsBuilder->resolveResourceArgs($extraMutationArgs, $operation);
-                }
 
                 return $fields;
             },
@@ -216,9 +213,7 @@ final class TypeBuilder implements TypeBuilderInterface, TypeBuilderEnumInterfac
      */
     public function getPaginatedCollectionType(GraphQLType $resourceType, Operation $operation): GraphQLType
     {
-        $namedType = GraphQLType::getNamedType($resourceType);
-        // graphql-php 15: name() exists
-        $shortName = method_exists($namedType, 'name') ? $namedType->name() : $namedType->name;
+        $shortName = $resourceType->name;
         $paginationType = $this->pagination->getGraphQlPaginationType($operation);
 
         $connectionTypeKey = sprintf('%s%sConnection', $shortName, ucfirst($paginationType));
@@ -245,9 +240,13 @@ final class TypeBuilder implements TypeBuilderInterface, TypeBuilderEnumInterfac
     public function getEnumType(Operation $operation): GraphQLType
     {
         $enumName = $operation->getShortName();
+        $enumKey = $enumName;
+        if (!str_ends_with($enumName, 'Enum')) {
+            $enumKey = sprintf('%sEnum', $enumName);
+        }
 
-        if ($this->typesContainer->has($enumName)) {
-            return $this->typesContainer->get($enumName);
+        if ($this->typesContainer->has($enumKey)) {
+            return $this->typesContainer->get($enumKey);
         }
 
         /** @var FieldsBuilderEnumInterface|FieldsBuilderInterface $fieldsBuilder */
@@ -269,7 +268,7 @@ final class TypeBuilder implements TypeBuilderInterface, TypeBuilderEnumInterfac
         }
 
         $enumType = new EnumType($enumConfig);
-        $this->typesContainer->set($enumName, $enumType);
+        $this->typesContainer->set($enumKey, $enumType);
 
         return $enumType;
     }
@@ -284,9 +283,7 @@ final class TypeBuilder implements TypeBuilderInterface, TypeBuilderEnumInterfac
 
     private function getCursorBasedPaginationFields(GraphQLType $resourceType): array
     {
-        $namedType = GraphQLType::getNamedType($resourceType);
-        // graphql-php 15: name() exists
-        $shortName = method_exists($namedType, 'name') ? $namedType->name() : $namedType->name;
+        $shortName = $resourceType->name;
 
         $edgeObjectTypeConfiguration = [
             'name' => "{$shortName}Edge",
@@ -321,9 +318,7 @@ final class TypeBuilder implements TypeBuilderInterface, TypeBuilderEnumInterfac
 
     private function getPageBasedPaginationFields(GraphQLType $resourceType): array
     {
-        $namedType = GraphQLType::getNamedType($resourceType);
-        // graphql-php 15: name() exists
-        $shortName = method_exists($namedType, 'name') ? $namedType->name() : $namedType->name;
+        $shortName = $resourceType->name;
 
         $paginationInfoObjectTypeConfiguration = [
             'name' => "{$shortName}PaginationInfo",

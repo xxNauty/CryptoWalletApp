@@ -17,7 +17,6 @@ use ApiPlatform\Exception\InvalidArgumentException;
 use Doctrine\ODM\MongoDB\Aggregation\Builder;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata as MongoDbOdmClassMetadata;
 use Doctrine\ODM\MongoDB\Mapping\MappingException;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 
 /**
@@ -27,8 +26,6 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
  */
 trait PropertyHelperTrait
 {
-    abstract protected function getManagerRegistry(): ManagerRegistry;
-
     /**
      * Splits the given property into parts.
      */
@@ -37,18 +34,7 @@ trait PropertyHelperTrait
     /**
      * Gets class metadata for the given resource.
      */
-    protected function getClassMetadata(string $resourceClass): ClassMetadata
-    {
-        $manager = $this
-            ->getManagerRegistry()
-            ->getManagerForClass($resourceClass);
-
-        if ($manager) {
-            return $manager->getClassMetadata($resourceClass);
-        }
-
-        return new MongoDbOdmClassMetadata($resourceClass);
-    }
+    abstract protected function getClassMetadata(string $resourceClass): ClassMetadata;
 
     /**
      * Adds the necessary lookups for a nested property.
@@ -60,7 +46,7 @@ trait PropertyHelperTrait
      *               the second element is the $field name
      *               the third element is the $associations array
      */
-    protected function addLookupsForNestedProperty(string $property, Builder $aggregationBuilder, string $resourceClass, bool $preserveNullAndEmptyArrays = false): array
+    protected function addLookupsForNestedProperty(string $property, Builder $aggregationBuilder, string $resourceClass): array
     {
         $propertyParts = $this->splitPropertyParts($property, $resourceClass);
         $alias = '';
@@ -98,8 +84,7 @@ trait PropertyHelperTrait
                     ->localField($isOwningSide ? $localField : '_id')
                     ->foreignField($isOwningSide ? '_id' : $referenceMapping['mappedBy'])
                     ->alias($alias);
-                $aggregationBuilder->unwind("\$$alias")
-                    ->preserveNullAndEmptyArrays($preserveNullAndEmptyArrays);
+                $aggregationBuilder->unwind("\$$alias");
 
                 // association.property => association_lkup.property
                 $property = substr_replace($property, $propertyAlias, strpos($property, (string) $association), \strlen((string) $association));

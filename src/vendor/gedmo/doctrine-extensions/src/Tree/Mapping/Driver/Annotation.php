@@ -129,9 +129,9 @@ class Annotation extends AbstractAnnotationDriver
 
         // property annotations
         foreach ($class->getProperties() as $property) {
-            if ($meta->isMappedSuperclass && !$property->isPrivate() ||
-                $meta->isInheritedField($property->name) ||
-                isset($meta->associationMappings[$property->name]['inherited'])
+            if ($meta->isMappedSuperclass && !$property->isPrivate()
+                || $meta->isInheritedField($property->name)
+                || isset($meta->associationMappings[$property->name]['inherited'])
             ) {
                 continue;
             }
@@ -265,5 +265,7 @@ class Annotation extends AbstractAnnotationDriver
                 throw new InvalidMappingException("Cannot find Tree type for class: {$meta->getName()}");
             }
         }
+
+        return $config;
     }
 }

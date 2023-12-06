@@ -13,17 +13,15 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Metadata\Extractor;
 
-use ApiPlatform\Metadata\Exception\InvalidArgumentException;
+use ApiPlatform\Elasticsearch\State\Options;
+use ApiPlatform\Exception\InvalidArgumentException;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Tests\Fixtures\StateOptions;
 use ApiPlatform\OpenApi\Model\ExternalDocumentation;
 use ApiPlatform\OpenApi\Model\Operation as OpenApiOperation;
 use ApiPlatform\OpenApi\Model\Parameter;
 use ApiPlatform\OpenApi\Model\RequestBody;
-use ApiPlatform\State\OptionsInterface;
 use Symfony\Component\Config\Util\XmlUtils;
-use Symfony\Component\WebLink\Link;
 
 /**
  * Extracts an array of metadata from a list of XML files.
@@ -95,7 +93,6 @@ final class XmlResourceExtractor extends AbstractResourceExtractor
             'exceptionToStatus' => $this->buildExceptionToStatus($resource),
             'queryParameterValidationEnabled' => $this->phpize($resource, 'queryParameterValidationEnabled', 'bool'),
             'stateOptions' => $this->buildStateOptions($resource),
-            'links' => $this->buildLinks($resource),
         ]);
     }
 
@@ -168,7 +165,7 @@ final class XmlResourceExtractor extends AbstractResourceExtractor
             return null;
         }
 
-        if (isset($resource['openapi']) && \in_array((string) $resource['openapi'], ['1', '0', 'true', 'false'], true)) {
+        if (isset($resource['openapi']) && (\is_bool($resource['openapi']) || \in_array((string) $resource['openapi'], ['1', '0', 'true', 'false'], true))) {
             return $this->phpize($resource, 'openapi', 'bool');
         }
 
@@ -218,7 +215,7 @@ final class XmlResourceExtractor extends AbstractResourceExtractor
         }
         $data['requestBody'] = isset($openapi->requestBody) ? new RequestBody(
             description: $this->phpize($openapi->requestBody, 'description', 'string'),
-            content: isset($openapi->requestBody->content->values) ? new \ArrayObject($this->buildValues($openapi->requestBody->content->values)) : null,
+            content: isset($openapi->requestBody->content->values) ? new \ArrayObject($this->buildValues($openapi->requestBody->values)) : null,
             required: $this->phpize($openapi->requestBody, 'required', 'bool'),
         ) : null;
 
@@ -426,7 +423,6 @@ final class XmlResourceExtractor extends AbstractResourceExtractor
             $data[] = array_merge($datum, [
                 'resolver' => $this->phpize($operation, 'resolver', 'string'),
                 'args' => $this->buildArgs($operation),
-                'extraArgs' => $this->buildExtraArgs($operation),
                 'class' => (string) $operation['class'],
                 'read' => $this->phpize($operation, 'read', 'bool'),
                 'deserialize' => $this->phpize($operation, 'deserialize', 'bool'),
@@ -441,7 +437,7 @@ final class XmlResourceExtractor extends AbstractResourceExtractor
         return $data;
     }
 
-    private function buildStateOptions(\SimpleXMLElement $resource): ?OptionsInterface
+    private function buildStateOptions(\SimpleXMLElement $resource): ?Options
     {
         $stateOptions = $resource->stateOptions ?? null;
         if (!$stateOptions) {
@@ -449,30 +445,12 @@ final class XmlResourceExtractor extends AbstractResourceExtractor
         }
         $elasticsearchOptions = $stateOptions->elasticsearchOptions ?? null;
         if ($elasticsearchOptions) {
-            return new StateOptions(
+            return new Options(
                 isset($elasticsearchOptions['index']) ? (string) $elasticsearchOptions['index'] : null,
                 isset($elasticsearchOptions['type']) ? (string) $elasticsearchOptions['type'] : null,
             );
         }
 
         return null;
-    }
-
-    /**
-     * @return Link[]
-     */
-    private function buildLinks(\SimpleXMLElement $resource): ?array
-    {
-        $links = $resource->links ?? null;
-        if (!$resource->links) {
-            return null;
-        }
-
-        $links = [];
-        foreach ($resource->links as $link) {
-            $links[] = new Link(rel: (string) $link->link->attributes()->rel, href: (string) $link->link->attributes()->href);
-        }
-
-        return $links;
     }
 }

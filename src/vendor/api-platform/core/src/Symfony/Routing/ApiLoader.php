@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace ApiPlatform\Symfony\Routing;
 
 use ApiPlatform\Exception\RuntimeException;
+use ApiPlatform\Metadata\HttpOperation;
 use ApiPlatform\Metadata\Resource\Factory\ResourceMetadataCollectionFactoryInterface;
 use ApiPlatform\Metadata\Resource\Factory\ResourceNameCollectionFactoryInterface;
 use Symfony\Component\Config\FileLocator;
@@ -79,11 +80,8 @@ final class ApiLoader extends Loader
                         $path = str_replace('{._format}', '.{_format}', $path);
                     }
 
-                    if ($controller = $operation->getController()) {
-                        $controllerId = explode('::', $controller, 2)[0];
-                        if (!$this->container->has($controllerId)) {
-                            throw new RuntimeException(sprintf('Operation "%s" is defining an unknown service as controller "%s". Make sure it is properly registered in the dependency injection container.', $operationName, $controllerId));
-                        }
+                    if (($controller = $operation->getController()) && !$this->container->has($controller)) {
+                        throw new RuntimeException(sprintf('There is no builtin action for the "%s" operation. You need to define the controller yourself.', $operationName));
                     }
 
                     $route = new Route(
@@ -99,7 +97,7 @@ final class ApiLoader extends Loader
                         $operation->getOptions() ?? [],
                         $operation->getHost() ?? '',
                         $operation->getSchemes() ?? [],
-                        [$operation->getMethod() ?? 'GET'],
+                        [$operation->getMethod() ?? HttpOperation::METHOD_GET],
                         $operation->getCondition() ?? ''
                     );
 

@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Elasticsearch\Filter;
 
+use ApiPlatform\Api\ResourceClassResolverInterface;
 use ApiPlatform\Elasticsearch\Util\FieldDatatypeTrait;
-use ApiPlatform\Metadata\Exception\PropertyNotFoundException;
-use ApiPlatform\Metadata\Exception\ResourceClassNotFoundException;
+use ApiPlatform\Exception\PropertyNotFoundException;
+use ApiPlatform\Exception\ResourceClassNotFoundException;
 use ApiPlatform\Metadata\Property\Factory\PropertyMetadataFactoryInterface;
 use ApiPlatform\Metadata\Property\Factory\PropertyNameCollectionFactoryInterface;
-use ApiPlatform\Metadata\ResourceClassResolverInterface;
 use Symfony\Component\PropertyInfo\Type;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 
@@ -93,70 +93,46 @@ abstract class AbstractFilter implements FilterInterface
                 return $noop;
             }
 
-            $types = $propertyMetadata->getBuiltinTypes();
+            $type = $propertyMetadata->getBuiltinTypes()[0] ?? null;
 
-            if (null === $types) {
+            if (null === $type) {
                 return $noop;
             }
 
             ++$index;
+            $builtinType = $type->getBuiltinType();
 
-            // check each type before deciding if it's noop or not
-            // e.g: maybe the first type is noop, but the second is valid
-            $isNoop = false;
-
-            foreach ($types as $type) {
-                $builtinType = $type->getBuiltinType();
-
-                if (Type::BUILTIN_TYPE_OBJECT !== $builtinType && Type::BUILTIN_TYPE_ARRAY !== $builtinType) {
-                    if ($totalProperties === $index) {
-                        break 2;
-                    }
-
-                    $isNoop = true;
-
-                    continue;
+            if (Type::BUILTIN_TYPE_OBJECT !== $builtinType && Type::BUILTIN_TYPE_ARRAY !== $builtinType) {
+                if ($totalProperties === $index) {
+                    break;
                 }
 
-                if ($type->isCollection() && null === $type = $type->getCollectionValueTypes()[0] ?? null) {
-                    $isNoop = true;
-
-                    continue;
-                }
-
-                if (Type::BUILTIN_TYPE_ARRAY === $builtinType && Type::BUILTIN_TYPE_OBJECT !== $type->getBuiltinType()) {
-                    if ($totalProperties === $index) {
-                        break 2;
-                    }
-
-                    $isNoop = true;
-
-                    continue;
-                }
-
-                if (null === $className = $type->getClassName()) {
-                    $isNoop = true;
-
-                    continue;
-                }
-
-                if ($isResourceClass = $this->resourceClassResolver->isResourceClass($className)) {
-                    $currentResourceClass = $className;
-                } elseif ($totalProperties !== $index) {
-                    $isNoop = true;
-
-                    continue;
-                }
-
-                $hasAssociation = $totalProperties === $index && $isResourceClass;
-                $isNoop = false;
-
-                break;
-            }
-
-            if ($isNoop) {
                 return $noop;
             }
+
+            if ($type->isCollection() && null === $type = $type->getCollectionValueTypes()[0] ?? null) {
+                return $noop;
+            }
+
+            if (Type::BUILTIN_TYPE_ARRAY === $builtinType && Type::BUILTIN_TYPE_OBJECT !== $type->getBuiltinType()) {
+                if ($totalProperties === $index) {
+                    break;
+                }
+
+                return $noop;
+            }
+
+            if (null === $className = $type->getClassName()) {
+                return $noop;
+            }
+
+            if ($isResourceClass = $this->resourceClassResolver->isResourceClass($className)) {
+                $currentResourceClass = $className;
+            } elseif ($totalProperties !== $index) {
+                return $noop;
+            }
+
+            $hasAssociation = $totalProperties === $index && $isResourceClass;
         }
 
         return [$type, $hasAssociation, $currentResourceClass, $currentProperty];

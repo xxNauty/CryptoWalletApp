@@ -41,8 +41,6 @@ final class PropertySchemaGreaterThanRestriction implements PropertySchemaRestri
      */
     public function supports(Constraint $constraint, ApiProperty $propertyMetadata): bool
     {
-        $types = array_map(fn (Type $type) => $type->getBuiltinType(), $propertyMetadata->getBuiltinTypes() ?? []);
-
-        return $constraint instanceof GreaterThan && is_numeric($constraint->value) && \count($types) && array_intersect($types, [Type::BUILTIN_TYPE_INT, Type::BUILTIN_TYPE_FLOAT]);
+        return $constraint instanceof GreaterThan && is_numeric($constraint->value) && null !== ($type = $propertyMetadata->getBuiltinTypes()[0] ?? null) && \in_array($type->getBuiltinType(), [Type::BUILTIN_TYPE_INT, Type::BUILTIN_TYPE_FLOAT], true);
     }
 }

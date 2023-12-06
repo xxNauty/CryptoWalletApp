@@ -39,11 +39,4 @@ final class ErrorNormalizer implements NormalizerInterface
     {
         return $data instanceof Error;
     }
-
-    public function getSupportedTypes($format): array
-    {
-        return [
-            Error::class => true,
-        ];
-    }
 }

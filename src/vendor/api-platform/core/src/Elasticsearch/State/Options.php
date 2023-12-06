@@ -19,9 +19,6 @@ class Options implements OptionsInterface
 {
     public function __construct(
         protected ?string $index = null,
-        /**
-         * @deprecated this parameter is not used anymore
-         */
         protected ?string $type = null,
     ) {
     }

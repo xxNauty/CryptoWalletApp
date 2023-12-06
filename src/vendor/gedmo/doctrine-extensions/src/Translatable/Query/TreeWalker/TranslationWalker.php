@@ -74,7 +74,7 @@ class TranslationWalker extends SqlWalker
      *
      * @phpstan-var array<string, array{metadata: ClassMetadata}>
      */
-    private $translatedComponents = [];
+    private array $translatedComponents = [];
 
     /**
      * DBAL database platform
@@ -96,19 +96,16 @@ class TranslationWalker extends SqlWalker
      *
      * @var array<string, string>
      */
-    private $replacements = [];
+    private array $replacements = [];
 
     /**
      * List of joins for translated components in query
      *
      * @var array<string, string>
      */
-    private $components = [];
+    private array $components = [];
 
-    /**
-     * @var TranslatableListener
-     */
-    private $listener;
+    private TranslatableListener $listener;
 
     public function __construct($query, $parserResult, array $queryComponents)
     {
@@ -354,10 +351,10 @@ class TranslationWalker extends SqlWalker
 
                 // Treat translation as original field type
                 $fieldMapping = $meta->getFieldMapping($field);
-                if ((($this->platform instanceof MySQLPlatform) &&
-                    in_array($fieldMapping['type'], ['decimal'], true)) ||
-                    (!($this->platform instanceof MySQLPlatform) &&
-                    !in_array($fieldMapping['type'], ['datetime', 'datetimetz', 'date', 'time'], true))) {
+                if ((($this->platform instanceof MySQLPlatform)
+                    && in_array($fieldMapping['type'], ['decimal'], true))
+                    || (!($this->platform instanceof MySQLPlatform)
+                    && !in_array($fieldMapping['type'], ['datetime', 'datetimetz', 'date', 'time'], true))) {
                     $type = Type::getType($fieldMapping['type']);
                     $substituteField = 'CAST('.$substituteField.' AS '.$type->getSQLDeclaration($fieldMapping, $this->platform).')';
                 }
@@ -420,8 +417,8 @@ class TranslationWalker extends SqlWalker
     private function getTranslatableListener(): TranslatableListener
     {
         $em = $this->getEntityManager();
-        foreach ($em->getEventManager()->getAllListeners() as $event => $listeners) {
-            foreach ($listeners as $hash => $listener) {
+        foreach ($em->getEventManager()->getAllListeners() as $listeners) {
+            foreach ($listeners as $listener) {
                 if ($listener instanceof TranslatableListener) {
                     return $listener;
                 }
@@ -440,9 +437,7 @@ class TranslationWalker extends SqlWalker
     private function replace(array $repl, string $str): string
     {
         foreach ($repl as $target => $result) {
-            $str = preg_replace_callback('/(\s|\()('.$target.')(,?)(\s|\)|$)/smi', static function (array $m) use ($result): string {
-                return $m[1].$result.$m[3].$m[4];
-            }, $str);
+            $str = preg_replace_callback('/(\s|\()('.$target.')(,?)(\s|\)|$)/smi', static fn (array $m): string => $m[1].$result.$m[3].$m[4], $str);
         }
 
         return $str;
@@ -472,7 +467,7 @@ class TranslationWalker extends SqlWalker
                 case 'string':
                 case 'guid':
                     // need to cast to VARCHAR
-                    $component = $component.'::VARCHAR';
+                    $component .= '::VARCHAR';
 
                     break;
             }

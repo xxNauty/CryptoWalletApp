@@ -13,15 +13,14 @@ declare(strict_types=1);
 
 namespace ApiPlatform\GraphQl\Subscription;
 
+use ApiPlatform\Api\IriConverterInterface;
 use ApiPlatform\GraphQl\Resolver\Stage\SerializeStageInterface;
 use ApiPlatform\GraphQl\Resolver\Util\IdentifierTrait;
 use ApiPlatform\Metadata\GraphQl\Operation;
 use ApiPlatform\Metadata\GraphQl\Subscription;
-use ApiPlatform\Metadata\IriConverterInterface;
 use ApiPlatform\Metadata\Resource\Factory\ResourceMetadataCollectionFactoryInterface;
-use ApiPlatform\Metadata\Util\ResourceClassInfoTrait;
-use ApiPlatform\Metadata\Util\SortTrait;
-use ApiPlatform\State\ProcessorInterface;
+use ApiPlatform\Util\ResourceClassInfoTrait;
+use ApiPlatform\Util\SortTrait;
 use GraphQL\Type\Definition\ResolveInfo;
 use Psr\Cache\CacheItemPoolInterface;
 
@@ -31,23 +30,23 @@ use Psr\Cache\CacheItemPoolInterface;
  *
  * @author Alan Poulain <contact@alanpoulain.eu>
  */
-final class SubscriptionManager implements OperationAwareSubscriptionManagerInterface
+final class SubscriptionManager implements SubscriptionManagerInterface
 {
     use IdentifierTrait;
     use ResourceClassInfoTrait;
     use SortTrait;
 
-    public function __construct(private readonly CacheItemPoolInterface $subscriptionsCache, private readonly SubscriptionIdentifierGeneratorInterface $subscriptionIdentifierGenerator, private readonly ?SerializeStageInterface $serializeStage, private readonly IriConverterInterface $iriConverter, private readonly ResourceMetadataCollectionFactoryInterface $resourceMetadataCollectionFactory, private readonly ?ProcessorInterface $normalizeProcessor = null)
+    public function __construct(private readonly CacheItemPoolInterface $subscriptionsCache, private readonly SubscriptionIdentifierGeneratorInterface $subscriptionIdentifierGenerator, private readonly SerializeStageInterface $serializeStage, private readonly IriConverterInterface $iriConverter, private readonly ResourceMetadataCollectionFactoryInterface $resourceMetadataCollectionFactory)
     {
     }
 
-    public function retrieveSubscriptionId(array $context, ?array $result, Operation $operation = null): ?string
+    public function retrieveSubscriptionId(array $context, ?array $result): ?string
     {
         /** @var ResolveInfo $info */
         $info = $context['info'];
         $fields = $info->getFieldSelection(\PHP_INT_MAX);
         $this->arrayRecursiveSort($fields, 'ksort');
-        $iri = $operation ? $this->getIdentifierFromOperation($operation, $context['args'] ?? []) : $this->getIdentifierFromContext($context);
+        $iri = $this->getIdentifierFromContext($context);
         if (null === $iri) {
             return null;
         }
@@ -85,14 +84,7 @@ final class SubscriptionManager implements OperationAwareSubscriptionManagerInte
             $resolverContext = ['fields' => $subscriptionFields, 'is_collection' => false, 'is_mutation' => false, 'is_subscription' => true];
             /** @var Operation */
             $operation = (new Subscription())->withName('update_subscription')->withShortName($shortName);
-            if ($this->normalizeProcessor) {
-                $data = $this->normalizeProcessor->process($object, $operation, [], $resolverContext);
-            } elseif ($this->serializeStage) {
-                $data = ($this->serializeStage)($object, $resourceClass, $operation, $resolverContext);
-            } else {
-                throw new \LogicException();
-            }
-
+            $data = ($this->serializeStage)($object, $resourceClass, $operation, $resolverContext);
             unset($data['clientSubscriptionId']);
 
             if ($data !== $subscriptionResult) {

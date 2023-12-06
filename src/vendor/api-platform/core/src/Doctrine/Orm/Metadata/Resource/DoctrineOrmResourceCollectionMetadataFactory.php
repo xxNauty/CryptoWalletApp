@@ -32,7 +32,7 @@ final class DoctrineOrmResourceCollectionMetadataFactory implements ResourceMeta
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function create(string $resourceClass): ResourceMetadataCollection
     {

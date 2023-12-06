@@ -19,6 +19,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\HttpOperation;
 use ApiPlatform\Metadata\NotExposed;
 use ApiPlatform\Metadata\Resource\ResourceMetadataCollection;
+use ApiPlatform\Symfony\Routing\SkolemIriConverter;
 
 /**
  * Adds a {@see NotExposed} operation with {@see NotFoundAction} on a resource which only has a GetCollection.
@@ -28,14 +29,10 @@ use ApiPlatform\Metadata\Resource\ResourceMetadataCollection;
  */
 final class NotExposedOperationResourceMetadataCollectionFactory implements ResourceMetadataCollectionFactoryInterface
 {
-    use OperationDefaultsTrait;
-
-    public static $skolemUriTemplate = '/.well-known/genid/{id}';
-
     private $linkFactory;
     private $decorated;
 
-    public function __construct(LinkFactoryInterface $linkFactory, ResourceMetadataCollectionFactoryInterface $decorated = null)
+    public function __construct(LinkFactoryInterface $linkFactory, ?ResourceMetadataCollectionFactoryInterface $decorated = null)
     {
         $this->linkFactory = $linkFactory;
         $this->decorated = $decorated;
@@ -60,10 +57,9 @@ final class NotExposedOperationResourceMetadataCollectionFactory implements Reso
         foreach ($resourceMetadataCollection as $resource) {
             $operations = $resource->getOperations();
 
-            /** @var ApiPlatform\Metadata\HttpOperation $operation */
             foreach ($operations as $operation) {
                 // An item operation has been found, nothing to do anymore in this factory
-                if (('GET' === $operation->getMethod() && !$operation instanceof CollectionOperationInterface) || ($operation->getExtraProperties()['is_legacy_resource_metadata'] ?? false)) {
+                if ((HttpOperation::METHOD_GET === $operation->getMethod() && !$operation instanceof CollectionOperationInterface) || ($operation->getExtraProperties()['is_legacy_resource_metadata'] ?? false)) {
                     return $resourceMetadataCollection;
                 }
             }
@@ -72,13 +68,13 @@ final class NotExposedOperationResourceMetadataCollectionFactory implements Reso
         // No item operation has been found on all resources for resource class: generate one on the last resource
         // Helpful to generate an IRI for a resource without declaring the Get operation
         /** @var HttpOperation $operation */
-        [$key, $operation] = $this->getOperationWithDefaults(resource: $resource, operation: new NotExposed(), generated: true, ignoredOptions: ['uriTemplate', 'uriVariables']); // @phpstan-ignore-line $resource is defined if count > 0
+        $operation = (new NotExposed())->withClass($resource->getClass())->withShortName($resource->getShortName()); // @phpstan-ignore-line $resource is defined if count > 0
 
         if (!$this->linkFactory->createLinksFromIdentifiers($operation)) {
-            $operation = $operation->withUriTemplate(self::$skolemUriTemplate);
+            $operation = $operation->withUriTemplate(SkolemIriConverter::$skolemUriTemplate);
         }
 
-        $operations->add($key, $operation)->sort(); // @phpstan-ignore-line $operation exists
+        $operations->add(sprintf('_api_%s_get', $operation->getShortName()), $operation)->sort(); // @phpstan-ignore-line $operation exists
 
         return $resourceMetadataCollection;
     }

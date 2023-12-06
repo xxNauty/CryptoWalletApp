@@ -22,6 +22,13 @@ use Gedmo\Tree\RepositoryUtils;
 use Gedmo\Tree\RepositoryUtilsInterface;
 use Gedmo\Tree\TreeListener;
 
+/**
+ * @template T of object
+ *
+ * @template-extends EntityRepository<T>
+ *
+ * @template-implements RepositoryInterface<T>
+ */
 abstract class AbstractTreeRepository extends EntityRepository implements RepositoryInterface
 {
     /**
@@ -38,6 +45,7 @@ abstract class AbstractTreeRepository extends EntityRepository implements Reposi
      */
     protected $repoUtils;
 
+    /** @param ClassMetadata<T> $class */
     public function __construct(EntityManagerInterface $em, ClassMetadata $class)
     {
         parent::__construct($em, $class);
@@ -61,7 +69,7 @@ abstract class AbstractTreeRepository extends EntityRepository implements Reposi
             throw new InvalidMappingException('This repository cannot be used for tree type: '.$treeListener->getStrategy($em, $class->getName())->getName());
         }
 
-        $this->repoUtils = new RepositoryUtils($this->_em, $this->getClassMetadata(), $this->listener, $this);
+        $this->repoUtils = new RepositoryUtils($this->getEntityManager(), $this->getClassMetadata(), $this->listener, $this);
     }
 
     /**
@@ -95,7 +103,7 @@ abstract class AbstractTreeRepository extends EntityRepository implements Reposi
                 throw new InvalidArgumentException('Node is not related to this repository');
             }
 
-            $wrapped = new EntityWrapper($node, $this->_em);
+            $wrapped = new EntityWrapper($node, $this->getEntityManager());
 
             if (!$wrapped->hasValidIdentifier()) {
                 throw new InvalidArgumentException('Node is not managed by UnitOfWork');

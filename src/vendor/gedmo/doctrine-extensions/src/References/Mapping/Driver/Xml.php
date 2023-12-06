@@ -35,7 +35,7 @@ class Xml extends BaseXml
     /**
      * @var string[]
      */
-    private $validReferences = [
+    private array $validReferences = [
         'referenceOne',
         'referenceMany',
         'referenceManyEmbed',
@@ -102,5 +102,7 @@ class Xml extends BaseXml
                 }
             }
         }
+
+        return $config;
     }
 }

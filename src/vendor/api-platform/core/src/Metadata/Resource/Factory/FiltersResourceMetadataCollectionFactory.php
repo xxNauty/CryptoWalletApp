@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Metadata\Resource\Factory;
 
-use ApiPlatform\Metadata\Exception\ResourceClassNotFoundException;
+use ApiPlatform\Exception\ResourceClassNotFoundException;
 use ApiPlatform\Metadata\Resource\ResourceMetadataCollection;
-use ApiPlatform\Metadata\Util\AttributeFilterExtractorTrait;
+use ApiPlatform\Util\AttributeFilterExtractorTrait;
 
 /**
  * Creates a resource metadata from {@see Resource} annotations.

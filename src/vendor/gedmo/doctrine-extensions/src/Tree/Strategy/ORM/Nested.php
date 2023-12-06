@@ -12,7 +12,7 @@ namespace Gedmo\Tree\Strategy\ORM;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
-use Doctrine\ORM\Proxy\Proxy;
+use Doctrine\Persistence\Proxy;
 use Gedmo\Exception\InvalidArgumentException;
 use Gedmo\Exception\UnexpectedValueException;
 use Gedmo\Mapping\Event\AdapterInterface;
@@ -84,7 +84,7 @@ class Nested implements Strategy
      *
      * @phpstan-var array<int, value-of<self::ALLOWED_NODE_POSITIONS>>
      */
-    private $nodePositions = [];
+    private array $nodePositions = [];
 
     /**
      * Stores a list of delayed nodes for correct order of updates
@@ -93,7 +93,7 @@ class Nested implements Strategy
      *
      * @phpstan-var array<int, array<int, array{node: Node|object, position: value-of<self::ALLOWED_NODE_POSITIONS>}>>
      */
-    private $delayedNodes = [];
+    private array $delayedNodes = [];
 
     public function __construct(TreeListener $listener)
     {
@@ -215,7 +215,8 @@ class Nested implements Strategy
             $qb->select('node')
                 ->from($config['useObjectClass'], 'node')
                 ->where($qb->expr()->between('node.'.$config['left'], '?1', '?2'))
-                ->setParameters([1 => $leftValue, 2 => $rightValue]);
+                ->setParameter(1, $leftValue)
+                ->setParameter(2, $rightValue);
 
             if (isset($config['root'])) {
                 $qb->andWhere($qb->expr()->eq('node.'.$config['root'], ':rid'));
@@ -223,8 +224,7 @@ class Nested implements Strategy
             }
             $q = $qb->getQuery();
             // get nodes for deletion
-            $nodes = $q->getResult();
-            foreach ((array) $nodes as $removalNode) {
+            foreach ($q->toIterable() as $removalNode) {
                 $uow->scheduleForDelete($removalNode);
             }
         }
@@ -406,8 +406,8 @@ class Nested implements Strategy
                 $wrapped->setPropertyValue($config['right'], $right);
             }
             $newRoot = $parentRoot;
-        } elseif (!isset($config['root']) ||
-            ($meta->isSingleValuedAssociation($config['root']) && null !== $parent && ($newRoot = $meta->getFieldValue($node, $config['root'])))) {
+        } elseif (!isset($config['root'])
+            || ($meta->isSingleValuedAssociation($config['root']) && null !== $parent && ($newRoot = $meta->getFieldValue($node, $config['root'])))) {
             if (!isset($this->treeEdges[$meta->getName()])) {
                 $this->treeEdges[$meta->getName()] = $this->max($em, $config['useObjectClass'], $newRoot) + 1;
             }
@@ -673,7 +673,7 @@ class Nested implements Strategy
                 \TypeError::class
             ), E_USER_DEPRECATED);
         }
-        $levelDelta = $levelDelta ?? 0;
+        $levelDelta ??= 0;
 
         $meta = $em->getClassMetadata($class);
         $config = $this->listener->getConfiguration($em, $class);

@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Symfony\EventListener;
 
-use ApiPlatform\Metadata\Error;
 use ApiPlatform\Util\RequestAttributesExtractor;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\EventListener\ErrorListener;
@@ -35,13 +34,9 @@ final class ExceptionListener
         $request = $event->getRequest();
         // Normalize exceptions only for routes managed by API Platform
         if (
+            'html' === $request->getRequestFormat('') ||
             !((RequestAttributesExtractor::extractAttributes($request)['respond'] ?? $request->attributes->getBoolean('_api_respond', false)) || $request->attributes->getBoolean('_graphql', false))
         ) {
-            return;
-        }
-
-        // Don't loop on errors leave it to Symfony as we could not handle this properly
-        if (($operation = $request->attributes->get('_api_operation')) && $operation instanceof Error) {
             return;
         }
 

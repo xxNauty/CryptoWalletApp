@@ -13,6 +13,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata as ORMClassMetadata;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\Mapping\AbstractClassMetadataFactory;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\ObjectManager;
@@ -50,7 +51,7 @@ class Closure implements Strategy
      *
      * @var array<int, array<int, object|Node>>
      */
-    private $pendingChildNodeInserts = [];
+    private array $pendingChildNodeInserts = [];
 
     /**
      * List of nodes which has their parents updated, but using
@@ -71,7 +72,7 @@ class Closure implements Strategy
      *
      * @phpstan-var array<array-key, object|Node>
      */
-    private $pendingNodesLevelProcess = [];
+    private array $pendingNodesLevelProcess = [];
 
     public function __construct(TreeListener $listener)
     {
@@ -205,9 +206,7 @@ class Closure implements Strategy
 
         if (!$hasTheUserExplicitlyDefinedMapping) {
             $metadataFactory = $em->getMetadataFactory();
-            $getCache = \Closure::bind(static function (AbstractClassMetadataFactory $metadataFactory): ?CacheItemPoolInterface {
-                return $metadataFactory->getCache();
-            }, null, \get_class($metadataFactory));
+            $getCache = \Closure::bind(static fn (AbstractClassMetadataFactory $metadataFactory): ?CacheItemPoolInterface => $metadataFactory->getCache(), null, \get_class($metadataFactory));
 
             $metadataCache = $getCache($metadataFactory);
 
@@ -302,21 +301,24 @@ class Closure implements Strategy
                 $dql .= ' WHERE c.descendant = :parent';
                 $q = $em->createQuery($dql);
                 $q->setParameter('parent', $parent);
-                $ancestors = $q->getArrayResult();
 
-                if ([] === $ancestors) {
-                    // The parent has been persisted after the child, postpone the evaluation
-                    $this->pendingChildNodeInserts[$emHash][] = $node;
+                $mustPostpone = true;
 
-                    continue;
-                }
+                foreach ($q->toIterable([], Query::HYDRATE_ARRAY) as $ancestor) {
+                    $mustPostpone = false;
 
-                foreach ($ancestors as $ancestor) {
                     $entries[] = [
                         $ancestorColumnName => $ancestor['ancestor'][$identifier],
                         $descendantColumnName => $nodeId,
                         $depthColumnName => $ancestor['depth'] + 1,
                     ];
+                }
+
+                if ($mustPostpone) {
+                    // The parent has been persisted after the child, postpone the evaluation
+                    $this->pendingChildNodeInserts[$emHash][] = $node;
+
+                    continue;
                 }
 
                 if (isset($config['level'])) {

@@ -13,12 +13,14 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Metadata\Resource\Factory;
 
-use ApiPlatform\Metadata\Exception\RuntimeException;
+use ApiPlatform\Api\ResourceClassResolverInterface;
+use ApiPlatform\Doctrine\Orm\State\Options;
+use ApiPlatform\Exception\RuntimeException;
+use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Link;
-use ApiPlatform\Metadata\Metadata;
+use ApiPlatform\Metadata\Operation;
 use ApiPlatform\Metadata\Property\Factory\PropertyMetadataFactoryInterface;
 use ApiPlatform\Metadata\Property\Factory\PropertyNameCollectionFactoryInterface;
-use ApiPlatform\Metadata\ResourceClassResolverInterface;
 use Symfony\Component\PropertyInfo\Type;
 
 /**
@@ -33,7 +35,7 @@ final class LinkFactory implements LinkFactoryInterface, PropertyLinkFactoryInte
     /**
      * {@inheritdoc}
      */
-    public function createLinkFromProperty(Metadata $operation, string $property): Link
+    public function createLinkFromProperty(ApiResource|Operation $operation, string $property): Link
     {
         $metadata = $this->propertyMetadataFactory->create($resourceClass = $operation->getClass(), $property);
         $relationClass = $this->getPropertyClassType($metadata->getBuiltinTypes());
@@ -49,7 +51,7 @@ final class LinkFactory implements LinkFactoryInterface, PropertyLinkFactoryInte
     /**
      * {@inheritdoc}
      */
-    public function createLinksFromIdentifiers(Metadata $operation): array
+    public function createLinksFromIdentifiers(ApiResource|Operation $operation): array
     {
         $identifiers = $this->getIdentifiersFromResourceClass($resourceClass = $operation->getClass());
 
@@ -57,7 +59,12 @@ final class LinkFactory implements LinkFactoryInterface, PropertyLinkFactoryInte
             return [];
         }
 
-        $link = (new Link())->withFromClass($resourceClass)->withIdentifiers($identifiers);
+        $entityClass = $resourceClass;
+        if (($options = $operation->getStateOptions()) && $options instanceof Options && $options->getEntityClass()) {
+            $entityClass = $options->getEntityClass();
+        }
+
+        $link = (new Link())->withFromClass($entityClass)->withIdentifiers($identifiers);
         $parameterName = $identifiers[0];
 
         if (1 < \count($identifiers)) {
@@ -71,7 +78,7 @@ final class LinkFactory implements LinkFactoryInterface, PropertyLinkFactoryInte
     /**
      * {@inheritdoc}
      */
-    public function createLinksFromRelations(Metadata $operation): array
+    public function createLinksFromRelations(ApiResource|Operation $operation): array
     {
         $links = [];
         foreach ($this->propertyNameCollectionFactory->create($resourceClass = $operation->getClass()) as $property) {
@@ -92,7 +99,7 @@ final class LinkFactory implements LinkFactoryInterface, PropertyLinkFactoryInte
     /**
      * {@inheritdoc}
      */
-    public function createLinksFromAttributes(Metadata $operation): array
+    public function createLinksFromAttributes(ApiResource|Operation $operation): array
     {
         $links = [];
         try {

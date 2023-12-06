@@ -24,6 +24,10 @@ use MongoDB\BSON\Regex;
  *
  * @author Gustavo Falco <comfortablynumb84@gmail.com>
  * @author Gediminas Morkevicius <gediminas.morkevicius@gmail.com>
+ *
+ * @template T of object
+ *
+ * @template-extends AbstractTreeRepository<T>
  */
 class MaterializedPathRepository extends AbstractTreeRepository
 {
@@ -55,6 +59,8 @@ class MaterializedPathRepository extends AbstractTreeRepository
      * Get tree
      *
      * @param object|null $rootNode
+     *
+     * @phpstan-return Iterator<object>
      */
     public function getTree($rootNode = null): Iterator
     {

@@ -16,7 +16,9 @@ use Gedmo\Mapping\Annotation\Annotation as GedmoAnnotation;
  * Timestampable annotation for Timestampable behavioral extension
  *
  * @Annotation
+ *
  * @NamedArgumentConstructor
+ *
  * @Target("PROPERTY")
  *
  * @author Gediminas Morkevicius <gediminas.morkevicius@gmail.com>
@@ -26,8 +28,7 @@ final class Timestampable implements GedmoAnnotation
 {
     use ForwardCompatibilityTrait;
 
-    /** @var string */
-    public $on = 'update';
+    public string $on = 'update';
     /** @var string|string[] */
     public $field;
     /** @var mixed */

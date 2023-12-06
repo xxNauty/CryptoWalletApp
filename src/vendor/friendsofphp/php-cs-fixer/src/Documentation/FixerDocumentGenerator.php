@@ -235,7 +235,7 @@ final class FixerDocumentGenerator
         $fileName = $reflectionObject->getFileName();
         $fileName = str_replace('\\', '/', $fileName);
         $fileName = substr($fileName, strrpos($fileName, '/src/Fixer/') + 1);
-        $fileName = "`{$className} <./../{$fileName}>`_";
+        $fileName = "`{$className} <./../../../{$fileName}>`_";
 
         $doc .= <<<RST
 
@@ -244,6 +244,8 @@ final class FixerDocumentGenerator
 
             {$fileName}
             RST;
+
+        $doc = str_replace("\t", '<TAB>', $doc);
 
         return "{$doc}\n";
     }

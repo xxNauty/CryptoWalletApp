@@ -16,23 +16,19 @@ namespace ApiPlatform\Action;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\HttpOperation;
 use ApiPlatform\Metadata\Resource\Factory\ResourceMetadataCollectionFactoryInterface;
-use ApiPlatform\State\Util\OperationRequestInitiatorTrait;
-use ApiPlatform\Symfony\Util\RequestAttributesExtractor;
-use ApiPlatform\Symfony\Validator\Exception\ConstraintViolationListAwareExceptionInterface;
 use ApiPlatform\Util\ErrorFormatGuesser;
+use ApiPlatform\Util\OperationRequestInitiatorTrait;
+use ApiPlatform\Util\RequestAttributesExtractor;
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
- * Renders a normalized exception for a given see [FlattenException](https://github.com/symfony/symfony/blob/6.3/src/Symfony/Component/ErrorHandler/Exception/FlattenException.php).
+ * Renders a normalized exception for a given {@see FlattenException}.
  *
  * @author Baptiste Meyer <baptiste.meyer@gmail.com>
  * @author Kévin Dunglas <dunglas@gmail.com>
- *
- * @deprecated since API Platform 3 and Error resource is used {@see ApiPlatform\Symfony\EventListener\ErrorListener}
  */
 final class ExceptionAction
 {
@@ -42,7 +38,7 @@ final class ExceptionAction
      * @param array $errorFormats      A list of enabled error formats
      * @param array $exceptionToStatus A list of exceptions mapped to their HTTP status code
      */
-    public function __construct(private readonly SerializerInterface $serializer, private readonly array $errorFormats, private readonly array $exceptionToStatus = [], ResourceMetadataCollectionFactoryInterface $resourceMetadataCollectionFactory = null)
+    public function __construct(private readonly SerializerInterface $serializer, private readonly array $errorFormats, private readonly array $exceptionToStatus = [], ?ResourceMetadataCollectionFactoryInterface $resourceMetadataCollectionFactory = null)
     {
         $this->resourceMetadataCollectionFactory = $resourceMetadataCollectionFactory;
     }
@@ -75,22 +71,7 @@ final class ExceptionAction
         $headers['X-Content-Type-Options'] = 'nosniff';
         $headers['X-Frame-Options'] = 'deny';
 
-        $context = ['statusCode' => $statusCode, 'rfc_7807_compliant_errors' => $operation?->getExtraProperties()['rfc_7807_compliant_errors'] ?? false];
-        $error = $request->attributes->get('exception') ?? $exception;
-        if ($error instanceof ConstraintViolationListAwareExceptionInterface) {
-            $error = $error->getConstraintViolationList();
-        } elseif (method_exists($error, 'getViolations') && $error->getViolations() instanceof ConstraintViolationListInterface) {
-            $error = $error->getViolations();
-        } else {
-            $error = $exception;
-        }
-
-        $serializerFormat = $format['key'];
-        if ('json' === $serializerFormat && 'application/problem+json' === $format['value'][0]) {
-            $serializerFormat = 'jsonproblem';
-        }
-
-        return new Response($this->serializer->serialize($error, $serializerFormat, $context), $statusCode, $headers);
+        return new Response($this->serializer->serialize($exception, $format['key'], ['statusCode' => $statusCode]), $statusCode, $headers);
     }
 
     private function getOperationExceptionToStatus(Request $request): array

@@ -18,8 +18,6 @@ use ApiPlatform\Metadata\Resource\ResourceNameCollection;
 /**
  * The first path you will see in the API.
  *
- * @deprecated use ApiPlatform\Documentation\Entrypoint
- *
  * @author Amrouche Hamza <hamza.simperfit@gmail.com>
  */
 final class Entrypoint

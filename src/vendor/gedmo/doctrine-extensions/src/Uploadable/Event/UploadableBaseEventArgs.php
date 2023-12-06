@@ -11,6 +11,7 @@ namespace Gedmo\Uploadable\Event;
 
 use Doctrine\Common\EventArgs;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Gedmo\Uploadable\FileInfo\FileInfoInterface;
 use Gedmo\Uploadable\UploadableListener;
 
@@ -24,22 +25,15 @@ abstract class UploadableBaseEventArgs extends EventArgs
 {
     /**
      * The instance of the Uploadable listener that fired this event
-     *
-     * @var UploadableListener
      */
-    private $uploadableListener;
+    private UploadableListener $uploadableListener;
 
-    /**
-     * @var EntityManagerInterface
-     */
-    private $em;
+    private EntityManagerInterface $em;
 
     /**
      * @todo Check if this property must be removed, as it is not used.
-     *
-     * @var array
      */
-    private $config = [];
+    private array $config = [];
 
     /**
      * The Uploadable entity
@@ -57,10 +51,7 @@ abstract class UploadableBaseEventArgs extends EventArgs
      */
     private $extensionConfiguration;
 
-    /**
-     * @var FileInfoInterface
-     */
-    private $fileInfo;
+    private FileInfoInterface $fileInfo;
 
     /**
      * Is the file being created, updated or removed?
@@ -101,6 +92,21 @@ abstract class UploadableBaseEventArgs extends EventArgs
      */
     public function getEntityManager()
     {
+        @trigger_error(sprintf(
+            '"%s()" is deprecated since gedmo/doctrine-extensions 3.14 and will be removed in version 4.0.',
+            __METHOD__
+        ), E_USER_DEPRECATED);
+
+        return $this->em;
+    }
+
+    /**
+     * Retrieve associated EntityManager
+     *
+     * @return ObjectManager
+     */
+    public function getObjectManager()
+    {
         return $this->em;
     }
 
@@ -110,6 +116,21 @@ abstract class UploadableBaseEventArgs extends EventArgs
      * @return object
      */
     public function getEntity()
+    {
+        @trigger_error(sprintf(
+            '"%s()" is deprecated since gedmo/doctrine-extensions 3.14 and will be removed in version 4.0.',
+            __METHOD__
+        ), E_USER_DEPRECATED);
+
+        return $this->entity;
+    }
+
+    /**
+     * Retrieve associated Object
+     *
+     * @return object
+     */
+    public function getObject()
     {
         return $this->entity;
     }

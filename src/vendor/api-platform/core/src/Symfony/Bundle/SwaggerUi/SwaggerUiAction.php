@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Symfony\Bundle\SwaggerUi;
 
+use ApiPlatform\Exception\RuntimeException;
 use ApiPlatform\Metadata\Resource\Factory\ResourceMetadataCollectionFactoryInterface;
 use ApiPlatform\OpenApi\Factory\OpenApiFactoryInterface;
 use ApiPlatform\OpenApi\Options;
@@ -25,8 +26,6 @@ use Twig\Environment as TwigEnvironment;
 
 /**
  * Displays the swaggerui interface.
- *
- * @deprecated use ApiPlatform\Symfony\Bundle\SwaggerUi\Processor instead
  *
  * @author Antoine Bluchet <soyuka@gmail.com>
  */
@@ -45,10 +44,6 @@ final class SwaggerUiAction
     {
         $openApi = $this->openApiFactory->__invoke(['base_url' => $request->getBaseUrl() ?: '/']);
 
-        foreach ($request->attributes->get('_api_exception_swagger_data') ?? [] as $key => $value) {
-            $request->attributes->set($key, $value);
-        }
-
         $swaggerContext = [
             'formats' => $this->formats,
             'title' => $openApi->getInfo()->getTitle(),
@@ -60,8 +55,6 @@ final class SwaggerUiAction
             'graphiQlEnabled' => $this->swaggerUiContext->isGraphiQlEnabled(),
             'graphQlPlaygroundEnabled' => $this->swaggerUiContext->isGraphQlPlaygroundEnabled(),
             'assetPackage' => $this->swaggerUiContext->getAssetPackage(),
-            'originalRoute' => $request->attributes->get('_api_original_route', $request->attributes->get('_route')),
-            'originalRouteParams' => $request->attributes->get('_api_original_route_params', $request->attributes->get('_route_params', [])),
         ];
 
         $swaggerData = [
@@ -81,27 +74,22 @@ final class SwaggerUiAction
             'extraConfiguration' => $this->swaggerUiContext->getExtraConfiguration(),
         ];
 
-        $originalRouteParams = $request->attributes->get('_api_original_route_params') ?? [];
-        $resourceClass = $originalRouteParams['_api_resource_class'] ?? $request->attributes->get('_api_resource_class');
-
-        if ($request->isMethodSafe() && $resourceClass) {
+        if ($request->isMethodSafe() && null !== $resourceClass = $request->attributes->get('_api_resource_class')) {
             $swaggerData['id'] = $request->attributes->get('id');
             $swaggerData['queryParameters'] = $request->query->all();
 
-            $metadata = $this->resourceMetadataFactory->create($resourceClass)->getOperation($originalRouteParams['_api_operation_name'] ?? $request->attributes->get('_api_operation_name'));
+            $metadata = $this->resourceMetadataFactory->create($resourceClass)->getOperation($request->attributes->get('_api_operation_name'));
 
             $swaggerData['shortName'] = $metadata->getShortName();
             $swaggerData['operationId'] = $this->normalizeOperationName($metadata->getName());
 
-            if ($data = $this->getPathAndMethod($swaggerData)) {
-                [$swaggerData['path'], $swaggerData['method']] = $data;
-            }
+            [$swaggerData['path'], $swaggerData['method']] = $this->getPathAndMethod($swaggerData);
         }
 
         return new Response($this->twig->render('@ApiPlatform/SwaggerUi/index.html.twig', $swaggerContext + ['swagger_data' => $swaggerData]));
     }
 
-    private function getPathAndMethod(array $swaggerData): ?array
+    private function getPathAndMethod(array $swaggerData): array
     {
         foreach ($swaggerData['spec']['paths'] as $path => $operations) {
             foreach ($operations as $method => $operation) {
@@ -111,6 +99,6 @@ final class SwaggerUiAction
             }
         }
 
-        return null;
+        throw new RuntimeException(sprintf('The operation "%s" cannot be found in the Swagger specification.', $swaggerData['operationId']));
     }
 }

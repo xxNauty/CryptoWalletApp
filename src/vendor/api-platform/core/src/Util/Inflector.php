@@ -13,17 +13,19 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Util;
 
-use Doctrine\Inflector\Inflector as LegacyInflector;
+use Doctrine\Inflector\Inflector as InflectorObject;
 use Doctrine\Inflector\InflectorFactory;
 
 /**
+ * Facade for Doctrine Inflector.
+ *
  * @internal
  */
 final class Inflector
 {
-    private static ?LegacyInflector $instance = null;
+    private static ?InflectorObject $instance = null;
 
-    private static function getInstance(): LegacyInflector
+    private static function getInstance(): InflectorObject
     {
         return self::$instance
             ?? self::$instance = InflectorFactory::create()->build();

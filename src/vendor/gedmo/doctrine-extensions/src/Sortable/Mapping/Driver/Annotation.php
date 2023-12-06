@@ -54,9 +54,9 @@ class Annotation extends AbstractAnnotationDriver
 
         // property annotations
         foreach ($class->getProperties() as $property) {
-            if ($meta->isMappedSuperclass && !$property->isPrivate() ||
-                $meta->isInheritedField($property->name) ||
-                isset($meta->associationMappings[$property->name]['inherited'])
+            if ($meta->isMappedSuperclass && !$property->isPrivate()
+                || $meta->isInheritedField($property->name)
+                || isset($meta->associationMappings[$property->name]['inherited'])
             ) {
                 continue;
             }
@@ -91,5 +91,7 @@ class Annotation extends AbstractAnnotationDriver
                 throw new InvalidMappingException("Missing property: 'position' in class - {$meta->getName()}");
             }
         }
+
+        return $config;
     }
 }

@@ -18,9 +18,9 @@ use ApiPlatform\Metadata\GraphQl\Query;
 use ApiPlatform\Metadata\GraphQl\Subscription;
 use ApiPlatform\Metadata\Resource\Factory\ResourceMetadataCollectionFactoryInterface;
 use ApiPlatform\Metadata\Resource\Factory\ResourceNameCollectionFactoryInterface;
-use GraphQL\Type\Definition\NamedType;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\WrappingType;
 use GraphQL\Type\Schema;
 
 /**
@@ -79,43 +79,34 @@ final class SchemaBuilder implements SchemaBuilderInterface
             }
         }
 
-        $queryType = new ObjectType([
-            'name' => 'Query',
-            'fields' => $queryFields,
-        ]);
-        $this->typesContainer->set('Query', $queryType);
-
         $schema = [
-            'query' => $queryType,
-            'typeLoader' => function (string $typeName): ?NamedType {
-                try {
-                    $type = $this->typesContainer->get($typeName);
-                } catch (TypeNotFoundException) {
-                    return null;
+            'query' => new ObjectType([
+                'name' => 'Query',
+                'fields' => $queryFields,
+            ]),
+            'typeLoader' => function ($name): Type {
+                $type = $this->typesContainer->get($name);
+
+                if ($type instanceof WrappingType) {
+                    return $type->getWrappedType(true);
                 }
 
-                return Type::getNamedType($type);
+                return $type;
             },
         ];
 
         if ($mutationFields) {
-            $mutationType = new ObjectType([
+            $schema['mutation'] = new ObjectType([
                 'name' => 'Mutation',
                 'fields' => $mutationFields,
             ]);
-            $this->typesContainer->set('Mutation', $mutationType);
-
-            $schema['mutation'] = $mutationType;
         }
 
         if ($subscriptionFields) {
-            $subscriptionType = new ObjectType([
+            $schema['subscription'] = new ObjectType([
                 'name' => 'Subscription',
                 'fields' => $subscriptionFields,
             ]);
-            $this->typesContainer->set('Subscription', $subscriptionType);
-
-            $schema['subscription'] = $subscriptionType;
         }
 
         return new Schema($schema);

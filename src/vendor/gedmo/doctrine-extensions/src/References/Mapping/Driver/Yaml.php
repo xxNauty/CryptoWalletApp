@@ -32,7 +32,7 @@ class Yaml extends File implements Driver
     /**
      * @var array<string, array<string, array<string, mixed>>>
      */
-    private $validReferences = [
+    private array $validReferences = [
         'referenceOne' => [],
         'referenceMany' => [],
         'referenceManyEmbed' => [],
@@ -70,6 +70,8 @@ class Yaml extends File implements Driver
             }
         }
         $config = array_merge($this->validReferences, $config);
+
+        return $config;
     }
 
     protected function _loadMappingFile($file)

@@ -13,8 +13,9 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Metadata\Resource\Factory;
 
+use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Link;
-use ApiPlatform\Metadata\Metadata;
+use ApiPlatform\Metadata\Operation;
 
 /**
  * @internal
@@ -24,5 +25,5 @@ interface PropertyLinkFactoryInterface
     /**
      * Create a link for a given property.
      */
-    public function createLinkFromProperty(Metadata $operation, string $property): Link;
+    public function createLinkFromProperty(ApiResource|Operation $operation, string $property): Link;
 }
