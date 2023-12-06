@@ -6,17 +6,24 @@ namespace App\Infrastructure\User\Doctrine;
 
 use App\Domain\User\Model\User;
 use App\Domain\User\Repository\UserRepositoryInterface;
-use App\Infrastructure\Shared\Doctrine\DoctrineRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 
-class DoctrineUserRepository extends DoctrineRepository implements UserRepositoryInterface
+class DoctrineUserRepository implements UserRepositoryInterface
 {
     private const ENTITY_CLASS = User::class;
     private const ALIAS = 'user';
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(
+        private readonly EntityManagerInterface $em
+    ) {
+    }
+
+    public function query(): QueryBuilder
     {
-        parent::__construct($em, self::ENTITY_CLASS, self::ALIAS);
+        return $this->em->createQueryBuilder()
+            ->select(self::ALIAS)
+            ->from(self::ENTITY_CLASS, self::ALIAS);
     }
 
     public function save(User $user): void

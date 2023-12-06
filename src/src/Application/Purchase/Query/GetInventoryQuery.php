@@ -9,7 +9,6 @@ readonly class GetInventoryQuery implements QueryInterface
 {
     public function __construct(
         public User $user
-    )
-    {
+    ) {
     }
 }

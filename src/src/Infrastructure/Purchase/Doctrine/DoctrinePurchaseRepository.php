@@ -5,17 +5,24 @@ namespace App\Infrastructure\Purchase\Doctrine;
 use App\Domain\Purchase\Model\Purchase;
 use App\Domain\Purchase\Resource\PurchaseRepositoryInterface;
 use App\Domain\User\Model\User;
-use App\Infrastructure\Shared\Doctrine\DoctrineRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 
-class DoctrinePurchaseRepository extends DoctrineRepository implements PurchaseRepositoryInterface
+class DoctrinePurchaseRepository implements PurchaseRepositoryInterface
 {
     private const ENTITY_CLASS = Purchase::class;
     private const ALIAS = 'purchase';
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(
+        private readonly EntityManagerInterface $em
+    ) {
+    }
+
+    public function query(): QueryBuilder
     {
-        parent::__construct($em, self::ENTITY_CLASS, self::ALIAS);
+        return $this->em->createQueryBuilder()
+            ->select(self::ALIAS)
+            ->from(self::ENTITY_CLASS, self::ALIAS);
     }
 
     public function save(Purchase $purchase): void
