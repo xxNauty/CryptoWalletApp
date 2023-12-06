@@ -23,7 +23,8 @@ use App\Infrastructure\Shared\ApiPlatform\Resource\ResourceFactory;
     shortName: 'CryptoCurrency',
     operations: [
         new Get(
-            uriTemplate: '/crypto_currencies/get/{id}',
+            uriTemplate: '/crypto_currencies/get/{symbol}',
+            uriVariables: 'symbol',
             security: 'is_granted("PUBLIC_ACCESS")',
             provider: CurrencyCrudProvider::class,
         ),

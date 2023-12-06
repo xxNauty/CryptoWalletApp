@@ -25,7 +25,7 @@ readonly class GetUserProvider implements ProviderInterface
         $user = $this->securityService->getUser();
 
         $model = User::ROLE_ADMIN === $user->role
-            ?  $this->queryBus->ask(
+            ? $this->queryBus->ask(
                 new FindUserQuery(
                     $uriVariables['id']
                 )

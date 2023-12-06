@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace App\Domain\Currency\Repository;
 
 use App\Domain\Currency\Model\CryptoCurrency;
-use App\Domain\Shared\Repository\RepositoryInterface;
 
-interface CurrencyRepositoryInterface extends RepositoryInterface
+interface CurrencyRepositoryInterface
 {
     public function save(CryptoCurrency $currency): void;
 

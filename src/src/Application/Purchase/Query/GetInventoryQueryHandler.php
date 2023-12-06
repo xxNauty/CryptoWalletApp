@@ -6,7 +6,6 @@ use App\Domain\Currency\Repository\CurrencyRepositoryInterface;
 use App\Domain\Purchase\Resource\PurchaseRepositoryInterface;
 use App\Domain\Purchase\ValueObject\InventoryPart;
 use App\Domain\Shared\Query\QueryHandlerInterface;
-use App\Domain\User\Service\UserSecurityServiceInterface;
 
 readonly class GetInventoryQueryHandler implements QueryHandlerInterface
 {

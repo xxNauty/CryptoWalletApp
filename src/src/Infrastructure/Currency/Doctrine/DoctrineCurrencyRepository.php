@@ -6,17 +6,24 @@ namespace App\Infrastructure\Currency\Doctrine;
 
 use App\Domain\Currency\Model\CryptoCurrency;
 use App\Domain\Currency\Repository\CurrencyRepositoryInterface;
-use App\Infrastructure\Shared\Doctrine\DoctrineRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
 
-class DoctrineCurrencyRepository extends DoctrineRepository implements CurrencyRepositoryInterface
+class DoctrineCurrencyRepository implements CurrencyRepositoryInterface
 {
     private const ENTITY_CLASS = CryptoCurrency::class;
     private const ALIAS = 'currency';
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(
+        private readonly EntityManagerInterface $em
+    ) {
+    }
+
+    public function query(): QueryBuilder
     {
-        parent::__construct($em, self::ENTITY_CLASS, self::ALIAS);
+        return $this->em->createQueryBuilder()
+            ->select(self::ALIAS)
+            ->from(self::ENTITY_CLASS, self::ALIAS);
     }
 
     public function save(CryptoCurrency $currency): void

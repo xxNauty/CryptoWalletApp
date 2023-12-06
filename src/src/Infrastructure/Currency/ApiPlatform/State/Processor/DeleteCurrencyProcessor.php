@@ -21,7 +21,7 @@ readonly class DeleteCurrencyProcessor implements ProcessorInterface
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): JsonResponse
     {
         Assert::isInstanceOf($data, CurrencyResource::class);
-        /** @var CurrencyResource $data */
+        /* @var CurrencyResource $data */
 
         $this->commandBus->dispatch(
             new DeleteCurrencyCommand(
