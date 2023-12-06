@@ -93,4 +93,9 @@ class DoctrinePurchaseRepository extends DoctrineRepository implements PurchaseR
 
         return array_unique($returnArray);
     }
+
+    public function findBy(array $params): ?array
+    {
+        return $this->em->getRepository(self::ENTITY_CLASS)->findBy($params);
+    }
 }
