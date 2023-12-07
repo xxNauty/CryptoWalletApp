@@ -16,9 +16,7 @@ use Gedmo\Mapping\Annotation\Annotation as GedmoAnnotation;
  * IpTraceable annotation for IpTraceable behavioral extension
  *
  * @Annotation
- *
  * @NamedArgumentConstructor
- *
  * @Target("PROPERTY")
  *
  * @author Pierre-Charles Bertineau <pc.bertineau@alterphp.com>

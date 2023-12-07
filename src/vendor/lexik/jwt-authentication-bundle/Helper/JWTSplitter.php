@@ -26,14 +26,8 @@ class JWTSplitter
      */
     private $signature;
 
-    /**
-     * @var string
-     */
-    private $jwt;
-
     public function __construct(string $jwt)
     {
-        $this->jwt = $jwt;
         [$this->header, $this->payload, $this->signature] = explode('.', $jwt);
     }
 
@@ -45,7 +39,7 @@ class JWTSplitter
     public function getParts($parts = [])
     {
         if (!$parts) {
-            return $this->jwt;
+            return "$this->header.$this->payload.$this->signature";
         }
 
         return implode('.', array_intersect_key(get_object_vars($this), array_flip($parts)));

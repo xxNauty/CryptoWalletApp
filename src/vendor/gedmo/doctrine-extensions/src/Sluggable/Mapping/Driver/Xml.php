@@ -50,18 +50,16 @@ class Xml extends BaseXml
         if (isset($xml->field)) {
             foreach ($xml->field as $mapping) {
                 $field = $this->_getAttribute($mapping, 'name');
-                $config = $this->buildFieldConfiguration($meta, $field, $mapping, $config);
+                $this->buildFieldConfiguration($meta, $field, $mapping, $config);
             }
         }
 
         if (isset($xml->{'attribute-overrides'})) {
             foreach ($xml->{'attribute-overrides'}->{'attribute-override'} as $mapping) {
                 $field = $this->_getAttribute($mapping, 'name');
-                $config = $this->buildFieldConfiguration($meta, $field, $mapping->field, $config);
+                $this->buildFieldConfiguration($meta, $field, $mapping->field, $config);
             }
         }
-
-        return $config;
     }
 
     /**
@@ -81,10 +79,8 @@ class Xml extends BaseXml
 
     /**
      * @param array<string, mixed> $config
-     *
-     * @return array<string, mixed>
      */
-    private function buildFieldConfiguration(ClassMetadata $meta, string $field, \SimpleXMLElement $mapping, array $config): array
+    private function buildFieldConfiguration(ClassMetadata $meta, string $field, \SimpleXMLElement $mapping, array &$config): void
     {
         /**
          * @var \SimpleXmlElement
@@ -156,7 +152,5 @@ class Xml extends BaseXml
                 throw new InvalidMappingException("Unable to find [{$ubase}] as mapped property in entity - {$meta->getName()}");
             }
         }
-
-        return $config;
     }
 }

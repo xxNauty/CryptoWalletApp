@@ -19,11 +19,9 @@ use Gedmo\Mapping\Annotation\Annotation;
 final class AttributeReader
 {
     /** @var array<string,bool> */
-    private array $isRepeatableAttribute = [];
+    private $isRepeatableAttribute = [];
 
     /**
-     * @phpstan-param \ReflectionClass<object> $class
-     *
      * @return array<Annotation|Annotation[]>
      */
     public function getClassAnnotations(\ReflectionClass $class): array
@@ -32,7 +30,6 @@ final class AttributeReader
     }
 
     /**
-     * @phpstan-param \ReflectionClass<object> $class
      * @phpstan-param class-string $annotationName
      *
      * @return Annotation|Annotation[]|null
@@ -61,13 +58,11 @@ final class AttributeReader
     }
 
     /**
-     * @param iterable<\ReflectionAttribute> $attributes
-     *
-     * @phpstan-param iterable<\ReflectionAttribute<object>> $attributes
+     * @param array<\ReflectionAttribute> $attributes
      *
      * @return array<string, Annotation|Annotation[]>
      */
-    private function convertToAttributeInstances(iterable $attributes): array
+    private function convertToAttributeInstances(array $attributes): array
     {
         $instances = [];
 

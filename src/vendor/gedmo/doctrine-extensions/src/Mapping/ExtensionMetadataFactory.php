@@ -12,8 +12,7 @@ namespace Gedmo\Mapping;
 use Doctrine\Bundle\DoctrineBundle\Mapping\MappingDriver as DoctrineBundleMappingDriver;
 use Doctrine\Common\Annotations\Reader;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata as DocumentClassMetadata;
-use Doctrine\ORM\Mapping\ClassMetadata as EntityClassMetadata;
-use Doctrine\ORM\Mapping\ClassMetadataInfo as LegacyEntityClassMetadata;
+use Doctrine\ORM\Mapping\ClassMetadataInfo as EntityClassMetadata;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\Mapping\Driver\DefaultFileLocator;
 use Doctrine\Persistence\Mapping\Driver\MappingDriver;
@@ -67,7 +66,10 @@ class ExtensionMetadataFactory
      */
     protected $annotationReader;
 
-    private ?CacheItemPoolInterface $cacheItemPool = null;
+    /**
+     * @var CacheItemPoolInterface|null
+     */
+    private $cacheItemPool;
 
     /**
      * @param Reader|AttributeReader|object $annotationReader
@@ -96,7 +98,7 @@ class ExtensionMetadataFactory
     /**
      * Reads extension metadata
      *
-     * @param ClassMetadata&(DocumentClassMetadata|EntityClassMetadata|LegacyEntityClassMetadata) $meta
+     * @param ClassMetadata&(DocumentClassMetadata|EntityClassMetadata) $meta
      *
      * @return array<string, mixed> the metatada configuration
      */
@@ -117,18 +119,9 @@ class ExtensionMetadataFactory
 
                     $class = $this->objectManager->getClassMetadata($parentClass);
 
-                    assert($class instanceof DocumentClassMetadata || $class instanceof EntityClassMetadata || $class instanceof LegacyEntityClassMetadata);
+                    assert($class instanceof DocumentClassMetadata || $class instanceof EntityClassMetadata);
 
-                    $extendedMetadata = $this->driver->readExtendedMetadata($class, $config);
-
-                    if (\is_array($extendedMetadata)) {
-                        $config = $extendedMetadata;
-                    }
-
-                    // @todo: In the next major release remove the assignment to `$extendedMetadata`, the previous conditional
-                    // block and uncomment the following line.
-                    // $config = $this->driver->readExtendedMetadata($class, $config);
-
+                    $this->driver->readExtendedMetadata($class, $config);
                     $isBaseInheritanceLevel = !$class->isInheritanceTypeNone()
                         && [] === $class->parentClasses
                         && [] !== $config
@@ -138,16 +131,7 @@ class ExtensionMetadataFactory
                     }
                 }
             }
-
-            $extendedMetadata = $this->driver->readExtendedMetadata($meta, $config);
-
-            if (\is_array($extendedMetadata)) {
-                $config = $extendedMetadata;
-            }
-
-            // @todo: In the next major release remove the assignment to `$extendedMetadata`, the previous conditional
-            // block and uncomment the following line.
-            // $config = $this->driver->readExtendedMetadata($meta, $config);
+            $this->driver->readExtendedMetadata($meta, $config);
         }
         if ([] !== $config) {
             $config['useObjectClass'] = $useObjectName;

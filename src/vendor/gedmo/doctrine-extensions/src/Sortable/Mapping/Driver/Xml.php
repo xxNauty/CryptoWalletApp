@@ -56,17 +56,17 @@ class Xml extends BaseXml
                     $config['position'] = $field;
                 }
             }
-            $config = $this->readSortableGroups($xml->field, $config, 'name');
+            $this->readSortableGroups($xml->field, $config, 'name');
         }
 
         // Search for sortable-groups in association mappings
         if (isset($xml->{'many-to-one'})) {
-            $config = $this->readSortableGroups($xml->{'many-to-one'}, $config);
+            $this->readSortableGroups($xml->{'many-to-one'}, $config);
         }
 
         // Search for sortable-groups in association mappings
         if (isset($xml->{'many-to-many'})) {
-            $config = $this->readSortableGroups($xml->{'many-to-many'}, $config);
+            $this->readSortableGroups($xml->{'many-to-many'}, $config);
         }
 
         if (!$meta->isMappedSuperclass && $config) {
@@ -74,8 +74,6 @@ class Xml extends BaseXml
                 throw new InvalidMappingException("Missing property: 'position' in class - {$meta->getName()}");
             }
         }
-
-        return $config;
     }
 
     /**
@@ -95,10 +93,8 @@ class Xml extends BaseXml
 
     /**
      * @param array<string, mixed> $config
-     *
-     * @return array<string, mixed>
      */
-    private function readSortableGroups(\SimpleXMLElement $mapping, array $config, string $fieldAttr = 'field'): array
+    private function readSortableGroups(\SimpleXMLElement $mapping, array &$config, string $fieldAttr = 'field'): void
     {
         foreach ($mapping as $mappingDoctrine) {
             $map = $mappingDoctrine->children(self::GEDMO_NAMESPACE_URI);
@@ -111,7 +107,5 @@ class Xml extends BaseXml
                 $config['groups'][] = $field;
             }
         }
-
-        return $config;
     }
 }

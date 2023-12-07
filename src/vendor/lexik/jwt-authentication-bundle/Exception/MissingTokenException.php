@@ -16,7 +16,7 @@ class MissingTokenException extends AuthenticationException
      *
      * @return string
      */
-    public function getMessageKey(): string
+    public function getMessageKey()
     {
         return 'JWT Token not found';
     }

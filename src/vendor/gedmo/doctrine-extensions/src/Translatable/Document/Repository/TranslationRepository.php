@@ -27,16 +27,16 @@ use Gedmo\Translatable\TranslatableListener;
  * to interact with translations.
  *
  * @author Gediminas Morkevicius <gediminas.morkevicius@gmail.com>
- *
- * @phpstan-extends DocumentRepository<object>
  */
 class TranslationRepository extends DocumentRepository
 {
     /**
      * Current TranslatableListener instance used
      * in EntityManager
+     *
+     * @var TranslatableListener|null
      */
-    private ?TranslatableListener $listener = null;
+    private $listener;
 
     public function __construct(DocumentManager $dm, UnitOfWork $uow, ClassMetadata $class)
     {
@@ -164,7 +164,6 @@ class TranslationRepository extends DocumentRepository
      * @param string $field
      * @param string $value
      * @param string $class
-     *
      * @phpstan-param class-string $class
      *
      * @return object|null instance of $class or null if not found
@@ -184,9 +183,9 @@ class TranslationRepository extends DocumentRepository
             ->getQuery();
 
         $q->setHydrate(false);
-        $result = $q->getSingleResult();
+        $result = $q->getIterator()->toArray();
 
-        $id = $result['foreign_key'] ?? null;
+        $id = $result[0]['foreign_key'] ?? null;
 
         if (null === $id) {
             return null;
@@ -231,8 +230,8 @@ class TranslationRepository extends DocumentRepository
     private function getTranslatableListener(): TranslatableListener
     {
         if (null === $this->listener) {
-            foreach ($this->dm->getEventManager()->getAllListeners() as $listeners) {
-                foreach ($listeners as $listener) {
+            foreach ($this->dm->getEventManager()->getAllListeners() as $event => $listeners) {
+                foreach ($listeners as $hash => $listener) {
                     if ($listener instanceof TranslatableListener) {
                         return $this->listener = $listener;
                     }

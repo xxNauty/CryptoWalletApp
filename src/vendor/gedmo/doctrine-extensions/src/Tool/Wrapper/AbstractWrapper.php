@@ -60,7 +60,7 @@ abstract class AbstractWrapper implements WrapperInterface
      *
      * @throws UnsupportedObjectManagerException
      *
-     * @return WrapperInterface<ClassMetadata>
+     * @return WrapperInterface
      */
     public static function wrap($object, ObjectManager $om)
     {

@@ -28,7 +28,7 @@ flushed in a behavioral way.
 
     composer require gedmo/doctrine-extensions
 
-* [Symfony](/doc/symfony.md)
+* [Symfony 4](/doc/symfony4.md)
 * [Laravel 5](https://www.laraveldoctrine.org/docs/1.3/extensions)
 * [Laminas](/doc/laminas.md)
 
@@ -100,7 +100,7 @@ To set up and run the tests, follow these steps:
 - From the project root, run `docker compose up -d` to start containers in daemon mode
 - Enter the container via `docker compose exec php bash` (you are now in the root directory: `/var/www`)
 - Install Composer dependencies via `composer install`
-- Run the tests: `vendor/bin/phpunit -c tests/`
+- Run the tests: `bin/phpunit -c tests/`
 
 ### Running the Example
 

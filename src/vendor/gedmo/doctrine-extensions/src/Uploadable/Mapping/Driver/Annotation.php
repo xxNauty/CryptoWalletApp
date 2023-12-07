@@ -78,7 +78,7 @@ class Annotation extends AbstractAnnotationDriver
                 }
             }
 
-            $config = Validator::validateConfiguration($meta, $config);
+            Validator::validateConfiguration($meta, $config);
         }
 
         /*
@@ -108,7 +108,5 @@ class Annotation extends AbstractAnnotationDriver
         }*/
 
         $this->validateFullMetadata($meta, $config);
-
-        return $config;
     }
 }

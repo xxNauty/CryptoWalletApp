@@ -16,7 +16,6 @@ use Gedmo\Mapping\Annotation\Annotation as GedmoAnnotation;
  * SlugHandlerOption annotation for Sluggable behavioral extension
  *
  * @Annotation
- *
  * @NamedArgumentConstructor
  *
  * @author Gediminas Morkevicius <gediminas.morkevicius@gmail.com>
@@ -25,7 +24,10 @@ final class SlugHandlerOption implements GedmoAnnotation
 {
     use ForwardCompatibilityTrait;
 
-    public string $name;
+    /**
+     * @var string
+     */
+    public $name;
 
     /**
      * @var mixed

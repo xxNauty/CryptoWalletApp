@@ -10,9 +10,8 @@
 namespace Gedmo\Loggable;
 
 use Doctrine\Common\EventArgs;
-use Doctrine\ORM\Mapping\ClassMetadata as ORMClassMetadata;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\Persistence\Event\LoadClassMetadataEventArgs;
-use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\ObjectManager;
 use Gedmo\Exception\InvalidArgumentException;
 use Gedmo\Loggable\Entity\LogEntry;
@@ -127,8 +126,6 @@ class LoggableListener extends MappedEventSubscriber
      *
      * @param LoadClassMetadataEventArgs $eventArgs
      *
-     * @phpstan-param LoadClassMetadataEventArgs<ClassMetadata<object>, ObjectManager> $eventArgs
-     *
      * @return void
      */
     public function loadClassMetadata(EventArgs $eventArgs)
@@ -210,11 +207,9 @@ class LoggableListener extends MappedEventSubscriber
      * Get the LogEntry class
      *
      * @param string $class
-     *
      * @phpstan-param class-string $class
      *
      * @return string
-     *
      * @phpstan-return class-string<LogEntryInterface<T>>
      */
     protected function getLogEntryClass(LoggableAdapter $ea, $class)
@@ -317,7 +312,7 @@ class LoggableListener extends MappedEventSubscriber
         if ($config = $this->getConfiguration($om, $meta->getName())) {
             $logEntryClass = $this->getLogEntryClass($ea, $meta->getName());
             $logEntryMeta = $om->getClassMetadata($logEntryClass);
-            /** @var LogEntryInterface<T> $logEntry */
+            /** @var LogEntryInterface $logEntry */
             $logEntry = $logEntryMeta->newInstance();
 
             $logEntry->setAction($action);
@@ -327,7 +322,7 @@ class LoggableListener extends MappedEventSubscriber
 
             // check for the availability of the primary key
             $uow = $om->getUnitOfWork();
-            if (LogEntryInterface::ACTION_CREATE === $action && ($ea->isPostInsertGenerator($meta) || ($meta instanceof ORMClassMetadata && $meta->isIdentifierComposite))) {
+            if (LogEntryInterface::ACTION_CREATE === $action && ($ea->isPostInsertGenerator($meta) || ($meta instanceof ClassMetadata && $meta->isIdentifierComposite))) {
                 $this->pendingLogEntryInserts[spl_object_id($object)] = $logEntry;
             } else {
                 $logEntry->setObjectId($wrapped->getIdentifier(false, true));

@@ -17,7 +17,7 @@ class ExpiredTokenException extends AuthenticationException
      *
      * @return string
      */
-    public function getMessageKey(): string
+    public function getMessageKey()
     {
         return 'Expired JWT Token';
     }

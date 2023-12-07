@@ -16,9 +16,7 @@ use Gedmo\Mapping\Annotation\Annotation as GedmoAnnotation;
  * Tree annotation for Tree behavioral extension
  *
  * @Annotation
- *
  * @NamedArgumentConstructor
- *
  * @Target("CLASS")
  *
  * @author Gediminas Morkevicius <gediminas.morkevicius@gmail.com>
@@ -29,16 +27,19 @@ final class Tree implements GedmoAnnotation
     use ForwardCompatibilityTrait;
 
     /**
+     * @var string
      * @phpstan-var 'closure'|'materializedPath'|'nested'
      */
-    public string $type = 'nested';
+    public $type = 'nested';
 
-    public bool $activateLocking = false;
+    /** @var bool */
+    public $activateLocking = false;
 
     /**
+     * @var int
      * @phpstan-var positive-int
      */
-    public int $lockingTimeout = 3;
+    public $lockingTimeout = 3;
 
     /**
      * @var string|null

@@ -24,9 +24,15 @@ use Gedmo\Mapping\Event\AdapterInterface;
  */
 class ORM implements AdapterInterface
 {
-    private ?EventArgs $args = null;
+    /**
+     * @var EventArgs
+     */
+    private $args;
 
-    private ?EntityManagerInterface $em = null;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
 
     public function __call($method, $args)
     {
@@ -89,21 +95,6 @@ class ORM implements AdapterInterface
             throw new \LogicException(sprintf('Event args must be set before calling "%s()".', __METHOD__));
         }
 
-        // todo: for the next major release, uncomment the next line:
-        // return $this->args->getObjectManager();
-        // and remove anything past this
-        if (\method_exists($this->args, 'getObjectManager')) {
-            return $this->args->getObjectManager();
-        }
-
-        @trigger_error(sprintf(
-            'Calling "%s()" on event args of class "%s" that does not implement "getObjectManager()" is deprecated since gedmo/doctrine-extensions 3.14'
-            .' and will throw a "%s" error in version 4.0.',
-            __METHOD__,
-            get_class($this->args),
-            \Error::class
-        ), E_USER_DEPRECATED);
-
         return $this->args->getEntityManager();
     }
 
@@ -112,21 +103,6 @@ class ORM implements AdapterInterface
         if (null === $this->args) {
             throw new \LogicException(sprintf('Event args must be set before calling "%s()".', __METHOD__));
         }
-
-        // todo: for the next major release, uncomment the next line:
-        // return $this->args->getObject();
-        // and remove anything past this
-        if (\method_exists($this->args, 'getObject')) {
-            return $this->args->getObject();
-        }
-
-        @trigger_error(sprintf(
-            'Calling "%s()" on event args of class "%s" that does not imeplement "getObject()" is deprecated since gedmo/doctrine-extensions 3.14'
-            .' and will throw a "%s" error in version 4.0.',
-            __METHOD__,
-            get_class($this->args),
-            \Error::class
-        ), E_USER_DEPRECATED);
 
         return $this->args->getEntity();
     }

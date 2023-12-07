@@ -185,8 +185,6 @@ class Validator
      * @param array<string, mixed> $config
      *
      * @return void
-     *
-     * @todo Stop receiving by reference the `$config` parameter and use `array` as return type declaration
      */
     public static function validateConfiguration(ClassMetadata $meta, array &$config)
     {
@@ -247,7 +245,5 @@ class Validator
                     throw new InvalidMappingException(sprintf('Class "%s" needs a valid value for filenameGenerator. It can be: SHA1, ALPHANUMERIC, NONE or a class implementing %s.', $meta->getName(), FilenameGeneratorInterface::class));
                 }
         }
-
-        return $config;
     }
 }

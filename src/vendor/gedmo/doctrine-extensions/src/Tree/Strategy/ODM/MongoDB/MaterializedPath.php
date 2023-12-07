@@ -65,13 +65,16 @@ class MaterializedPath extends AbstractMaterializedPath
     {
         $uow = $om->getUnitOfWork();
 
-        foreach ($this->rootsOfTreesWhichNeedsLocking as $root) {
+        foreach ($this->rootsOfTreesWhichNeedsLocking as $oid => $root) {
             $meta = $om->getClassMetadata(get_class($root));
             $config = $this->listener->getConfiguration($om, $meta->getName());
             $lockTimeProp = $meta->getReflectionProperty($config['lock_time']);
             $lockTimeProp->setAccessible(true);
             $lockTimeValue = new UTCDateTime();
             $lockTimeProp->setValue($root, $lockTimeValue);
+            $changes = [
+                $config['lock_time'] => [null, $lockTimeValue],
+            ];
 
             $ea->recomputeSingleObjectChangeSet($uow, $meta, $root);
         }
@@ -91,6 +94,9 @@ class MaterializedPath extends AbstractMaterializedPath
             $lockTimeProp->setAccessible(true);
             $lockTimeValue = null;
             $lockTimeProp->setValue($root, $lockTimeValue);
+            $changes = [
+                $config['lock_time'] => [null, null],
+            ];
 
             $ea->recomputeSingleObjectChangeSet($uow, $meta, $root);
 

@@ -72,8 +72,6 @@ class Yaml extends File implements Driver
                 }
             }
         }
-
-        return $config;
     }
 
     protected function _loadMappingFile($file)

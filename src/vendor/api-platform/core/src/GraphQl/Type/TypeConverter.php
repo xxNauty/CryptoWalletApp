@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace ApiPlatform\GraphQl\Type;
 
-use ApiPlatform\Exception\InvalidArgumentException;
-use ApiPlatform\Exception\OperationNotFoundException;
-use ApiPlatform\Exception\ResourceClassNotFoundException;
+use ApiPlatform\Metadata\Exception\InvalidArgumentException;
+use ApiPlatform\Metadata\Exception\OperationNotFoundException;
+use ApiPlatform\Metadata\Exception\ResourceClassNotFoundException;
 use ApiPlatform\Metadata\GraphQl\Operation;
 use ApiPlatform\Metadata\GraphQl\Query;
 use ApiPlatform\Metadata\Property\Factory\PropertyMetadataFactoryInterface;
@@ -70,28 +70,7 @@ final class TypeConverter implements TypeConverterInterface
                     return GraphQLType::string();
                 }
 
-                $resourceType = $this->getResourceType($type, $input, $rootOperation, $rootResource, $property, $depth);
-
-                if (!$resourceType && is_a($type->getClassName(), \BackedEnum::class, true)) {
-                    // Remove the condition in API Platform 4.
-                    if ($this->typeBuilder instanceof TypeBuilderEnumInterface) {
-                        $operation = null;
-                        try {
-                            $resourceMetadataCollection = $this->resourceMetadataCollectionFactory->create($type->getClassName());
-                            $operation = $resourceMetadataCollection->getOperation();
-                        } catch (ResourceClassNotFoundException|OperationNotFoundException) {
-                        }
-                        /** @var Query $enumOperation */
-                        $enumOperation = (new Query())
-                            ->withClass($type->getClassName())
-                            ->withShortName($operation?->getShortName() ?? (new \ReflectionClass($type->getClassName()))->getShortName())
-                            ->withDescription($operation?->getDescription());
-
-                        return $this->typeBuilder->getEnumType($enumOperation);
-                    }
-                }
-
-                return $resourceType;
+                return $this->getResourceType($type, $input, $rootOperation, $rootResource, $property, $depth);
             default:
                 return null;
         }
@@ -118,8 +97,8 @@ final class TypeConverter implements TypeConverterInterface
     private function getResourceType(Type $type, bool $input, Operation $rootOperation, string $rootResource, ?string $property, int $depth): ?GraphQLType
     {
         if (
-            $this->typeBuilder->isCollection($type) &&
-            $collectionValueType = $type->getCollectionValueTypes()[0] ?? null
+            $this->typeBuilder->isCollection($type)
+            && $collectionValueType = $type->getCollectionValueTypes()[0] ?? null
         ) {
             $resourceClass = $collectionValueType->getClassName();
         } else {
@@ -149,6 +128,25 @@ final class TypeConverter implements TypeConverterInterface
         }
 
         if (!$hasGraphQl) {
+            if (is_a($resourceClass, \BackedEnum::class, true)) {
+                // Remove the condition in API Platform 4.
+                if ($this->typeBuilder instanceof TypeBuilderEnumInterface) {
+                    $operation = null;
+                    try {
+                        $resourceMetadataCollection = $this->resourceMetadataCollectionFactory->create($resourceClass);
+                        $operation = $resourceMetadataCollection->getOperation();
+                    } catch (ResourceClassNotFoundException|OperationNotFoundException) {
+                    }
+                    /** @var Query $enumOperation */
+                    $enumOperation = (new Query())
+                        ->withClass($resourceClass)
+                        ->withShortName($operation?->getShortName() ?? (new \ReflectionClass($resourceClass))->getShortName())
+                        ->withDescription($operation?->getDescription());
+
+                    return $this->typeBuilder->getEnumType($enumOperation);
+                }
+            }
+
             return null;
         }
 

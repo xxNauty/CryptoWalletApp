@@ -11,8 +11,6 @@ use Symfony\Component\Console\Input\InputInterface;
 
 class ConsoleInputMigratorConfigurationFactory implements MigratorConfigurationFactory
 {
-    public const ABSENT_CONFIG_VALUE = 'notprovided';
-
     public function __construct(private readonly Configuration $configuration)
     {
     }
@@ -38,7 +36,7 @@ class ConsoleInputMigratorConfigurationFactory implements MigratorConfigurationF
             $allOrNothingOption = $input->getOption('all-or-nothing');
         }
 
-        if ($wasOptionExplicitlyPassed && ($allOrNothingOption !== null && $allOrNothingOption !== self::ABSENT_CONFIG_VALUE)) {
+        if ($wasOptionExplicitlyPassed && $allOrNothingOption !== null) {
             Deprecation::trigger(
                 'doctrine/migrations',
                 'https://github.com/doctrine/migrations/issues/1304',
@@ -51,10 +49,10 @@ class ConsoleInputMigratorConfigurationFactory implements MigratorConfigurationF
             );
         }
 
-        return match ($allOrNothingOption) {
-            self::ABSENT_CONFIG_VALUE => null,
-            null => false,
-            default => (bool) $allOrNothingOption,
-        };
+        if ($allOrNothingOption === 'notprovided') {
+            return null;
+        }
+
+        return (bool) ($allOrNothingOption ?? false);
     }
 }

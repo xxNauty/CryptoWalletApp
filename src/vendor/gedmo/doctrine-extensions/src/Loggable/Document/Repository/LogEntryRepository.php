@@ -33,9 +33,9 @@ class LogEntryRepository extends DocumentRepository
     /**
      * Currently used loggable listener
      *
-     * @var LoggableListener<T>|null
+     * @var LoggableListener<T>
      */
-    private ?LoggableListener $listener = null;
+    private $listener;
 
     /**
      * Loads all log entries for the
@@ -163,8 +163,8 @@ class LogEntryRepository extends DocumentRepository
     private function getLoggableListener(): LoggableListener
     {
         if (null === $this->listener) {
-            foreach ($this->dm->getEventManager()->getAllListeners() as $listeners) {
-                foreach ($listeners as $listener) {
+            foreach ($this->dm->getEventManager()->getAllListeners() as $event => $listeners) {
+                foreach ($listeners as $hash => $listener) {
                     if ($listener instanceof LoggableListener) {
                         $this->listener = $listener;
 

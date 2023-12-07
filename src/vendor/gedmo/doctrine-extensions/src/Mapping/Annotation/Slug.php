@@ -16,9 +16,7 @@ use Gedmo\Mapping\Annotation\Annotation as GedmoAnnotation;
  * Slug annotation for Sluggable behavioral extension
  *
  * @Annotation
- *
  * @NamedArgumentConstructor
- *
  * @Target("PROPERTY")
  *
  * @author Gediminas Morkevicius <gediminas.morkevicius@gmail.com>
@@ -34,17 +32,24 @@ final class Slug implements GedmoAnnotation
      * @Required
      */
     public $fields = [];
-    public bool $updatable = true;
-    public string $style = 'default'; // or "camel"
-    public bool $unique = true;
+    /** @var bool */
+    public $updatable = true;
+    /** @var string */
+    public $style = 'default'; // or "camel"
+    /** @var bool */
+    public $unique = true;
     /** @var string|null */
     public $unique_base;
-    public string $separator = '-';
-    public string $prefix = '';
-    public string $suffix = '';
+    /** @var string */
+    public $separator = '-';
+    /** @var string */
+    public $prefix = '';
+    /** @var string */
+    public $suffix = '';
     /** @var SlugHandler[] */
     public $handlers = [];
-    public string $dateFormat = 'Y-m-d-H:i';
+    /** @var string */
+    public $dateFormat = 'Y-m-d-H:i';
 
     /**
      * @param array<string, mixed> $data

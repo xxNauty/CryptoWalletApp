@@ -39,7 +39,6 @@ class SoftDeleteableFilter extends SQLFilter
 
     /**
      * @var array<string, bool>
-     *
      * @phpstan-var array<class-string, bool>
      */
     protected $disabled = [];
@@ -47,9 +46,9 @@ class SoftDeleteableFilter extends SQLFilter
     /**
      * @param string $targetTableAlias
      *
-     * @throws Exception
-     *
      * @return string
+     *
+     * @throws Exception
      */
     public function addFilterConstraint(ClassMetadata $targetEntity, $targetTableAlias)
     {
@@ -109,9 +108,9 @@ class SoftDeleteableFilter extends SQLFilter
     }
 
     /**
-     * @throws \RuntimeException
-     *
      * @return SoftDeleteableListener
+     *
+     * @throws \RuntimeException
      */
     protected function getListener()
     {
@@ -143,7 +142,9 @@ class SoftDeleteableFilter extends SQLFilter
     protected function getEntityManager()
     {
         if (null === $this->entityManager) {
-            $getEntityManager = \Closure::bind(fn (): EntityManagerInterface => $this->em, $this, parent::class);
+            $getEntityManager = \Closure::bind(function (): EntityManagerInterface {
+                return $this->em;
+            }, $this, parent::class);
 
             $this->entityManager = $getEntityManager();
         }

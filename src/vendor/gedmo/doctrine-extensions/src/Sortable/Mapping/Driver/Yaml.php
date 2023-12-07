@@ -62,13 +62,13 @@ class Yaml extends File implements Driver
                     }
                 }
             }
-            $config = $this->readSortableGroups($mapping['fields'], $config);
+            $this->readSortableGroups($mapping['fields'], $config);
         }
         if (isset($mapping['manyToOne'])) {
-            $config = $this->readSortableGroups($mapping['manyToOne'], $config);
+            $this->readSortableGroups($mapping['manyToOne'], $config);
         }
         if (isset($mapping['manyToMany'])) {
-            $config = $this->readSortableGroups($mapping['manyToMany'], $config);
+            $this->readSortableGroups($mapping['manyToMany'], $config);
         }
 
         if (!$meta->isMappedSuperclass && $config) {
@@ -76,8 +76,6 @@ class Yaml extends File implements Driver
                 throw new InvalidMappingException("Missing property: 'position' in class - {$meta->getName()}");
             }
         }
-
-        return $config;
     }
 
     protected function _loadMappingFile($file)
@@ -103,10 +101,8 @@ class Yaml extends File implements Driver
     /**
      * @param iterable<string, array<string, mixed>> $mapping
      * @param array<string, mixed>                   $config
-     *
-     * @return array<string, mixed>
      */
-    private function readSortableGroups(iterable $mapping, array $config): array
+    private function readSortableGroups(iterable $mapping, array &$config): void
     {
         foreach ($mapping as $field => $fieldMapping) {
             if (isset($fieldMapping['gedmo'])) {
@@ -118,7 +114,5 @@ class Yaml extends File implements Driver
                 }
             }
         }
-
-        return $config;
     }
 }

@@ -15,7 +15,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\Event\LoadClassMetadataEventArgs;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\NotifyPropertyChanged;
-use Doctrine\Persistence\ObjectManager;
 use Gedmo\Exception\InvalidArgumentException;
 use Gedmo\Exception\UploadableCantWriteException;
 use Gedmo\Exception\UploadableCouldntGuessMimeTypeException;
@@ -60,15 +59,19 @@ class UploadableListener extends MappedEventSubscriber
 
     /**
      * Mime type guesser
+     *
+     * @var MimeTypeGuesserInterface
      */
-    private MimeTypeGuesserInterface $mimeTypeGuesser;
+    private $mimeTypeGuesser;
 
     /**
      * Default FileInfoInterface class
      *
+     * @var string
+     *
      * @phpstan-var class-string<FileInfoInterface>
      */
-    private string $defaultFileInfoClass = FileInfoArray::class;
+    private $defaultFileInfoClass = FileInfoArray::class;
 
     /**
      * Array of files to remove on postFlush
@@ -378,6 +381,8 @@ class UploadableListener extends MappedEventSubscriber
      * @param bool        $appendNumber
      * @param object      $object
      *
+     * @return array<string, int|string|null>
+     *
      * @throws UploadableUploadException
      * @throws UploadableNoFileException
      * @throws UploadableExtensionException
@@ -387,8 +392,6 @@ class UploadableListener extends MappedEventSubscriber
      * @throws UploadablePartialException
      * @throws UploadableNoTmpDirException
      * @throws UploadableCantWriteException
-     *
-     * @return array<string, int|string|null>
      *
      * @phpstan-param class-string|false $filenameGeneratorClass
      */
@@ -520,8 +523,6 @@ class UploadableListener extends MappedEventSubscriber
      *
      * @param LoadClassMetadataEventArgs $eventArgs
      *
-     * @phpstan-param LoadClassMetadataEventArgs<ClassMetadata<object>, ObjectManager> $eventArgs
-     *
      * @return void
      */
     public function loadClassMetadata(EventArgs $eventArgs)
@@ -560,8 +561,8 @@ class UploadableListener extends MappedEventSubscriber
      */
     public function setDefaultFileInfoClass($defaultFileInfoClass)
     {
-        if (!is_string($defaultFileInfoClass) || !class_exists($defaultFileInfoClass)
-            || !is_subclass_of($defaultFileInfoClass, FileInfoInterface::class)
+        if (!is_string($defaultFileInfoClass) || !class_exists($defaultFileInfoClass) ||
+            !is_subclass_of($defaultFileInfoClass, FileInfoInterface::class)
         ) {
             throw new InvalidArgumentException(sprintf('Default FileInfo class must be a valid class, and it must implement "%s".', FileInfoInterface::class));
         }
@@ -644,9 +645,9 @@ class UploadableListener extends MappedEventSubscriber
      * @param array<string, mixed> $config
      * @param object               $object Entity
      *
-     * @throws UploadableNoPathDefinedException
-     *
      * @return string
+     *
+     * @throws UploadableNoPathDefinedException
      */
     protected function getPath(ClassMetadata $meta, array $config, $object)
     {
@@ -655,7 +656,9 @@ class UploadableListener extends MappedEventSubscriber
         if ('' === $path) {
             $defaultPath = $this->getDefaultPath();
             if ('' !== $config['pathMethod']) {
-                $getPathMethod = \Closure::bind(fn (string $pathMethod, ?string $defaultPath): string => $this->{$pathMethod}($defaultPath), $object, $meta->getReflectionClass()->getName());
+                $getPathMethod = \Closure::bind(function (string $pathMethod, ?string $defaultPath): string {
+                    return $this->{$pathMethod}($defaultPath);
+                }, $object, $meta->getReflectionClass()->getName());
 
                 $path = $getPathMethod($config['pathMethod'], $defaultPath);
             } elseif (null !== $defaultPath) {
@@ -714,7 +717,9 @@ class UploadableListener extends MappedEventSubscriber
      */
     protected function getPropertyValueFromObject(ClassMetadata $meta, $propertyName, $object)
     {
-        $getFilePath = \Closure::bind(fn (string $propertyName) => $this->{$propertyName}, $object, $meta->getReflectionClass()->getName());
+        $getFilePath = \Closure::bind(function (string $propertyName) {
+            return $this->{$propertyName};
+        }, $object, $meta->getReflectionClass()->getName());
 
         return $getFilePath($propertyName);
     }

@@ -11,7 +11,6 @@ namespace Gedmo\Mapping\Annotation;
 
 /**
  * @NamedArgumentConstructor
- *
  * @Annotation
  *
  * @final since gedmo/doctrine-extensions 3.11

@@ -26,7 +26,7 @@ class InvalidPayloadException extends AuthenticationException
      *
      * @return string
      */
-    public function getMessageKey(): string
+    public function getMessageKey()
     {
         return sprintf('Unable to find key "%s" in the token payload.', $this->invalidKey);
     }

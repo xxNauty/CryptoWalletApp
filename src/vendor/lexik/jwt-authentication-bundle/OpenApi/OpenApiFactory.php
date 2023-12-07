@@ -44,17 +44,6 @@ class OpenApiFactory implements OpenApiFactoryInterface
         $openApi = ($this->decorated)($context);
 
         $openApi
-            ->getComponents()->getSecuritySchemes()->offsetSet(
-                'JWT',
-                new \ArrayObject([
-                        'type' => 'http',
-                        'scheme' => 'bearer',
-                        'bearerFormat' => 'JWT',
-                    ]
-                )
-            );
-
-        $openApi
             ->getPaths()
             ->addPath($this->checkPath, (new PathItem())->withPost(
                 (new Operation())

@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Elasticsearch\Util;
 
-use ApiPlatform\Api\ResourceClassResolverInterface;
-use ApiPlatform\Exception\PropertyNotFoundException;
+use ApiPlatform\Metadata\Exception\PropertyNotFoundException;
 use ApiPlatform\Metadata\Property\Factory\PropertyMetadataFactoryInterface;
+use ApiPlatform\Metadata\ResourceClassResolverInterface;
 use Symfony\Component\PropertyInfo\Type;
 
 /**
@@ -43,6 +43,11 @@ trait FieldDatatypeTrait
 
     /**
      * Get the nested path to the decomposed given property (e.g.: foo.bar.baz => foo.bar).
+     *
+     * Elasticsearch can save arrays of Objects as nested documents.
+     * In the case of foo.bar.baz
+     *   foo.bar will be returned if foo.bar is an array of objects.
+     *   If neither foo nor bar is an array, it is not a nested property and will return null.
      */
     private function getNestedFieldPath(string $resourceClass, string $property): ?string
     {
@@ -59,30 +64,29 @@ trait FieldDatatypeTrait
             return null;
         }
 
-        // TODO: 3.0 allow multiple types
-        $type = $propertyMetadata->getBuiltinTypes()[0] ?? null;
+        $types = $propertyMetadata->getBuiltinTypes() ?? [];
 
-        if (null === $type) {
-            return null;
-        }
+        foreach ($types as $type) {
+            if (
+                Type::BUILTIN_TYPE_OBJECT === $type->getBuiltinType()
+                && null !== ($nextResourceClass = $type->getClassName())
+                && $this->resourceClassResolver->isResourceClass($nextResourceClass)
+            ) {
+                $nestedPath = $this->getNestedFieldPath($nextResourceClass, implode('.', $properties));
 
-        if (
-            Type::BUILTIN_TYPE_OBJECT === $type->getBuiltinType()
-            && null !== ($nextResourceClass = $type->getClassName())
-            && $this->resourceClassResolver->isResourceClass($nextResourceClass)
-        ) {
-            $nestedPath = $this->getNestedFieldPath($nextResourceClass, implode('.', $properties));
+                return null === $nestedPath ? $nestedPath : "$currentProperty.$nestedPath";
+            }
 
-            return null === $nestedPath ? $nestedPath : "$currentProperty.$nestedPath";
-        }
+            if (
+                null !== ($type = $type->getCollectionValueTypes()[0] ?? null)
+                && Type::BUILTIN_TYPE_OBJECT === $type->getBuiltinType()
+                && null !== ($className = $type->getClassName())
+                && $this->resourceClassResolver->isResourceClass($className)
+            ) {
+                $nestedPath = $this->getNestedFieldPath($className, implode('.', $properties));
 
-        if (
-            null !== ($type = $type->getCollectionValueTypes()[0] ?? null)
-            && Type::BUILTIN_TYPE_OBJECT === $type->getBuiltinType()
-            && null !== ($className = $type->getClassName())
-            && $this->resourceClassResolver->isResourceClass($className)
-        ) {
-            return $currentProperty;
+                return null === $nestedPath ? $currentProperty : "$currentProperty.$nestedPath";
+            }
         }
 
         return null;

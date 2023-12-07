@@ -108,8 +108,6 @@ class Yaml extends File implements Driver
                     $config[$mappingProperty['on']][] = $field;
                 }
             }
-
-            return $config;
         }
     }
 
