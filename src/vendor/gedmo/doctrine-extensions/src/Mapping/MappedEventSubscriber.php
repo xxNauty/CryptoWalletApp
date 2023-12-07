@@ -17,8 +17,7 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Mapping\ClassMetadata as DocumentClassMetadata;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\ClassMetadata as EntityClassMetadata;
-use Doctrine\ORM\Mapping\ClassMetadataInfo as LegacyEntityClassMetadata;
+use Doctrine\ORM\Mapping\ClassMetadataInfo as EntityClassMetadata;
 use Doctrine\Persistence\Mapping\AbstractClassMetadataFactory;
 use Doctrine\Persistence\Mapping\ClassMetadata;
 use Doctrine\Persistence\ObjectManager;
@@ -68,14 +67,14 @@ abstract class MappedEventSubscriber implements EventSubscriber
      *
      * @var array<int, ExtensionMetadataFactory>
      */
-    private array $extensionMetadataFactory = [];
+    private $extensionMetadataFactory = [];
 
     /**
      * List of event adapters used for this listener
      *
      * @var array<string, AdapterInterface>
      */
-    private array $adapters = [];
+    private $adapters = [];
 
     /**
      * Custom annotation reader
@@ -84,7 +83,10 @@ abstract class MappedEventSubscriber implements EventSubscriber
      */
     private $annotationReader;
 
-    private static ?PsrCachedReader $defaultAnnotationReader = null;
+    /**
+     * @var PsrCachedReader|null
+     */
+    private static $defaultAnnotationReader;
 
     /**
      * @var CacheItemPoolInterface|null
@@ -230,7 +232,7 @@ abstract class MappedEventSubscriber implements EventSubscriber
      */
     public function loadMetadataForObjectClass(ObjectManager $objectManager, $metadata)
     {
-        assert($metadata instanceof DocumentClassMetadata || $metadata instanceof EntityClassMetadata || $metadata instanceof LegacyEntityClassMetadata);
+        assert($metadata instanceof DocumentClassMetadata || $metadata instanceof EntityClassMetadata);
 
         $factory = $this->getExtensionMetadataFactory($objectManager);
 
@@ -326,7 +328,9 @@ abstract class MappedEventSubscriber implements EventSubscriber
 
         if ($objectManager instanceof EntityManagerInterface || $objectManager instanceof DocumentManager) {
             $metadataFactory = $objectManager->getMetadataFactory();
-            $getCache = \Closure::bind(static fn (AbstractClassMetadataFactory $metadataFactory): ?CacheItemPoolInterface => $metadataFactory->getCache(), null, \get_class($metadataFactory));
+            $getCache = \Closure::bind(static function (AbstractClassMetadataFactory $metadataFactory): ?CacheItemPoolInterface {
+                return $metadataFactory->getCache();
+            }, null, \get_class($metadataFactory));
 
             $metadataCache = $getCache($metadataFactory);
 

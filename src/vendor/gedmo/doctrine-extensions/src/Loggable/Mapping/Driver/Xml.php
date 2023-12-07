@@ -56,22 +56,22 @@ class Xml extends BaseXml
         }
 
         if (isset($xmlDoctrine->field)) {
-            $config = $this->inspectElementForVersioned($xmlDoctrine->field, $config, $meta);
+            $this->inspectElementForVersioned($xmlDoctrine->field, $config, $meta);
         }
         foreach ($xmlDoctrine->{'attribute-overrides'}->{'attribute-override'} ?? [] as $overrideMapping) {
-            $config = $this->inspectElementForVersioned($overrideMapping, $config, $meta);
+            $this->inspectElementForVersioned($overrideMapping, $config, $meta);
         }
         if (isset($xmlDoctrine->{'many-to-one'})) {
-            $config = $this->inspectElementForVersioned($xmlDoctrine->{'many-to-one'}, $config, $meta);
+            $this->inspectElementForVersioned($xmlDoctrine->{'many-to-one'}, $config, $meta);
         }
         if (isset($xmlDoctrine->{'one-to-one'})) {
-            $config = $this->inspectElementForVersioned($xmlDoctrine->{'one-to-one'}, $config, $meta);
+            $this->inspectElementForVersioned($xmlDoctrine->{'one-to-one'}, $config, $meta);
         }
         if (isset($xmlDoctrine->{'reference-one'})) {
-            $config = $this->inspectElementForVersioned($xmlDoctrine->{'reference-one'}, $config, $meta);
+            $this->inspectElementForVersioned($xmlDoctrine->{'reference-one'}, $config, $meta);
         }
         if (isset($xmlDoctrine->{'embedded'})) {
-            $config = $this->inspectElementForVersioned($xmlDoctrine->{'embedded'}, $config, $meta);
+            $this->inspectElementForVersioned($xmlDoctrine->{'embedded'}, $config, $meta);
         }
 
         if (!$meta->isMappedSuperclass && $config) {
@@ -82,18 +82,14 @@ class Xml extends BaseXml
                 throw new InvalidMappingException("Class must be annotated with Loggable annotation in order to track versioned fields in class - {$meta->getName()}");
             }
         }
-
-        return $config;
     }
 
     /**
      * Searches mappings on element for versioned fields
      *
      * @param array<string, mixed> $config
-     *
-     * @return array<string, mixed>
      */
-    private function inspectElementForVersioned(\SimpleXMLElement $element, array $config, ClassMetadata $meta): array
+    private function inspectElementForVersioned(\SimpleXMLElement $element, array &$config, ClassMetadata $meta): void
     {
         foreach ($element as $mapping) {
             $mappingDoctrine = $mapping;
@@ -112,7 +108,5 @@ class Xml extends BaseXml
                 $config['versioned'][] = $field;
             }
         }
-
-        return $config;
     }
 }

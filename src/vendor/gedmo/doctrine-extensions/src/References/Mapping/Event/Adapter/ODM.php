@@ -11,7 +11,7 @@ namespace Gedmo\References\Mapping\Event\Adapter;
 
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\Persistence\Proxy as PersistenceProxy;
+use Doctrine\ORM\Proxy\Proxy as ORMProxy;
 use Gedmo\Mapping\Event\Adapter\ODM as BaseAdapterODM;
 use Gedmo\References\Mapping\Event\ReferencesAdapter;
 use ProxyManager\Proxy\GhostObjectInterface;
@@ -32,7 +32,7 @@ final class ODM extends BaseAdapterODM implements ReferencesAdapter
         }
 
         if ($om instanceof EntityManagerInterface) {
-            if ($object instanceof PersistenceProxy) {
+            if ($object instanceof ORMProxy) {
                 $id = $om->getUnitOfWork()->getEntityIdentifier($object);
             } else {
                 $meta = $om->getClassMetadata(get_class($object));

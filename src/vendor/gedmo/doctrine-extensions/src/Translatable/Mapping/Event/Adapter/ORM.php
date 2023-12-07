@@ -142,10 +142,11 @@ final class ORM extends BaseAdapterORM implements TranslatableAdapter
                 'trans.locale = :locale',
                 'trans.field = :field'
             )
-            ->setParameter('locale', $locale)
-            ->setParameter('field', $field)
         ;
-
+        $qb->setParameters([
+            'locale' => $locale,
+            'field' => $field,
+        ]);
         if ($this->usesPersonalTranslation($translationClass)) {
             $qb->andWhere('trans.object = :object');
             if ($wrapped->getIdentifier()) {
@@ -161,8 +162,13 @@ final class ORM extends BaseAdapterORM implements TranslatableAdapter
         }
         $q = $qb->getQuery();
         $q->setMaxResults(1);
+        $result = $q->getResult();
 
-        return $q->getOneOrNullResult();
+        if ($result) {
+            return array_shift($result);
+        }
+
+        return null;
     }
 
     public function removeAssociatedTranslations(AbstractWrapper $wrapped, $transClass, $objectClass)
@@ -234,7 +240,6 @@ final class ORM extends BaseAdapterORM implements TranslatableAdapter
      *
      * @param mixed  $key       foreign key value
      * @param string $className translation class name
-     *
      * @phpstan-param class-string $className translation class name
      *
      * @return int|string transformed foreign key

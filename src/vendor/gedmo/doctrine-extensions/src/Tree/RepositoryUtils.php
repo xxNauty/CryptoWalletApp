@@ -19,12 +19,10 @@ use Gedmo\Tool\Wrapper\MongoDocumentWrapper;
 
 /**
  * @final since gedmo/doctrine-extensions 3.11
- *
- * @template T of object
  */
 class RepositoryUtils implements RepositoryUtilsInterface
 {
-    /** @var ClassMetadata<T> */
+    /** @var ClassMetadata */
     protected $meta;
 
     /** @var TreeListener */
@@ -33,7 +31,7 @@ class RepositoryUtils implements RepositoryUtilsInterface
     /** @var ObjectManager&(DocumentManager|EntityManagerInterface) */
     protected $om;
 
-    /** @var RepositoryInterface<T> */
+    /** @var RepositoryInterface */
     protected $repo;
 
     /**
@@ -46,9 +44,8 @@ class RepositoryUtils implements RepositoryUtilsInterface
 
     /**
      * @param ObjectManager&(DocumentManager|EntityManagerInterface) $om
-     * @param ClassMetadata<T>                                       $meta
-     * @param TreeListener                                           $listener
-     * @param RepositoryInterface<T>                                 $repo
+     * @param TreeListener        $listener
+     * @param RepositoryInterface $repo
      */
     public function __construct(ObjectManager $om, ClassMetadata $meta, $listener, $repo)
     {
@@ -59,7 +56,7 @@ class RepositoryUtils implements RepositoryUtilsInterface
     }
 
     /**
-     * @return ClassMetadata<T>
+     * @return ClassMetadata
      */
     public function getClassMetadata()
     {

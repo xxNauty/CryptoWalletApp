@@ -28,7 +28,6 @@ interface SluggableAdapter extends AdapterInterface
      * @param object        $object
      * @param ClassMetadata $meta
      * @param string        $slug
-     *
      * @phpstan-param SluggableConfiguration $config
      *
      * @return array<int, array<string, mixed>>
@@ -41,7 +40,6 @@ interface SluggableAdapter extends AdapterInterface
      * @param object $object
      * @param string $target
      * @param string $replacement
-     *
      * @phpstan-param SluggableConfiguration $config
      *
      * @return int the number of updated records
@@ -55,7 +53,6 @@ interface SluggableAdapter extends AdapterInterface
      * @param object $object
      * @param string $target
      * @param string $replacement
-     *
      * @phpstan-param SluggableConfiguration $config
      *
      * @return int the number of updated records

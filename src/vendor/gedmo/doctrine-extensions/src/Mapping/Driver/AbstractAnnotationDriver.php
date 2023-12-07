@@ -79,8 +79,6 @@ abstract class AbstractAnnotationDriver implements AnnotationDriverInterface
      * @param ClassMetadata $meta
      *
      * @return \ReflectionClass
-     *
-     * @phpstan-return \ReflectionClass<object>
      */
     public function getMetaReflectionClass($meta)
     {

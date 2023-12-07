@@ -14,16 +14,21 @@ use Gedmo\Mapping\Annotation\Annotation;
 
 /**
  * @author Gediminas Morkevicius <gediminas.morkevicius@gmail.com>
- *
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  *
  * @internal
  */
 final class AttributeAnnotationReader implements Reader
 {
-    private Reader $annotationReader;
+    /**
+     * @var Reader
+     */
+    private $annotationReader;
 
-    private AttributeReader $attributeReader;
+    /**
+     * @var AttributeReader
+     */
+    private $attributeReader;
 
     public function __construct(AttributeReader $attributeReader, Reader $annotationReader)
     {
@@ -32,8 +37,6 @@ final class AttributeAnnotationReader implements Reader
     }
 
     /**
-     * @phpstan-param \ReflectionClass<object> $class
-     *
      * @return Annotation[]
      */
     public function getClassAnnotations(\ReflectionClass $class): array
@@ -48,10 +51,7 @@ final class AttributeAnnotationReader implements Reader
     }
 
     /**
-     * @param string $annotationName
-     *
-     * @phpstan-param \ReflectionClass<object> $class
-     * @phpstan-param class-string<T> $annotationName the name of the annotation
+     * @param class-string<T> $annotationName the name of the annotation
      *
      * @return T|null the Annotation or NULL, if the requested annotation does not exist
      *
@@ -61,7 +61,11 @@ final class AttributeAnnotationReader implements Reader
     {
         $annotation = $this->attributeReader->getClassAnnotation($class, $annotationName);
 
-        return $annotation ?? $this->annotationReader->getClassAnnotation($class, $annotationName);
+        if (null !== $annotation) {
+            return $annotation;
+        }
+
+        return $this->annotationReader->getClassAnnotation($class, $annotationName);
     }
 
     /**
@@ -89,7 +93,11 @@ final class AttributeAnnotationReader implements Reader
     {
         $annotation = $this->attributeReader->getPropertyAnnotation($property, $annotationName);
 
-        return $annotation ?? $this->annotationReader->getPropertyAnnotation($property, $annotationName);
+        if (null !== $annotation) {
+            return $annotation;
+        }
+
+        return $this->annotationReader->getPropertyAnnotation($property, $annotationName);
     }
 
     public function getMethodAnnotations(\ReflectionMethod $method): array

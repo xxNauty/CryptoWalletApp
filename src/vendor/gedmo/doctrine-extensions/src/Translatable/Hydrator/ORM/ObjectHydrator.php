@@ -11,7 +11,6 @@ namespace Gedmo\Translatable\Hydrator\ORM;
 
 use Doctrine\ORM\Internal\Hydration\ObjectHydrator as BaseObjectHydrator;
 use Gedmo\Exception\RuntimeException;
-use Gedmo\Tool\ORM\Hydration\EntityManagerRetriever;
 use Gedmo\Translatable\TranslatableListener;
 
 /**
@@ -26,8 +25,6 @@ use Gedmo\Translatable\TranslatableListener;
  */
 class ObjectHydrator extends BaseObjectHydrator
 {
-    use EntityManagerRetriever;
-
     /**
      * State of skipOnLoad for listener between hydrations
      *
@@ -68,14 +65,21 @@ class ObjectHydrator extends BaseObjectHydrator
      */
     protected function getTranslatableListener()
     {
-        foreach ($this->getEntityManager()->getEventManager()->getAllListeners() as $listeners) {
-            foreach ($listeners as $listener) {
+        $translatableListener = null;
+        foreach ($this->_em->getEventManager()->getAllListeners() as $event => $listeners) {
+            foreach ($listeners as $hash => $listener) {
                 if ($listener instanceof TranslatableListener) {
-                    return $listener;
+                    $translatableListener = $listener;
+
+                    break 2;
                 }
             }
         }
 
-        throw new RuntimeException('The translation listener could not be found');
+        if (null === $translatableListener) {
+            throw new RuntimeException('The translation listener could not be found');
+        }
+
+        return $translatableListener;
     }
 }

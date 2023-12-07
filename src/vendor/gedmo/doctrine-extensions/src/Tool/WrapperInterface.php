@@ -14,7 +14,7 @@ use Doctrine\Persistence\Mapping\ClassMetadata;
 /**
  * Interface for a wrapper of a managed object.
  *
- * @phpstan-template-covariant TClassMetadata of ClassMetadata
+ * @phpstan-template TClassMetadata of ClassMetadata
  *
  * @author Gediminas Morkevicius <gediminas.morkevicius@gmail.com>
  */
@@ -88,7 +88,6 @@ interface WrapperInterface
      * Get the root object class name.
      *
      * @return string
-     *
      * @phpstan-return class-string
      */
     public function getRootObjectName();

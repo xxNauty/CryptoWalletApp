@@ -14,7 +14,6 @@
             <argument/> <!-- Default secure -->
             <argument/> <!-- Default httpOnly -->
             <argument>null</argument> <!-- Default split -->
-            <argument>false</argument> <!-- Default partitioned -->
         </service>
     </services>
 </container>

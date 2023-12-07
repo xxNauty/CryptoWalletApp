@@ -128,7 +128,7 @@ class GithubApi
 
     public function getPullRequestForCommit(string $commit, string $repo): ?array
     {
-        $data = $this->requestGitHubApi('https://api.github.com/search/issues?q='.$commit.'+is:pull-request');
+        $data = $this->requestGitHubApi('https://api.github.com/search/issues?q='.$commit);
 
         if (0 === \count($data['items'])) {
             return null;

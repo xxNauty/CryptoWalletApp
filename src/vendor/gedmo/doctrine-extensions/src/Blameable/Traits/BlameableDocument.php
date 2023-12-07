@@ -22,9 +22,7 @@ trait BlameableDocument
 {
     /**
      * @var string
-     *
      * @Gedmo\Blameable(on="create")
-     *
      * @ODM\Field(type="string")
      */
     #[ODM\Field(type: Type::STRING)]
@@ -33,9 +31,7 @@ trait BlameableDocument
 
     /**
      * @var string
-     *
      * @Gedmo\Blameable(on="update")
-     *
      * @ODM\Field(type="string")
      */
     #[ODM\Field(type: Type::STRING)]

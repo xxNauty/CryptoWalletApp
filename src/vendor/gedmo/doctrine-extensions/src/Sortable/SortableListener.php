@@ -33,6 +33,7 @@ use ProxyManager\Proxy\GhostObjectInterface;
  *   position?: string,
  *   useObjectClass?: class-string,
  * }
+ *
  * @phpstan-type SortableRelocation = array{
  *   name?: class-string,
  *   groups?: mixed[],
@@ -54,15 +55,15 @@ class SortableListener extends MappedEventSubscriber
 {
     /**
      * @var array<string, array<string, mixed>>
-     *
      * @phpstan-var array<string, SortableRelocation>
      */
-    private array $relocations = [];
+    private $relocations = [];
 
-    private bool $persistenceNeeded = false;
+    /** @var bool */
+    private $persistenceNeeded = false;
 
     /** @var array<string, int> */
-    private array $maxPositions = [];
+    private $maxPositions = [];
 
     /**
      * Specifies the list of events to listen
@@ -86,8 +87,6 @@ class SortableListener extends MappedEventSubscriber
      * Maps additional metadata
      *
      * @param LoadClassMetadataEventArgs $args
-     *
-     * @phpstan-param LoadClassMetadataEventArgs<ClassMetadata<object>, ObjectManager> $args
      *
      * @return void
      */
@@ -326,6 +325,8 @@ class SortableListener extends MappedEventSubscriber
      */
     protected function processInsert(SortableAdapter $ea, array $config, $meta, $object)
     {
+        $em = $ea->getObjectManager();
+
         $old = $meta->getReflectionProperty($config['position'])->getValue($object);
         $newPosition = $meta->getReflectionProperty($config['position'])->getValue($object);
 

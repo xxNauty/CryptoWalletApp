@@ -23,7 +23,6 @@ interface LoggableAdapter extends AdapterInterface
      * Get the default object class name used to store the log entries.
      *
      * @return string
-     *
      * @phpstan-return class-string
      */
     public function getDefaultLogEntryClass();

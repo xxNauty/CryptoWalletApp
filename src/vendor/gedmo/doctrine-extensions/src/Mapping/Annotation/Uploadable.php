@@ -18,9 +18,7 @@ use Gedmo\Uploadable\Mapping\Validator;
  * Uploadable annotation for Uploadable behavioral extension
  *
  * @Annotation
- *
  * @NamedArgumentConstructor
- *
  * @Target("CLASS")
  *
  * @author Gustavo Falco <comfortablynumb84@gmail.com>
@@ -31,32 +29,52 @@ final class Uploadable implements GedmoAnnotation
 {
     use ForwardCompatibilityTrait;
 
-    public bool $allowOverwrite = false;
-
-    public bool $appendNumber = false;
-
-    public string $path = '';
-
-    public string $pathMethod = '';
-
-    public string $callback = '';
+    /**
+     * @var bool
+     */
+    public $allowOverwrite = false;
 
     /**
+     * @var bool
+     */
+    public $appendNumber = false;
+
+    /**
+     * @var string
+     */
+    public $path = '';
+
+    /**
+     * @var string
+     */
+    public $pathMethod = '';
+
+    /**
+     * @var string
+     */
+    public $callback = '';
+
+    /**
+     * @var string
+     *
      * @phpstan-var Validator::FILENAME_GENERATOR_*|class-string<FilenameGeneratorInterface>
      */
-    public string $filenameGenerator = Validator::FILENAME_GENERATOR_NONE;
+    public $filenameGenerator = Validator::FILENAME_GENERATOR_NONE;
 
-    public string $maxSize = '0';
+    /**
+     * @var string
+     */
+    public $maxSize = '0';
 
     /**
      * @var string A list of comma separate values of allowed types, like "text/plain,text/css"
      */
-    public string $allowedTypes = '';
+    public $allowedTypes = '';
 
     /**
      * @var string A list of comma separate values of disallowed types, like "video/jpeg,text/html"
      */
-    public string $disallowedTypes = '';
+    public $disallowedTypes = '';
 
     /**
      * @param array<string, mixed> $data

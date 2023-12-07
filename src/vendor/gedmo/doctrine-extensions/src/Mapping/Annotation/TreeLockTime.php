@@ -16,7 +16,6 @@ use Gedmo\Mapping\Annotation\Annotation as GedmoAnnotation;
  * TreeLockTime annotation for Tree behavioral extension
  *
  * @Annotation
- *
  * @Target("PROPERTY")
  *
  * @author Gustavo Falco <comfortablynumb84@gmail.com>

@@ -32,7 +32,7 @@ class Xml extends BaseXml
      *
      * @var string[]
      */
-    private array $strategies = [
+    private $strategies = [
         'nested',
         'closure',
         'materializedPath',
@@ -253,7 +253,5 @@ class Xml extends BaseXml
                 throw new InvalidMappingException("Cannot find Tree type for class: {$meta->getName()}");
             }
         }
-
-        return $config;
     }
 }

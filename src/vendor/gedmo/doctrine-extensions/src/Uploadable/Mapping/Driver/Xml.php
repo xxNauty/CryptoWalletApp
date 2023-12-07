@@ -85,10 +85,8 @@ class Xml extends BaseXml
                     }
                 }
 
-                $config = Validator::validateConfiguration($meta, $config);
+                Validator::validateConfiguration($meta, $config);
             }
         }
-
-        return $config;
     }
 }

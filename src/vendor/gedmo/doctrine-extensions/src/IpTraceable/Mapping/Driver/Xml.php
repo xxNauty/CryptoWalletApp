@@ -113,8 +113,6 @@ class Xml extends BaseXml
                     $config[$this->_getAttribute($data, 'on')][] = $field;
                 }
             }
-
-            return $config;
         }
     }
 

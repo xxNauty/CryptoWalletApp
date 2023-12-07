@@ -16,9 +16,7 @@ use Gedmo\Mapping\Annotation\Annotation as GedmoAnnotation;
  * TreeLevel annotation for Tree behavioral extension
  *
  * @Annotation
- *
  * @NamedArgumentConstructor
- *
  * @Target("PROPERTY")
  *
  * @author Gediminas Morkevicius <gediminas.morkevicius@gmail.com>
@@ -30,8 +28,10 @@ final class TreeLevel implements GedmoAnnotation
 
     /**
      * The level which root nodes will have
+     *
+     * @var int
      */
-    public int $base = 0;
+    public $base = 0;
 
     /**
      * @param array<string, mixed> $data

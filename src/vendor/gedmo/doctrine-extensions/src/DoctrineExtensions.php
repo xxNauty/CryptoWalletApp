@@ -15,7 +15,6 @@ use Doctrine\Common\Annotations\Reader;
 use Doctrine\ODM\MongoDB\Mapping\Driver as DriverMongodbODM;
 use Doctrine\ORM\Mapping\Driver as DriverORM;
 use Doctrine\Persistence\Mapping\Driver\MappingDriverChain;
-use Gedmo\Exception\RuntimeException;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 
 /**
@@ -29,7 +28,7 @@ final class DoctrineExtensions
     /**
      * Current version of extensions
      */
-    public const VERSION = '3.14.0';
+    public const VERSION = '3.13.0';
 
     /**
      * Hooks all extension metadata mapping drivers into
@@ -37,19 +36,15 @@ final class DoctrineExtensions
      */
     public static function registerMappingIntoDriverChainORM(MappingDriverChain $driverChain, ?Reader $reader = null): void
     {
-        $paths = [
+        if (!$reader) {
+            $reader = self::createAnnotationReader();
+        }
+        $annotationDriver = new DriverORM\AnnotationDriver($reader, [
             __DIR__.'/Translatable/Entity',
             __DIR__.'/Loggable/Entity',
             __DIR__.'/Tree/Entity',
-        ];
-
-        if (\PHP_VERSION_ID >= 80000) {
-            $driver = new DriverORM\AttributeDriver($paths);
-        } else {
-            $driver = new DriverORM\AnnotationDriver($reader ?? self::createAnnotationReader(), $paths);
-        }
-
-        $driverChain->addDriver($driver, 'Gedmo');
+        ]);
+        $driverChain->addDriver($annotationDriver, 'Gedmo');
     }
 
     /**
@@ -58,19 +53,15 @@ final class DoctrineExtensions
      */
     public static function registerAbstractMappingIntoDriverChainORM(MappingDriverChain $driverChain, ?Reader $reader = null): void
     {
-        $paths = [
+        if (!$reader) {
+            $reader = self::createAnnotationReader();
+        }
+        $annotationDriver = new DriverORM\AnnotationDriver($reader, [
             __DIR__.'/Translatable/Entity/MappedSuperclass',
             __DIR__.'/Loggable/Entity/MappedSuperclass',
             __DIR__.'/Tree/Entity/MappedSuperclass',
-        ];
-
-        if (\PHP_VERSION_ID >= 80000) {
-            $driver = new DriverORM\AttributeDriver($paths);
-        } else {
-            $driver = new DriverORM\AnnotationDriver($reader ?? self::createAnnotationReader(), $paths);
-        }
-
-        $driverChain->addDriver($driver, 'Gedmo');
+        ]);
+        $driverChain->addDriver($annotationDriver, 'Gedmo');
     }
 
     /**
@@ -79,18 +70,14 @@ final class DoctrineExtensions
      */
     public static function registerMappingIntoDriverChainMongodbODM(MappingDriverChain $driverChain, ?Reader $reader = null): void
     {
-        $paths = [
+        if (!$reader) {
+            $reader = self::createAnnotationReader();
+        }
+        $annotationDriver = new DriverMongodbODM\AnnotationDriver($reader, [
             __DIR__.'/Translatable/Document',
             __DIR__.'/Loggable/Document',
-        ];
-
-        if (\PHP_VERSION_ID >= 80000) {
-            $driver = new DriverMongodbODM\AttributeDriver($paths);
-        } else {
-            $driver = new DriverMongodbODM\AnnotationDriver($reader ?? self::createAnnotationReader(), $paths);
-        }
-
-        $driverChain->addDriver($driver, 'Gedmo');
+        ]);
+        $driverChain->addDriver($annotationDriver, 'Gedmo');
     }
 
     /**
@@ -99,18 +86,14 @@ final class DoctrineExtensions
      */
     public static function registerAbstractMappingIntoDriverChainMongodbODM(MappingDriverChain $driverChain, ?Reader $reader = null): void
     {
-        $paths = [
+        if (!$reader) {
+            $reader = self::createAnnotationReader();
+        }
+        $annotationDriver = new DriverMongodbODM\AnnotationDriver($reader, [
             __DIR__.'/Translatable/Document/MappedSuperclass',
             __DIR__.'/Loggable/Document/MappedSuperclass',
-        ];
-
-        if (\PHP_VERSION_ID >= 80000) {
-            $driver = new DriverMongodbODM\AttributeDriver($paths);
-        } else {
-            $driver = new DriverMongodbODM\AnnotationDriver($reader ?? self::createAnnotationReader(), $paths);
-        }
-
-        $driverChain->addDriver($driver, 'Gedmo');
+        ]);
+        $driverChain->addDriver($annotationDriver, 'Gedmo');
     }
 
     /**
@@ -128,15 +111,8 @@ final class DoctrineExtensions
         // Purposefully no-op'd, all supported versions of `doctrine/annotations` support autoloading
     }
 
-    /**
-     * @throws RuntimeException if running PHP 7 and the `doctrine/annotations` package is not installed
-     */
     private static function createAnnotationReader(): PsrCachedReader
     {
-        if (!class_exists(AnnotationReader::class)) {
-            throw new RuntimeException(sprintf('The "%1$s" class requires the "doctrine/annotations" package to use annotations but it is not available. Try running "composer require doctrine/annotations" or upgrade to PHP 8 to use attributes.', self::class));
-        }
-
         return new PsrCachedReader(new AnnotationReader(), new ArrayAdapter());
     }
 }

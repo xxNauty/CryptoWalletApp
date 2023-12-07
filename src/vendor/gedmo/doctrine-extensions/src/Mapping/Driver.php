@@ -26,14 +26,12 @@ interface Driver
     /**
      * Read the extended metadata configuration for a single mapped class.
      *
-     * @todo In the next major release stop receiving by reference the `$config` parameter and use `array` as return type declaration
-     *
      * @param ClassMetadata        $meta
      * @param array<string, mixed> $config
      *
-     * @throws InvalidMappingException if the mapping configuration is invalid
-     *
      * @return void
+     *
+     * @throws InvalidMappingException if the mapping configuration is invalid
      *
      * @phpstan-param ClassMetadata&(OdmClassMetadata|OrmClassMetadata) $meta
      */

@@ -65,7 +65,6 @@ interface AdapterInterface
      * @param ClassMetadata $meta
      *
      * @return string
-     *
      * @phpstan-return class-string
      */
     public function getRootObjectClass($meta);

@@ -16,9 +16,7 @@ use Gedmo\Mapping\Annotation\Annotation as GedmoAnnotation;
  * TreePath annotation for Tree behavioral extension
  *
  * @Annotation
- *
  * @NamedArgumentConstructor
- *
  * @Target("PROPERTY")
  *
  * @author Gustavo Falco <comfortablynumb84@gmail.com>
@@ -30,14 +28,17 @@ final class TreePath implements GedmoAnnotation
 {
     use ForwardCompatibilityTrait;
 
-    public string $separator = ',';
+    /** @var string */
+    public $separator = ',';
 
     /** @var bool|null */
     public $appendId;
 
-    public bool $startsWithSeparator = false;
+    /** @var bool */
+    public $startsWithSeparator = false;
 
-    public bool $endsWithSeparator = true;
+    /** @var bool */
+    public $endsWithSeparator = true;
 
     /**
      * @param array<string, mixed> $data
