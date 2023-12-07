@@ -22,7 +22,6 @@ use ApiPlatform\Metadata\Resource\Factory\ResourceMetadataCollectionFactoryInter
 use ApiPlatform\State\ProviderInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
-use Psr\Container\ContainerInterface;
 
 /**
  * Collection state provider using the Doctrine ORM.
@@ -37,10 +36,9 @@ final class CollectionProvider implements ProviderInterface
     /**
      * @param QueryCollectionExtensionInterface[] $collectionExtensions
      */
-    public function __construct(ResourceMetadataCollectionFactoryInterface $resourceMetadataCollectionFactory, private readonly ManagerRegistry $managerRegistry, private readonly iterable $collectionExtensions = [], ContainerInterface $handleLinksLocator = null)
+    public function __construct(ResourceMetadataCollectionFactoryInterface $resourceMetadataCollectionFactory, private readonly ManagerRegistry $managerRegistry, private readonly iterable $collectionExtensions = [])
     {
         $this->resourceMetadataCollectionFactory = $resourceMetadataCollectionFactory;
-        $this->handleLinksLocator = $handleLinksLocator;
     }
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): iterable
@@ -61,11 +59,7 @@ final class CollectionProvider implements ProviderInterface
         $queryBuilder = $repository->createQueryBuilder('o');
         $queryNameGenerator = new QueryNameGenerator();
 
-        if ($handleLinks = $this->getLinksHandler($operation)) {
-            $handleLinks($queryBuilder, $uriVariables, $queryNameGenerator, ['entityClass' => $entityClass, 'operation' => $operation] + $context);
-        } else {
-            $this->handleLinks($queryBuilder, $uriVariables, $queryNameGenerator, $context, $entityClass, $operation);
-        }
+        $this->handleLinks($queryBuilder, $uriVariables, $queryNameGenerator, $context, $entityClass, $operation);
 
         foreach ($this->collectionExtensions as $extension) {
             $extension->applyToCollection($queryBuilder, $queryNameGenerator, $entityClass, $operation, $context);

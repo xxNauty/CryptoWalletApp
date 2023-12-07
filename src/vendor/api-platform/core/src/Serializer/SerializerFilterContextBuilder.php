@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Serializer;
 
-use ApiPlatform\Metadata\Exception\RuntimeException;
+use ApiPlatform\Exception\RuntimeException;
 use ApiPlatform\Metadata\Resource\Factory\ResourceMetadataCollectionFactoryInterface;
 use ApiPlatform\Serializer\Filter\FilterInterface;
-use ApiPlatform\Symfony\Util\RequestAttributesExtractor;
+use ApiPlatform\Util\RequestAttributesExtractor;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -42,11 +42,7 @@ final class SerializerFilterContextBuilder implements SerializerContextBuilderIn
 
         $context = $this->decorated->createFromRequest($request, $normalization, $attributes);
 
-        if (!($operation = $context['operation'] ?? null)) {
-            $operation = $this->resourceMetadataCollectionFactory->create($attributes['resource_class'])->getOperation($attributes['operation_name'] ?? null);
-        }
-
-        $resourceFilters = $operation->getFilters();
+        $resourceFilters = $this->resourceMetadataCollectionFactory->create($attributes['resource_class'])->getOperation($attributes['operation_name'] ?? null)->getFilters();
 
         if (!$resourceFilters) {
             return $context;

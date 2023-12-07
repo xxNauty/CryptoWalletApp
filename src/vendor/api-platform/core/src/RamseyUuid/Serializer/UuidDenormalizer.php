@@ -37,11 +37,4 @@ final class UuidDenormalizer implements DenormalizerInterface
     {
         return \is_string($data) && is_a($type, UuidInterface::class, true);
     }
-
-    public function getSupportedTypes(?string $format): array
-    {
-        return [
-            UuidInterface::class => true,
-        ];
-    }
 }

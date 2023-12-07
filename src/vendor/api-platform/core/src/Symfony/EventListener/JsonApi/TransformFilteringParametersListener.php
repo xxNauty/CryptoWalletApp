@@ -27,16 +27,12 @@ final class TransformFilteringParametersListener
     public function onKernelRequest(RequestEvent $event): void
     {
         $request = $event->getRequest();
-        if (($operation = $request->attributes->get('_api_operation')) && 'api_platform.symfony.main_controller' === $operation->getController()) {
-            return;
-        }
-
         $filterParameter = $request->query->all()['filter'] ?? null;
 
         if (
-            !$filterParameter
-            || !\is_array($filterParameter)
-            || 'jsonapi' !== $request->getRequestFormat()
+            !$filterParameter ||
+            !\is_array($filterParameter) ||
+            'jsonapi' !== $request->getRequestFormat()
         ) {
             return;
         }

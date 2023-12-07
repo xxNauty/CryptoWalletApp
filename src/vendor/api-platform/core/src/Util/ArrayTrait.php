@@ -13,9 +13,6 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Util;
 
-/**
- * @deprecated use ApiPlatform\GraphQl\ArrayTrait
- */
 trait ArrayTrait
 {
     public function isSequentialArrayOfArrays(array $array): bool

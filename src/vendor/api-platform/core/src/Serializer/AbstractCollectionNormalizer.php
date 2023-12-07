@@ -13,12 +13,11 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Serializer;
 
-use ApiPlatform\Api\ResourceClassResolverInterface as LegacyResourceClassResolverInterface;
-use ApiPlatform\Metadata\Operation;
+use ApiPlatform\Api\ResourceClassResolverInterface;
 use ApiPlatform\Metadata\Resource\Factory\ResourceMetadataCollectionFactoryInterface;
-use ApiPlatform\Metadata\ResourceClassResolverInterface;
 use ApiPlatform\State\Pagination\PaginatorInterface;
 use ApiPlatform\State\Pagination\PartialPaginatorInterface;
+use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerAwareTrait;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -35,7 +34,6 @@ abstract class AbstractCollectionNormalizer implements NormalizerInterface, Norm
         initContext as protected;
     }
     use NormalizerAwareTrait;
-    use OperationContextTrait;
 
     /**
      * This constant must be overridden in the child class.
@@ -43,7 +41,7 @@ abstract class AbstractCollectionNormalizer implements NormalizerInterface, Norm
     // @noRector \Rector\Php81\Rector\ClassConst\FinalizePublicClassConstantRector
     public const FORMAT = 'to-override';
 
-    public function __construct(protected ResourceClassResolverInterface|LegacyResourceClassResolverInterface $resourceClassResolver, protected string $pageParameterName, protected ?ResourceMetadataCollectionFactoryInterface $resourceMetadataFactory = null)
+    public function __construct(protected ResourceClassResolverInterface $resourceClassResolver, protected string $pageParameterName, protected ?ResourceMetadataCollectionFactoryInterface $resourceMetadataFactory = null)
     {
     }
 
@@ -57,33 +55,7 @@ abstract class AbstractCollectionNormalizer implements NormalizerInterface, Norm
 
     public function hasCacheableSupportsMethod(): bool
     {
-        if (method_exists(Serializer::class, 'getSupportedTypes')) {
-            trigger_deprecation(
-                'api-platform/core',
-                '3.1',
-                'The "%s()" method is deprecated, use "getSupportedTypes()" instead.',
-                __METHOD__
-            );
-        }
-
         return true;
-    }
-
-    public function getSupportedTypes(?string $format): array
-    {
-        /*
-         * At this point, support anything that is_iterable(), i.e. array|Traversable
-         * for non-objects, symfony uses 'native-'.\gettype($data) :
-         * https://github.com/tucksaun/symfony/blob/400685a68b00b0932f8ef41096578872b643099c/src/Symfony/Component/Serializer/Serializer.php#L254
-         */
-        if (static::FORMAT === $format) {
-            return [
-                'native-array' => true,
-                '\Traversable' => true,
-            ];
-        }
-
-        return [];
     }
 
     /**
@@ -98,12 +70,26 @@ abstract class AbstractCollectionNormalizer implements NormalizerInterface, Norm
         }
 
         $resourceClass = $this->resourceClassResolver->getResourceClass($object, $context['resource_class']);
-        $collectionContext = $this->initContext($resourceClass, $context);
+        $context = $this->initContext($resourceClass, $context);
         $data = [];
-        $paginationData = $this->getPaginationData($object, $collectionContext);
+        $paginationData = $this->getPaginationData($object, $context);
 
-        $childContext = $this->createOperationContext($collectionContext, $resourceClass);
-        $itemsData = $this->getItemsData($object, $format, $childContext);
+        if (($operation = $context['operation'] ?? null) && method_exists($operation, 'getItemUriTemplate')) {
+            $context['item_uri_template'] = $operation->getItemUriTemplate();
+        }
+
+        // We need to keep this operation for serialization groups for later
+        if (isset($context['operation'])) {
+            $context['root_operation'] = $context['operation'];
+        }
+
+        if (isset($context['operation_name'])) {
+            $context['root_operation_name'] = $context['operation_name'];
+        }
+
+        unset($context['operation']);
+        unset($context['operation_type'], $context['operation_name']);
+        $itemsData = $this->getItemsData($object, $format, $context);
 
         return array_merge_recursive($data, $paginationData, $itemsData);
     }
@@ -149,13 +135,6 @@ abstract class AbstractCollectionNormalizer implements NormalizerInterface, Norm
         }
 
         return [$paginator, $paginated, $currentPage, $itemsPerPage, $lastPage, $pageTotalItems, $totalItems];
-    }
-
-    protected function getOperation(array $context = []): Operation
-    {
-        $metadata = $this->resourceMetadataFactory->create($context['resource_class'] ?? '');
-
-        return $metadata->getOperation($context['operation_name'] ?? null);
     }
 
     /**

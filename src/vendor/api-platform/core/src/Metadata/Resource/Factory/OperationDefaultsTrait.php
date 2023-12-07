@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Metadata\Resource\Factory;
 
+use ApiPlatform\Exception\RuntimeException;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\CollectionOperationInterface;
 use ApiPlatform\Metadata\Delete;
-use ApiPlatform\Metadata\Exception\RuntimeException;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\GraphQl\DeleteMutation;
@@ -27,13 +27,12 @@ use ApiPlatform\Metadata\GraphQl\QueryCollection;
 use ApiPlatform\Metadata\GraphQl\Subscription;
 use ApiPlatform\Metadata\HttpOperation;
 use ApiPlatform\Metadata\Operation;
-use ApiPlatform\Metadata\Operations;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
-use ApiPlatform\Metadata\Util\CamelCaseToSnakeCaseNameConverter;
 use ApiPlatform\State\CreateProvider;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter;
 
 trait OperationDefaultsTrait
 {
@@ -43,13 +42,8 @@ trait OperationDefaultsTrait
 
     private function addGlobalDefaults(ApiResource|Operation $operation): ApiResource|Operation
     {
-        $extraProperties = $this->defaults['extra_properties'] ?? [];
-
+        $extraProperties = [];
         foreach ($this->defaults as $key => $value) {
-            if ('operations' === $key) {
-                continue;
-            }
-
             $upperKey = ucfirst($this->camelCaseToSnakeCaseNameConverter->denormalize($key));
             $getter = 'get'.$upperKey;
 
@@ -88,16 +82,6 @@ trait OperationDefaultsTrait
 
     private function getDefaultHttpOperations($resource): iterable
     {
-        if (($defaultOperations = $this->defaults['operations'] ?? null) && null === $resource->getOperations()) {
-            $operations = [];
-
-            foreach ($defaultOperations as $defaultOperation) {
-                $operations[] = new $defaultOperation();
-            }
-
-            return new Operations($operations);
-        }
-
         $post = new Post();
         if ($resource->getUriTemplate() && !$resource->getProvider()) {
             $post = $post->withProvider(CreateProvider::class);
@@ -154,15 +138,11 @@ trait OperationDefaultsTrait
         return $resource->withGraphQlOperations($graphQlOperations);
     }
 
-    private function getOperationWithDefaults(ApiResource $resource, Operation $operation, bool $generated = false, array $ignoredOptions = []): array
+    private function getOperationWithDefaults(ApiResource $resource, Operation $operation, bool $generated = false): array
     {
         // Inherit from resource defaults
         foreach (get_class_methods($resource) as $methodName) {
             if (!str_starts_with($methodName, 'get')) {
-                continue;
-            }
-
-            if (\in_array(lcfirst(substr($methodName, 3)), $ignoredOptions, true)) {
                 continue;
             }
 
@@ -207,6 +187,7 @@ trait OperationDefaultsTrait
             $operation = $operation->withName($operation->getRouteName());
         }
 
+        $path = ($operation->getRoutePrefix() ?? '').($operation->getUriTemplate() ?? '');
         $operationName = $operation->getName() ?? $this->getDefaultOperationName($operation, $resource->getClass());
 
         return [

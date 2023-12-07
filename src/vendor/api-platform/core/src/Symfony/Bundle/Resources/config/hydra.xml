@@ -20,11 +20,12 @@
         </service>
 
 
-        <!-- State -->
+        <!-- Event listener -->
 
-        <service id="api_platform.hydra.processor.link" class="ApiPlatform\Hydra\State\HydraLinkProcessor" decorates="api_platform.state_processor.main" decoration-priority="410">
-            <argument type="service" id="api_platform.hydra.processor.link.inner" />
+        <service id="api_platform.hydra.listener.response.add_link_header" class="ApiPlatform\Hydra\EventListener\AddLinkHeaderListener">
             <argument type="service" id="api_platform.router" />
+
+            <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" />
         </service>
 
         <!-- Serializer -->
@@ -45,11 +46,9 @@
             <tag name="serializer.normalizer" priority="-800" />
         </service>
 
-        <!-- deprecated -->
         <service id="api_platform.hydra.normalizer.error" class="ApiPlatform\Hydra\Serializer\ErrorNormalizer" public="false">
             <argument type="service" id="api_platform.router" />
             <argument>%kernel.debug%</argument>
-            <argument type="collection"></argument>
 
             <tag name="serializer.normalizer" priority="-800" />
         </service>

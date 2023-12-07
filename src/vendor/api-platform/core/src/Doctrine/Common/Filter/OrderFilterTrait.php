@@ -39,8 +39,8 @@ trait OrderFilterTrait
         $description = [];
 
         $properties = $this->getProperties();
-        if (null === $properties && $fieldNames = $this->getClassMetadata($resourceClass)->getFieldNames()) {
-            $properties = array_fill_keys($fieldNames, null);
+        if (null === $properties) {
+            $properties = array_fill_keys($this->getClassMetadata($resourceClass)->getFieldNames(), null);
         }
 
         foreach ($properties as $property => $propertyOptions) {

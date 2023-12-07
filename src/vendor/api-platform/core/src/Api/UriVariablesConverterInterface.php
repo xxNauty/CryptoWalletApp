@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Api;
 
-use ApiPlatform\Metadata\Exception\InvalidIdentifierException;
+use ApiPlatform\Exception\InvalidIdentifierException;
 
 /**
  * Identifier converter.

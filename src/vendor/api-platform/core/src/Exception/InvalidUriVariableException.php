@@ -18,6 +18,6 @@ namespace ApiPlatform\Exception;
  *
  * @author Antoine Bluchet <soyuka@gmail.com>
  */
-class InvalidUriVariableException extends \Exception implements ExceptionInterface
+final class InvalidUriVariableException extends \Exception implements ExceptionInterface
 {
 }

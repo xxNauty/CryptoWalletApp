@@ -14,10 +14,9 @@ declare(strict_types=1);
 namespace ApiPlatform\JsonApi\Serializer;
 
 use ApiPlatform\Metadata\Property\Factory\PropertyMetadataFactoryInterface;
-use ApiPlatform\Serializer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
+use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
@@ -60,22 +59,8 @@ final class ConstraintViolationListNormalizer implements NormalizerInterface, Ca
         return self::FORMAT === $format && $data instanceof ConstraintViolationListInterface;
     }
 
-    public function getSupportedTypes($format): array
-    {
-        return self::FORMAT === $format ? [ConstraintViolationListInterface::class => true] : [];
-    }
-
     public function hasCacheableSupportsMethod(): bool
     {
-        if (method_exists(Serializer::class, 'getSupportedTypes')) {
-            trigger_deprecation(
-                'api-platform/core',
-                '3.1',
-                'The "%s()" method is deprecated, use "getSupportedTypes()" instead.',
-                __METHOD__
-            );
-        }
-
         return true;
     }
 

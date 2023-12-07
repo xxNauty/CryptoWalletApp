@@ -13,9 +13,6 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Metadata;
 
-/**
- * An Operation dictionnary.
- */
 final class Operations implements \IteratorAggregate, \Countable
 {
     private array $operations = [];

@@ -17,8 +17,8 @@ use ApiPlatform\OpenApi\Model\Paths;
 use ApiPlatform\OpenApi\OpenApi;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\AbstractObjectNormalizer;
+use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Serializer;
 
 /**
  * Generates an OpenAPI v3 specification.
@@ -26,8 +26,6 @@ use Symfony\Component\Serializer\Serializer;
 final class OpenApiNormalizer implements NormalizerInterface, CacheableSupportsMethodInterface
 {
     public const FORMAT = 'json';
-    public const JSON_FORMAT = 'jsonopenapi';
-    public const YAML_FORMAT = 'yamlopenapi';
     private const EXTENSION_PROPERTIES_KEY = 'extensionProperties';
 
     public function __construct(private readonly NormalizerInterface $decorated)
@@ -39,7 +37,7 @@ final class OpenApiNormalizer implements NormalizerInterface, CacheableSupportsM
      */
     public function normalize(mixed $object, string $format = null, array $context = []): array
     {
-        $pathsCallback = static fn ($decoratedObject): array => $decoratedObject instanceof Paths ? $decoratedObject->getPaths() : [];
+        $pathsCallback = static fn ($innerObject): array => $innerObject instanceof Paths ? $innerObject->getPaths() : [];
         $context[AbstractObjectNormalizer::PRESERVE_EMPTY_OBJECTS] = true;
         $context[AbstractObjectNormalizer::SKIP_NULL_VALUES] = true;
         $context[AbstractNormalizer::CALLBACKS] = [
@@ -74,25 +72,11 @@ final class OpenApiNormalizer implements NormalizerInterface, CacheableSupportsM
      */
     public function supportsNormalization(mixed $data, string $format = null, array $context = []): bool
     {
-        return (self::FORMAT === $format || self::JSON_FORMAT === $format || self::YAML_FORMAT === $format) && $data instanceof OpenApi;
-    }
-
-    public function getSupportedTypes($format): array
-    {
-        return (self::FORMAT === $format || self::JSON_FORMAT === $format || self::YAML_FORMAT === $format) ? [OpenApi::class => true] : [];
+        return self::FORMAT === $format && $data instanceof OpenApi;
     }
 
     public function hasCacheableSupportsMethod(): bool
     {
-        if (method_exists(Serializer::class, 'getSupportedTypes')) {
-            trigger_deprecation(
-                'api-platform/core',
-                '3.1',
-                'The "%s()" method is deprecated, use "getSupportedTypes()" instead.',
-                __METHOD__
-            );
-        }
-
         return true;
     }
 }

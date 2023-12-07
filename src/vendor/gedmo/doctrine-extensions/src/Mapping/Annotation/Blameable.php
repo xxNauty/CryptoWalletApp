@@ -16,7 +16,9 @@ use Gedmo\Mapping\Annotation\Annotation as GedmoAnnotation;
  * Blameable annotation for Blameable behavioral extension
  *
  * @Annotation
+ *
  * @NamedArgumentConstructor
+ *
  * @Target("PROPERTY")
  *
  * @author David Buchmann <mail@davidbu.ch>
@@ -26,8 +28,7 @@ final class Blameable implements GedmoAnnotation
 {
     use ForwardCompatibilityTrait;
 
-    /** @var string */
-    public $on = 'update';
+    public string $on = 'update';
     /** @var string|string[] */
     public $field;
     /** @var mixed */

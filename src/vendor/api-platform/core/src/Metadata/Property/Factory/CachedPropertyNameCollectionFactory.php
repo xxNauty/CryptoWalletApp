@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace ApiPlatform\Metadata\Property\Factory;
 
 use ApiPlatform\Metadata\Property\PropertyNameCollection;
-use ApiPlatform\Metadata\Util\CachedTrait;
+use ApiPlatform\Util\CachedTrait;
 use Psr\Cache\CacheItemPoolInterface;
 
 /**

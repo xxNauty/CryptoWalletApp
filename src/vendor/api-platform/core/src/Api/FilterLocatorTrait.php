@@ -14,15 +14,12 @@ declare(strict_types=1);
 namespace ApiPlatform\Api;
 
 use ApiPlatform\Exception\InvalidArgumentException;
-use ApiPlatform\Metadata\FilterInterface as MetadataFilterInterface;
 use Psr\Container\ContainerInterface;
 
 /**
  * Manipulates filters with a backward compatibility between the new filter locator and the deprecated filter collection.
  *
  * @author Baptiste Meyer <baptiste.meyer@gmail.com>
- *
- * @deprecated
  *
  * @internal
  */
@@ -45,7 +42,7 @@ trait FilterLocatorTrait
     /**
      * Gets a filter with a backward compatibility.
      */
-    private function getFilter(string $filterId): null|FilterInterface|MetadataFilterInterface
+    private function getFilter(string $filterId): ?FilterInterface
     {
         if ($this->filterLocator && $this->filterLocator->has($filterId)) {
             return $this->filterLocator->get($filterId);

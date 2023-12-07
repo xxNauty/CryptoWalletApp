@@ -17,7 +17,9 @@ use Gedmo\Tree\Entity\MappedSuperclass\AbstractClosure;
  * TreeClosure annotation for Tree behavioral extension
  *
  * @Annotation
+ *
  * @NamedArgumentConstructor
+ *
  * @Target("CLASS")
  *
  * @author Gediminas Morkevicius <gediminas.morkevicius@gmail.com>
@@ -28,10 +30,9 @@ final class TreeClosure implements GedmoAnnotation
     use ForwardCompatibilityTrait;
 
     /**
-     * @var string
      * @phpstan-var string|class-string<AbstractClosure>
      */
-    public $class;
+    public string $class;
 
     /**
      * @param array<string, mixed> $data

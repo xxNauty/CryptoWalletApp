@@ -13,14 +13,11 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Hal\Serializer;
 
-use ApiPlatform\Api\IriConverterInterface as LegacyIriConverterInterface;
-use ApiPlatform\Metadata\IriConverterInterface;
-use ApiPlatform\Serializer\CacheableSupportsMethodInterface;
+use ApiPlatform\Api\IriConverterInterface;
 use Symfony\Component\Serializer\Exception\LogicException;
-use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface as BaseCacheableSupportsMethodInterface;
+use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Serializer;
 
 /**
  * Decorates the output with JSON HAL metadata when appropriate, but otherwise
@@ -30,7 +27,7 @@ final class ObjectNormalizer implements NormalizerInterface, DenormalizerInterfa
 {
     public const FORMAT = 'jsonhal';
 
-    public function __construct(private readonly NormalizerInterface $decorated, private readonly IriConverterInterface|LegacyIriConverterInterface $iriConverter)
+    public function __construct(private readonly NormalizerInterface $decorated, private readonly IriConverterInterface $iriConverter)
     {
     }
 
@@ -42,33 +39,12 @@ final class ObjectNormalizer implements NormalizerInterface, DenormalizerInterfa
         return self::FORMAT === $format && $this->decorated->supportsNormalization($data, $format, $context);
     }
 
-    public function getSupportedTypes($format): array
-    {
-        // @deprecated remove condition when support for symfony versions under 6.3 is dropped
-        if (!method_exists($this->decorated, 'getSupportedTypes')) {
-            return [
-                '*' => $this->decorated instanceof BaseCacheableSupportsMethodInterface && $this->decorated->hasCacheableSupportsMethod(),
-            ];
-        }
-
-        return self::FORMAT === $format ? $this->decorated->getSupportedTypes($format) : [];
-    }
-
     /**
      * {@inheritdoc}
      */
     public function hasCacheableSupportsMethod(): bool
     {
-        if (method_exists(Serializer::class, 'getSupportedTypes')) {
-            trigger_deprecation(
-                'api-platform/core',
-                '3.1',
-                'The "%s()" method is deprecated, use "getSupportedTypes()" instead.',
-                __METHOD__
-            );
-        }
-
-        return $this->decorated instanceof BaseCacheableSupportsMethodInterface && $this->decorated->hasCacheableSupportsMethod();
+        return $this->decorated instanceof CacheableSupportsMethodInterface && $this->decorated->hasCacheableSupportsMethod();
     }
 
     /**

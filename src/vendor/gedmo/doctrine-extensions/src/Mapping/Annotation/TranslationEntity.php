@@ -16,7 +16,9 @@ use Gedmo\Mapping\Annotation\Annotation as GedmoAnnotation;
  * TranslationEntity annotation for Translatable behavioral extension
  *
  * @Annotation
+ *
  * @NamedArgumentConstructor
+ *
  * @Target("CLASS")
  *
  * @author Gediminas Morkevicius <gediminas.morkevicius@gmail.com>
@@ -26,12 +28,8 @@ final class TranslationEntity implements GedmoAnnotation
 {
     use ForwardCompatibilityTrait;
 
-    /**
-     * @var string
-     *
-     * @Required
-     */
-    public $class;
+    /** @Required */
+    public string $class;
 
     /**
      * @param array<string, mixed> $data

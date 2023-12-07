@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Validator\Exception;
 
-use ApiPlatform\Metadata\Exception\RuntimeException;
+use ApiPlatform\Exception\RuntimeException;
 
 /**
  * Thrown when a validation error occurs.

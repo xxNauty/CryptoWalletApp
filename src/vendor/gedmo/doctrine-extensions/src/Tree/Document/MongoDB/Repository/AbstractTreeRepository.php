@@ -21,6 +21,13 @@ use Gedmo\Tree\RepositoryUtils;
 use Gedmo\Tree\RepositoryUtilsInterface;
 use Gedmo\Tree\TreeListener;
 
+/**
+ * @template T of object
+ *
+ * @phpstan-extends DocumentRepository<T>
+ *
+ * @phpstan-implements RepositoryInterface<T>
+ */
 abstract class AbstractTreeRepository extends DocumentRepository implements RepositoryInterface
 {
     /**
@@ -37,6 +44,7 @@ abstract class AbstractTreeRepository extends DocumentRepository implements Repo
      */
     protected $repoUtils;
 
+    /** @param ClassMetadata<T> $class */
     public function __construct(DocumentManager $em, UnitOfWork $uow, ClassMetadata $class)
     {
         parent::__construct($em, $uow, $class);

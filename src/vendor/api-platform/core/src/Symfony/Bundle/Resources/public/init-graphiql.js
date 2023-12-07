@@ -25,13 +25,12 @@ function updateURL() {
     history.replaceState(null, null, newSearch);
 }
 
-function graphQLFetcher(graphQLParams, {headers}) {
+function graphQLFetcher(graphQLParams) {
     return fetch(entrypoint, {
         method: 'post',
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            ...headers
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(graphQLParams),
         credentials: 'include'

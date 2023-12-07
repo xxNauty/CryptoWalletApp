@@ -18,7 +18,9 @@ use Gedmo\Mapping\Annotation\Annotation as GedmoAnnotation;
  * @author Gustavo Falco <comfortablynumb84@gmail.com>
  *
  * @Annotation
+ *
  * @NamedArgumentConstructor
+ *
  * @Target("CLASS")
  */
 #[\Attribute(\Attribute::TARGET_CLASS)]
@@ -26,14 +28,11 @@ final class SoftDeleteable implements GedmoAnnotation
 {
     use ForwardCompatibilityTrait;
 
-    /** @var string */
-    public $fieldName = 'deletedAt';
+    public string $fieldName = 'deletedAt';
 
-    /** @var bool */
-    public $timeAware = false;
+    public bool $timeAware = false;
 
-    /** @var bool */
-    public $hardDelete = true;
+    public bool $hardDelete = true;
 
     /**
      * @param array<string, mixed> $data

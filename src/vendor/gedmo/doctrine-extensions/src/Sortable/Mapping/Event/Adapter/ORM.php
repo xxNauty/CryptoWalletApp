@@ -43,15 +43,16 @@ final class ORM extends BaseAdapterORM implements SortableAdapter
         $query = $qb->getQuery();
         $query->useQueryCache(false);
         $query->disableResultCache();
-        $res = $query->getResult();
+        $query->setMaxResults(1);
 
-        return $res[0][1];
+        return $query->getSingleScalarResult();
     }
 
     /**
      * @param array<string, mixed> $relocation
      * @param array<string, mixed> $delta
      * @param array<string, mixed> $config
+     *
      * @phpstan-param SortableRelocation $relocation
      *
      * @return void

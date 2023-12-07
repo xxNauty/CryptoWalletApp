@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Api\QueryParameterValidator\Validator;
 
-use ApiPlatform\State\Util\RequestParser;
+use ApiPlatform\Util\RequestParser;
 
 final class Required implements ValidatorInterface
 {

@@ -13,17 +13,15 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Doctrine\EventListener;
 
-use ApiPlatform\Api\IriConverterInterface as LegacyIriConverterInterface;
-use ApiPlatform\Api\ResourceClassResolverInterface as LegacyResourceClassResolverInterface;
+use ApiPlatform\Api\IriConverterInterface;
+use ApiPlatform\Api\ResourceClassResolverInterface;
+use ApiPlatform\Api\UrlGeneratorInterface;
 use ApiPlatform\Exception\InvalidArgumentException;
 use ApiPlatform\Exception\OperationNotFoundException;
 use ApiPlatform\Exception\RuntimeException;
 use ApiPlatform\HttpCache\PurgerInterface;
 use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\IriConverterInterface;
-use ApiPlatform\Metadata\ResourceClassResolverInterface;
-use ApiPlatform\Metadata\UrlGeneratorInterface;
-use ApiPlatform\Metadata\Util\ClassInfoTrait;
+use ApiPlatform\Util\ClassInfoTrait;
 use Doctrine\Common\Util\ClassUtils;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\OnFlushEventArgs;
@@ -43,7 +41,7 @@ final class PurgeHttpCacheListener
     private readonly PropertyAccessorInterface $propertyAccessor;
     private array $tags = [];
 
-    public function __construct(private readonly PurgerInterface $purger, private readonly IriConverterInterface|LegacyIriConverterInterface $iriConverter, private readonly ResourceClassResolverInterface|LegacyResourceClassResolverInterface $resourceClassResolver, PropertyAccessorInterface $propertyAccessor = null)
+    public function __construct(private readonly PurgerInterface $purger, private readonly IriConverterInterface $iriConverter, private readonly ResourceClassResolverInterface $resourceClassResolver, PropertyAccessorInterface $propertyAccessor = null)
     {
         $this->propertyAccessor = $propertyAccessor ?? PropertyAccess::createPropertyAccessor();
     }
@@ -126,11 +124,6 @@ final class PurgeHttpCacheListener
     {
         $associationMappings = $em->getClassMetadata(ClassUtils::getClass($entity))->getAssociationMappings();
         foreach (array_keys($associationMappings) as $property) {
-            if (
-                \array_key_exists('targetEntity', $associationMappings[$property])
-                && !$this->resourceClassResolver->isResourceClass($associationMappings[$property]['targetEntity'])) {
-                return;
-            }
             if ($this->propertyAccessor->isReadable($entity, $property)) {
                 $this->addTagsFor($this->propertyAccessor->getValue($entity, $property));
             }

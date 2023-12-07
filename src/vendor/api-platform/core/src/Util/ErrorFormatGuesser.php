@@ -18,8 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Guesses the error format to use.
  *
- * @deprecated since API Platform 3.2
- *
  * @author Kévin Dunglas <dunglas@gmail.com>
  */
 final class ErrorFormatGuesser

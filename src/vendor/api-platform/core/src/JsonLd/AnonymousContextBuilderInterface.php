@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace ApiPlatform\JsonLd;
 
-use ApiPlatform\Metadata\UrlGeneratorInterface;
+use ApiPlatform\Api\UrlGeneratorInterface;
 
 /**
  * JSON-LD context builder with Input Output DTO support interface.

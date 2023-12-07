@@ -24,7 +24,7 @@ final class MessengerResourceMetadataCollectionFactory implements ResourceMetada
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      */
     public function create(string $resourceClass): ResourceMetadataCollection
     {

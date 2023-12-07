@@ -13,20 +13,19 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Symfony\EventListener;
 
-use ApiPlatform\Api\UriVariablesConverterInterface as LegacyUriVariablesConverterInterface;
+use ApiPlatform\Api\UriVariablesConverterInterface;
 use ApiPlatform\Exception\InvalidIdentifierException;
 use ApiPlatform\Exception\InvalidUriVariableException;
+use ApiPlatform\Metadata\HttpOperation;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Resource\Factory\ResourceMetadataCollectionFactoryInterface;
-use ApiPlatform\Metadata\UriVariablesConverterInterface;
-use ApiPlatform\Metadata\Util\CloneTrait;
 use ApiPlatform\Serializer\SerializerContextBuilderInterface;
-use ApiPlatform\State\Exception\ProviderNotFoundException;
 use ApiPlatform\State\ProviderInterface;
 use ApiPlatform\State\UriVariablesResolverTrait;
-use ApiPlatform\State\Util\OperationRequestInitiatorTrait;
-use ApiPlatform\State\Util\RequestParser;
-use ApiPlatform\Symfony\Util\RequestAttributesExtractor;
+use ApiPlatform\Util\CloneTrait;
+use ApiPlatform\Util\OperationRequestInitiatorTrait;
+use ApiPlatform\Util\RequestAttributesExtractor;
+use ApiPlatform\Util\RequestParser;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -43,9 +42,9 @@ final class ReadListener
 
     public function __construct(
         private readonly ProviderInterface $provider,
-        ResourceMetadataCollectionFactoryInterface $resourceMetadataCollectionFactory = null,
+        ?ResourceMetadataCollectionFactoryInterface $resourceMetadataCollectionFactory = null,
         private readonly ?SerializerContextBuilderInterface $serializerContextBuilder = null,
-        LegacyUriVariablesConverterInterface|UriVariablesConverterInterface $uriVariablesConverter = null,
+        UriVariablesConverterInterface $uriVariablesConverter = null,
     ) {
         $this->resourceMetadataCollectionFactory = $resourceMetadataCollectionFactory;
         $this->uriVariablesConverter = $uriVariablesConverter;
@@ -60,10 +59,6 @@ final class ReadListener
     {
         $request = $event->getRequest();
         $operation = $this->initializeOperation($request);
-
-        if ('api_platform.symfony.main_controller' === $operation?->getController() || $request->attributes->get('_api_platform_disable_listeners')) {
-            return;
-        }
 
         if (!($attributes = RequestAttributesExtractor::extractAttributes($request))) {
             return;
@@ -97,16 +92,13 @@ final class ReadListener
             $data = $this->provider->provide($operation, $uriVariables, $context);
         } catch (InvalidIdentifierException|InvalidUriVariableException $e) {
             throw new NotFoundHttpException('Invalid identifier value or configuration.', $e);
-        } catch (ProviderNotFoundException $e) {
-            $data = null;
         }
 
         if (
-            null === $data
-            && 'POST' !== $operation->getMethod()
-            && (
-                'PUT' !== $operation->getMethod()
-                || ($operation instanceof Put && !($operation->getAllowCreate() ?? false))
+            null === $data &&
+            (
+                HttpOperation::METHOD_PUT !== $operation->getMethod() ||
+                ($operation instanceof Put && !($operation->getAllowCreate() ?? false))
             )
         ) {
             throw new NotFoundHttpException('Not Found');
