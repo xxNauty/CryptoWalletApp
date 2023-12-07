@@ -20,6 +20,7 @@ readonly class CurrencyCrudProvider implements ProviderInterface
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         // todo Do przemyślenia czy zostawić
         $this->commandBus->dispatch(
             new UpdateCurrencyCommand(
@@ -27,6 +28,8 @@ readonly class CurrencyCrudProvider implements ProviderInterface
             )
         );
 
+=======
+>>>>>>> origin/develop
 =======
 >>>>>>> origin/develop
         $model = $this->queryBus->ask(

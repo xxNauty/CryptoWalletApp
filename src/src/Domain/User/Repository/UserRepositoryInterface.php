@@ -7,7 +7,11 @@ namespace App\Domain\User\Repository;
 use App\Domain\User\Model\User;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 interface UserRepositoryInterface // extends RepositoryInterface
+=======
+interface UserRepositoryInterface
+>>>>>>> origin/develop
 =======
 interface UserRepositoryInterface
 >>>>>>> origin/develop
