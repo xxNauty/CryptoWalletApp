@@ -2,11 +2,11 @@
 
 namespace App\Application\User\Command;
 
-use ApiPlatform\Symfony\Security\Exception\AccessDeniedException;
 use App\Domain\Shared\Command\CommandHandlerInterface;
 use App\Domain\User\Repository\UserRepositoryInterface;
 use App\Domain\User\Service\UserPasswordServiceInterface;
 use App\Domain\User\Service\UserSecurityServiceInterface;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 
 readonly class UpdateUserPasswordCommandHandler implements CommandHandlerInterface
 {

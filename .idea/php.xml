@@ -113,7 +113,6 @@
       <path value="$PROJECT_DIR$/src/vendor/lcobucci/clock" />
       <path value="$PROJECT_DIR$/src/vendor/symfony/polyfill-php81" />
       <path value="$PROJECT_DIR$/src/vendor/symfony/options-resolver" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/diff" />
       <path value="$PROJECT_DIR$/src/vendor/phpstan/phpstan" />
       <path value="$PROJECT_DIR$/src/vendor/friendsofphp/php-cs-fixer" />
       <path value="$PROJECT_DIR$/src/vendor/gesdinet/jwt-refresh-token-bundle" />
@@ -124,27 +123,10 @@
       <path value="$PROJECT_DIR$/src/vendor/symfony/phpunit-bridge" />
       <path value="$PROJECT_DIR$/src/vendor/symfony/browser-kit" />
       <path value="$PROJECT_DIR$/src/vendor/symfony/dom-crawler" />
-      <path value="$PROJECT_DIR$/src/vendor/phar-io/version" />
-      <path value="$PROJECT_DIR$/src/vendor/phar-io/manifest" />
       <path value="$PROJECT_DIR$/src/vendor/myclabs/deep-copy" />
       <path value="$PROJECT_DIR$/src/vendor/theseer/tokenizer" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/global-state" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/complexity" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/object-enumerator" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/cli-parser" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/recursion-context" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/object-reflector" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/version" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/comparator" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/lines-of-code" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/type" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/code-unit" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/resource-operations" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/exporter" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/environment" />
       <path value="$PROJECT_DIR$/src/vendor/phpunit/php-code-coverage" />
       <path value="$PROJECT_DIR$/src/vendor/phpunit/php-text-template" />
-      <path value="$PROJECT_DIR$/src/vendor/sebastian/code-unit-reverse-lookup" />
       <path value="$PROJECT_DIR$/src/vendor/phpunit/php-timer" />
       <path value="$PROJECT_DIR$/src/vendor/phpunit/php-invoker" />
       <path value="$PROJECT_DIR$/src/vendor/phpunit/phpunit" />
@@ -157,9 +139,24 @@
       <path value="$PROJECT_DIR$/src/vendor/zenstruck/assert" />
       <path value="$PROJECT_DIR$/src/vendor/zenstruck/foundry" />
       <path value="$PROJECT_DIR$/src/vendor/fakerphp/faker" />
-      <path value="$PROJECT_DIR$/src/vendor/nelmio/api-doc-bundle" />
-      <path value="$PROJECT_DIR$/src/vendor/zircote/swagger-php" />
-      <path value="$PROJECT_DIR$/src/vendor/twig/extra-bundle" />
+      <path value="$PROJECT_DIR$/src/vendor/phar-io/manifest" />
+      <path value="$PROJECT_DIR$/src/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/src/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/src/vendor/sebastian/lines-of-code" />
+      <path value="$PROJECT_DIR$/src/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/src/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/src/vendor/sebastian/code-unit" />
+      <path value="$PROJECT_DIR$/src/vendor/sebastian/complexity" />
+      <path value="$PROJECT_DIR$/src/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/src/vendor/sebastian/cli-parser" />
+      <path value="$PROJECT_DIR$/src/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/src/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/src/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/src/vendor/sebastian/type" />
+      <path value="$PROJECT_DIR$/src/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/src/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/src/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/src/vendor/sebastian/object-reflector" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2" />

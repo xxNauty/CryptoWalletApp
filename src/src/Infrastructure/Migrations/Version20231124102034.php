@@ -27,7 +27,6 @@ final class Version20231124102034 extends AbstractMigration
         $this->addSql('ALTER TABLE purchase ADD CONSTRAINT FK_9861B36D9EEA759 FOREIGN KEY (inventory_id) REFERENCES inventory (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE currency ALTER symbol TYPE VARCHAR(4)');
         $this->addSql('ALTER TABLE inventory DROP content');
-        $this->addSql('ALTER TABLE user_base ALTER currency SET NOT NULL');
     }
 
     public function down(Schema $schema): void
@@ -37,7 +36,6 @@ final class Version20231124102034 extends AbstractMigration
         $this->addSql('CREATE SEQUENCE currency_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('ALTER TABLE purchase DROP CONSTRAINT FK_9861B36D9EEA759');
         $this->addSql('DROP TABLE purchase');
-        $this->addSql('ALTER TABLE user_base ALTER currency DROP NOT NULL');
         $this->addSql('ALTER TABLE currency ALTER symbol TYPE VARCHAR(3)');
         $this->addSql('ALTER TABLE inventory ADD content JSON DEFAULT NULL');
     }

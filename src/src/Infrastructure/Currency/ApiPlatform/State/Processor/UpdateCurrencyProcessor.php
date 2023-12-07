@@ -15,7 +15,7 @@ use Webmozart\Assert\Assert;
 readonly class UpdateCurrencyProcessor implements ProcessorInterface
 {
     public function __construct(
-        private CommandBusInterface         $commandBus,
+        private CommandBusInterface $commandBus,
         private CurrencyRepositoryInterface $currencyRepository
     ) {
     }
@@ -24,11 +24,10 @@ readonly class UpdateCurrencyProcessor implements ProcessorInterface
     {
         Assert::isInstanceOf($data, CurrencyResource::class);
         /** @var CurrencyResource $data */
-
         $currenciesList = $this->currencyRepository->getAvailableCurrencies();
 
         foreach ($currenciesList as $currency) {
-            /** @var string $currency */
+            /* @var string $currency */
             $this->commandBus->dispatch(
                 new UpdateCurrencyCommand(
                     $currency,

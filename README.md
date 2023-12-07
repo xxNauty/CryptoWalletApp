@@ -10,15 +10,17 @@ the best for you, determining the degree of risk for currencies you are interest
 ## How it works?
 
 ### Set up container
-This app is build using Docker containers. So, in order to run it you'll have to install Docker engine. \
-The next step is to download this repo: ``git clone git@github.com:xxNauty/CryptoWalletApp.git``. After that, go to the folder
+This app is build using Docker containers. So, in order to run it you'll have to install Docker engine. 
+The next step is to download this repo: ``git clone git@github.com:xxNauty/CryptoWalletApp.git``. After that, go to the
+folder
 ``docker`` and run this command:
 
 ```bash
 docker compose --env-file=../src/.env up
 ```
 
-After few minutes, you'll have working application, so you can start working with it using for example Postman application.
+After few minutes, you'll have working application, so you can start working with it using for example Postman 
+application.
 
 ### Database 
 If you want to look into the database, just type this command into your terminal:
@@ -61,9 +63,9 @@ This endpoint is available for everyone, authorization not required.
 }
 ```
 
-In this endpoint you cannot change your password, because it is used here for security reasons. Before update, it is compared
-with password in database, and only if it's correct, update will be made. You don't have to pass all of these fields. Only fields you want
-to update, and correct password is required. 
+In this endpoint you cannot change your password, because it is used here for security reasons. Before update, it is 
+compared with password in database, and only if it's correct, update will be made. You don't have to pass all of 
+these fields. Only fields you want to update, and correct password is required. 
 
 ### Change user password
 

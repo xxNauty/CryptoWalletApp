@@ -23,7 +23,7 @@ readonly class UpdateAllRatiosProcessor implements ProcessorInterface
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): JsonResponse
     {
         Assert::isInstanceOf($data, DollarRatiosResource::class);
-        /** @var DollarRatiosResource $data */
+        /* @var DollarRatiosResource $data */
 
         $this->commandBus->dispatch(
             new UpdateRatiosCommand()

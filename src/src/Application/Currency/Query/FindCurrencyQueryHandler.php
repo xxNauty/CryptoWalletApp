@@ -11,7 +11,7 @@ use App\Domain\Shared\Query\QueryHandlerInterface;
 readonly class FindCurrencyQueryHandler implements QueryHandlerInterface
 {
     public function __construct(
-        private CurrencyRepositoryInterface  $currencyRepository,
+        private CurrencyRepositoryInterface $currencyRepository,
     ) {
     }
 

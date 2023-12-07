@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Application\User\Command;
 
-use ApiPlatform\Symfony\Security\Exception\AccessDeniedException;
 use App\Domain\Shared\Command\CommandHandlerInterface;
 use App\Domain\User\Model\User;
 use App\Domain\User\Repository\UserRepositoryInterface;
 use App\Domain\User\Service\UserPasswordServiceInterface;
 use App\Domain\User\Service\UserSecurityServiceInterface;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 readonly class DeleteUserCommandHandler implements CommandHandlerInterface

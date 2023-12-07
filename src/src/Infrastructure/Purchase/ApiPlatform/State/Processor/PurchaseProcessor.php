@@ -23,7 +23,6 @@ readonly class PurchaseProcessor implements ProcessorInterface
     {
         Assert::isInstanceOf($data, PurchaseResource::class);
         /** @var PurchaseResource $data */
-
         if ($data->sold) {
             $this->commandBus->dispatch(
                 new PurchaseSaleCommand(
