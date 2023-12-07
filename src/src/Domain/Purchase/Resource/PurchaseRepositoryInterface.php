@@ -18,6 +18,4 @@ interface PurchaseRepositoryInterface
     public function getUsersCurrencies(User $user): array;
 
     public function findUsedCurrencies(): ?array;
-
-    public function findBy(array $params): ?array;
 }

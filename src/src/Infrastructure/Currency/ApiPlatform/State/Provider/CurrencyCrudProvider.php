@@ -19,22 +19,6 @@ readonly class CurrencyCrudProvider implements ProviderInterface
 
     public function provide(Operation $operation, array $uriVariables = [], array $context = []): object|array|null
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        // todo Do przemyślenia czy zostawić
-        $this->commandBus->dispatch(
-            new UpdateCurrencyCommand(
-                $uriVariables['id']
-            )
-        );
-
-=======
->>>>>>> origin/develop
-=======
->>>>>>> origin/develop
-=======
->>>>>>> origin/develop
         $model = $this->queryBus->ask(
             new FindCurrencyQuery(
                 $uriVariables['symbol']

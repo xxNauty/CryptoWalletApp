@@ -71,6 +71,9 @@
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/zenstruck/callback" />
       <excludeFolder url="file://$MODULE_DIR$/src/vendor/zenstruck/foundry" />
       <excludeFolder url="file://$MODULE_DIR$/.idea/httpRequests" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/nelmio/api-doc-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/twig/extra-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/src/vendor/zircote/swagger-php" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

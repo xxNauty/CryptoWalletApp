@@ -13,7 +13,7 @@ services:
     App\:
         resource: '../../src/'
         exclude:
-            - '../../src/Infrastructure/Shared/Kernel.php'
+            - '../src/Infrastructure/Shared/Kernel.php'
 
     gedmo.listener.softdeleteable:
         class: Gedmo\SoftDeleteable\SoftDeleteableListener
