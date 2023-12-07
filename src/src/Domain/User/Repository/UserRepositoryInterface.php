@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App\Domain\User\Repository;
 
-use App\Domain\Shared\Repository\RepositoryInterface;
 use App\Domain\User\Model\User;
 
+<<<<<<< HEAD
 interface UserRepositoryInterface // extends RepositoryInterface
+=======
+interface UserRepositoryInterface
+>>>>>>> origin/develop
 {
     public function save(User $user): void;
 

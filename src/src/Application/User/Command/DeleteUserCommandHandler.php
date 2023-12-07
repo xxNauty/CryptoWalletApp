@@ -27,7 +27,7 @@ readonly class DeleteUserCommandHandler implements CommandHandlerInterface
             throw new NotFoundHttpException('There is no user with given ID');
         }
 
-        if ($user !== $this->securityService->getUser()) {
+        if ($user !== $this->securityService->getUser() && User::ROLE_ADMIN !== $this->securityService->getUser()->role) {
             throw new AccessDeniedException('It is not your account!');
         }
 

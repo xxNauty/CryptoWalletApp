@@ -17,6 +17,6 @@ readonly class FindCurrencyQueryHandler implements QueryHandlerInterface
 
     public function __invoke(FindCurrencyQuery $query): CryptoCurrency
     {
-        return $this->currencyRepository->find($query->id);
+        return $this->currencyRepository->findBy(['symbol' => $query->id]);
     }
 }

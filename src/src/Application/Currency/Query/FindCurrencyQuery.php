@@ -9,7 +9,7 @@ use App\Domain\Shared\Query\QueryInterface;
 readonly class FindCurrencyQuery implements QueryInterface
 {
     public function __construct(
-        public int $id,
+        public string $id,
     ) {
     }
 }
