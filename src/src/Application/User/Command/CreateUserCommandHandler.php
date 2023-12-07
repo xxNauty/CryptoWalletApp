@@ -23,8 +23,13 @@ readonly class CreateUserCommandHandler implements CommandHandlerInterface
     {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         if (!in_array($command->currency, [DolarRatio::SUPPORTED_CURRENCIES, DolarRatio::DEFAULT_CURRENCY])) {
             throw new InvalidArgumentException('Given currency is not available');
+=======
+        if (!in_array($command->currency, array_merge(DolarRatio::SUPPORTED_CURRENCIES, [DolarRatio::DEFAULT_CURRENCY]))) {
+            throw new InvalidArgumentException('Given currency is not available '.$command->currency);
+>>>>>>> origin/develop
 =======
         if (!in_array($command->currency, array_merge(DolarRatio::SUPPORTED_CURRENCIES, [DolarRatio::DEFAULT_CURRENCY]))) {
             throw new InvalidArgumentException('Given currency is not available '.$command->currency);

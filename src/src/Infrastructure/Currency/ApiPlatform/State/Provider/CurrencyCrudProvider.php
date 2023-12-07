@@ -21,6 +21,7 @@ readonly class CurrencyCrudProvider implements ProviderInterface
     {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         // todo Do przemyślenia czy zostawić
         $this->commandBus->dispatch(
             new UpdateCurrencyCommand(
@@ -28,6 +29,8 @@ readonly class CurrencyCrudProvider implements ProviderInterface
             )
         );
 
+=======
+>>>>>>> origin/develop
 =======
 >>>>>>> origin/develop
 =======
